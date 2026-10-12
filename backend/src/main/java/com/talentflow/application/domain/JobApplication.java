@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.OptimisticLock;
 import org.hibernate.type.SqlTypes;
@@ -22,9 +23,11 @@ import com.talentflow.shared.domain.BusinessRuleException;
 /**
  * A candidate's application for a job, including the AI screening suggestion (never a decision).
  * The AI fields are written by a background job and are excluded from optimistic locking, so a screening
- * finishing at the same moment never makes a recruiter's stage change fail.
+ * finishing at the same moment never makes a recruiter's stage change fail. Updates only write changed
+ * columns, so neither side can overwrite the other's fields with stale values.
  */
 @Entity
+@DynamicUpdate
 @Table(name = "job_application")
 public class JobApplication {
 
