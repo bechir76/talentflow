@@ -10,25 +10,50 @@
   "resetPasswordAllowed": false,
   "rememberMe": true,
   "internationalizationEnabled": true,
-  "supportedLocales": ["en", "de"],
+  "supportedLocales": [
+    "en",
+    "de"
+  ],
   "defaultLocale": "en",
   "accessTokenLifespan": 300,
   "ssoSessionIdleTimeout": 1800,
   "ssoSessionMaxLifespan": 36000,
   "roles": {
     "realm": [
-      { "name": "CANDIDATE", "description": "Applies to jobs and manages own data" },
-      { "name": "RECRUITER", "description": "Manages jobs, applications and the pipeline" },
-      { "name": "HIRING_MANAGER", "description": "Reviews assigned candidates and gives interview feedback" },
-      { "name": "ADMIN", "description": "Manages users, data retention and the audit log" },
-      { "name": "offline_access", "description": "${role_offline-access}" },
-      { "name": "uma_authorization", "description": "${role_uma_authorization}" },
+      {
+        "name": "CANDIDATE",
+        "description": "Applies to jobs and manages own data"
+      },
+      {
+        "name": "RECRUITER",
+        "description": "Manages jobs, applications and the pipeline"
+      },
+      {
+        "name": "HIRING_MANAGER",
+        "description": "Reviews assigned candidates and gives interview feedback"
+      },
+      {
+        "name": "ADMIN",
+        "description": "Manages users, data retention and the audit log"
+      },
+      {
+        "name": "offline_access",
+        "description": "${role_offline-access}"
+      },
+      {
+        "name": "uma_authorization",
+        "description": "${role_uma_authorization}"
+      },
       {
         "name": "default-roles-talentflow",
         "description": "Roles granted to self-registered users",
         "composite": true,
         "composites": {
-          "realm": ["offline_access", "uma_authorization", "CANDIDATE"]
+          "realm": [
+            "offline_access",
+            "uma_authorization",
+            "CANDIDATE"
+          ]
         }
       }
     ]
@@ -51,8 +76,13 @@
       "frontchannelLogout": true,
       "rootUrl": "http://localhost:5173",
       "baseUrl": "/",
-      "redirectUris": ["http://localhost:5173/*", "http://localhost:3000/*"],
-      "webOrigins": ["+"],
+      "redirectUris": [
+        "http://localhost:5173/*",
+        "http://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "+"
+      ],
       "attributes": {
         "pkce.code.challenge.method": "S256",
         "post.logout.redirect.uris": "http://localhost:5173/*##http://localhost:3000/*"
@@ -83,48 +113,118 @@
       "standardFlowEnabled": false,
       "directAccessGrantsEnabled": false,
       "serviceAccountsEnabled": false
+    },
+    {
+      "clientId": "talentflow-admin-api",
+      "name": "TalentFlow backend (user administration)",
+      "description": "Service account used by the backend to manage users and roles",
+      "enabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${KEYCLOAK_ADMIN_CLIENT_SECRET}",
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true
     }
   ],
   "users": [
     {
+      "id": "8b1c6f0e-3d4a-4f6b-9a51-0c7d2e9f1a01",
       "username": "candidate@talentflow.dev",
       "email": "candidate@talentflow.dev",
       "emailVerified": true,
       "firstName": "Clara",
       "lastName": "Candidate",
       "enabled": true,
-      "credentials": [{ "type": "password", "value": "demo1234", "temporary": false }],
-      "realmRoles": ["CANDIDATE", "offline_access", "uma_authorization"]
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "CANDIDATE",
+        "offline_access",
+        "uma_authorization"
+      ]
     },
     {
+      "id": "8b1c6f0e-3d4a-4f6b-9a51-0c7d2e9f1a02",
       "username": "recruiter@talentflow.dev",
       "email": "recruiter@talentflow.dev",
       "emailVerified": true,
       "firstName": "Anna",
       "lastName": "Keller",
       "enabled": true,
-      "credentials": [{ "type": "password", "value": "demo1234", "temporary": false }],
-      "realmRoles": ["RECRUITER", "offline_access", "uma_authorization"]
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "RECRUITER",
+        "offline_access",
+        "uma_authorization"
+      ]
     },
     {
+      "id": "8b1c6f0e-3d4a-4f6b-9a51-0c7d2e9f1a03",
       "username": "manager@talentflow.dev",
       "email": "manager@talentflow.dev",
       "emailVerified": true,
       "firstName": "Martin",
       "lastName": "Richter",
       "enabled": true,
-      "credentials": [{ "type": "password", "value": "demo1234", "temporary": false }],
-      "realmRoles": ["HIRING_MANAGER", "offline_access", "uma_authorization"]
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "HIRING_MANAGER",
+        "offline_access",
+        "uma_authorization"
+      ]
     },
     {
+      "id": "8b1c6f0e-3d4a-4f6b-9a51-0c7d2e9f1a04",
       "username": "admin@talentflow.dev",
       "email": "admin@talentflow.dev",
       "emailVerified": true,
       "firstName": "Alex",
       "lastName": "Admin",
       "enabled": true,
-      "credentials": [{ "type": "password", "value": "demo1234", "temporary": false }],
-      "realmRoles": ["ADMIN", "offline_access", "uma_authorization"]
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "ADMIN",
+        "offline_access",
+        "uma_authorization"
+      ]
+    },
+    {
+      "username": "service-account-talentflow-admin-api",
+      "enabled": true,
+      "serviceAccountClientId": "talentflow-admin-api",
+      "clientRoles": {
+        "realm-management": [
+          "view-users",
+          "query-users",
+          "manage-users",
+          "view-realm"
+        ]
+      }
     }
   ]
 }

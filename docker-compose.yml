@@ -27,6 +27,8 @@ services:
       # Tokens always carry the browser-facing issuer, even when fetched from inside the network.
       KC_HOSTNAME: http://localhost:${KEYCLOAK_PORT:-8180}
       KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
+      # Substituted into the realm import (service account secret of the backend).
+      KEYCLOAK_ADMIN_CLIENT_SECRET: ${KEYCLOAK_ADMIN_CLIENT_SECRET:?Set KEYCLOAK_ADMIN_CLIENT_SECRET in .env}
     ports:
       - "${KEYCLOAK_PORT:-8180}:8080"
     volumes:
@@ -46,6 +48,8 @@ services:
       DB_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
       KEYCLOAK_ISSUER_URI: http://localhost:${KEYCLOAK_PORT:-8180}/realms/talentflow
       KEYCLOAK_JWK_SET_URI: http://keycloak:8080/realms/talentflow/protocol/openid-connect/certs
+      KEYCLOAK_ADMIN_URL: http://keycloak:8080
+      KEYCLOAK_ADMIN_CLIENT_SECRET: ${KEYCLOAK_ADMIN_CLIENT_SECRET:?Set KEYCLOAK_ADMIN_CLIENT_SECRET in .env}
       CV_STORAGE_DIR: /var/lib/talentflow/cvs
       MAIL_HOST: mailpit
       MAIL_PORT: 1025
