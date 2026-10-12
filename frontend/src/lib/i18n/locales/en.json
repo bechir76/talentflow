@@ -10,7 +10,8 @@
       "showing": "Showing {{from}}–{{to}} of {{total}}",
       "previous": "Previous",
       "next": "Next"
-    }
+    },
+    "close": "Close"
   },
   "roles": {
     "CANDIDATE": "Candidate",
@@ -47,9 +48,6 @@
   },
   "shell": {
     "workspace": "Workspace",
-    "manage": "Manage",
-    "settings": "Settings",
-    "compliance": "Compliance",
     "searchPlaceholder": "Search candidates, jobs, interviews...",
     "toggleDarkMode": "Toggle dark mode",
     "toggleSidebar": "Toggle sidebar",
@@ -64,7 +62,11 @@
     "candidates": "Candidates",
     "shortlists": "Shortlists",
     "myApplications": "My Applications",
-    "findJobs": "Find Jobs"
+    "findJobs": "Find Jobs",
+    "users": "Users",
+    "retention": "Data retention",
+    "auditLog": "Audit log",
+    "privacy": "Privacy & Data"
   },
   "portal": {
     "eyebrow": "Candidate portal",
@@ -389,5 +391,91 @@
     "interviewsSubtitle": "Your schedule this week",
     "noInterviews": "No interviews scheduled",
     "noInterviewsText": "Scheduled interviews will appear here."
+  },
+  "privacy": {
+    "title": "Privacy & Data",
+    "subtitle": "See what we store about you, download it, or have it deleted at any time.",
+    "exportTitle": "Download your data",
+    "exportText": "Get a copy of everything stored about you, including your applications, their status and the AI screening results (GDPR Art. 15).",
+    "exportButton": "Download as JSON",
+    "deleteTitle": "Delete your data",
+    "deleteText": "Your profile will be anonymised, your consents withdrawn and your CVs deleted. Open applications end. This cannot be undone (GDPR Art. 17).",
+    "deleteButton": "Delete my data",
+    "consentTitle": "Consent history",
+    "consentText": "Every consent you gave, with the privacy policy version and date.",
+    "consentType": "Purpose",
+    "policyVersion": "Policy version",
+    "givenAt": "Given on",
+    "status": "Status",
+    "active": "Active",
+    "withdrawn": "Withdrawn {{date}}",
+    "noConsents": "You have not given any consent yet.",
+    "types": {
+      "APPLICATION_PROCESSING": "Processing of application data"
+    },
+    "confirmTitle": "Delete all your data?",
+    "confirmText": "We will anonymise your candidate profile, delete your CV files and withdraw your consents. Recruiters will no longer see your name or contact details. You will be signed out.",
+    "confirmCheck": "I understand that this cannot be undone.",
+    "confirmButton": "Delete permanently"
+  },
+  "admin": {
+    "eyebrow": "Administration",
+    "users": {
+      "title": "Users",
+      "subtitle": "Manage accounts and the role that decides what each person can do.",
+      "search": "Search by name or email...",
+      "count_one": "{{count}} user",
+      "count_other": "{{count}} users",
+      "user": "User",
+      "role": "Role",
+      "status": "Status",
+      "you": "you",
+      "noRole": "No role",
+      "active": "Active",
+      "disabled": "Disabled",
+      "enable": "Enable",
+      "disable": "Disable"
+    },
+    "retention": {
+      "title": "Data retention",
+      "subtitle": "Keep candidate data only as long as necessary (GDPR storage limitation).",
+      "policyTitle": "Rejected candidates",
+      "policyText": "Candidates whose applications were all rejected are anonymised after this period.",
+      "months": "Retention period in months",
+      "monthsInvalid": "Enter a number between 1 and 120.",
+      "auto": "Automatic anonymisation",
+      "on": "On – runs daily at 03:00",
+      "off": "Off",
+      "hint": "Anonymisation removes name, contact details, CVs and cover letters. Anonymous statistics are kept.",
+      "updated": "Last changed on {{date}}",
+      "save": "Save policy",
+      "saved": "Saved",
+      "runNow": "Run now",
+      "runResult_one": "{{count}} candidate was anonymised.",
+      "runResult_other": "{{count}} candidates were anonymised."
+    },
+    "audit": {
+      "title": "Audit log",
+      "subtitle": "Who accessed or changed personal data, and when.",
+      "allActions": "All actions",
+      "count_one": "{{count}} entry",
+      "count_other": "{{count}} entries",
+      "time": "Time",
+      "actor": "Actor",
+      "action": "Action",
+      "entity": "Object",
+      "details": "Details",
+      "empty": "No entries yet",
+      "actions": {
+        "STAGE_CHANGED": "Stage changed",
+        "CV_VIEWED": "CV viewed",
+        "CV_DOWNLOADED": "CV downloaded",
+        "DATA_EXPORTED": "Data exported",
+        "CANDIDATE_DELETED": "Candidate deleted",
+        "RETENTION_POLICY_CHANGED": "Retention changed",
+        "USER_ROLE_CHANGED": "Role changed",
+        "USER_STATUS_CHANGED": "Account status changed"
+      }
+    }
   }
 }

@@ -10,7 +10,8 @@
       "showing": "{{from}}–{{to}} von {{total}}",
       "previous": "Zurück",
       "next": "Weiter"
-    }
+    },
+    "close": "Schließen"
   },
   "roles": {
     "CANDIDATE": "Bewerber:in",
@@ -47,9 +48,6 @@
   },
   "shell": {
     "workspace": "Arbeitsbereich",
-    "manage": "Verwalten",
-    "settings": "Einstellungen",
-    "compliance": "Compliance",
     "searchPlaceholder": "Bewerber, Stellen, Interviews suchen...",
     "toggleDarkMode": "Dunkelmodus umschalten",
     "toggleSidebar": "Seitenleiste umschalten",
@@ -64,7 +62,11 @@
     "candidates": "Bewerber",
     "shortlists": "Shortlists",
     "myApplications": "Meine Bewerbungen",
-    "findJobs": "Stellen finden"
+    "findJobs": "Stellen finden",
+    "users": "Benutzer",
+    "retention": "Aufbewahrung",
+    "auditLog": "Audit-Log",
+    "privacy": "Datenschutz"
   },
   "portal": {
     "eyebrow": "Bewerberportal",
@@ -389,5 +391,91 @@
     "interviewsSubtitle": "Ihr Wochenplan",
     "noInterviews": "Keine Interviews geplant",
     "noInterviewsText": "Geplante Interviews erscheinen hier."
+  },
+  "privacy": {
+    "title": "Datenschutz & Daten",
+    "subtitle": "Sehen Sie, was wir über Sie speichern, laden Sie es herunter oder lassen Sie es jederzeit löschen.",
+    "exportTitle": "Ihre Daten herunterladen",
+    "exportText": "Erhalten Sie eine Kopie aller gespeicherten Daten, inklusive Bewerbungen, Status und KI-Screening-Ergebnissen (Art. 15 DSGVO).",
+    "exportButton": "Als JSON herunterladen",
+    "deleteTitle": "Ihre Daten löschen",
+    "deleteText": "Ihr Profil wird anonymisiert, Einwilligungen werden widerrufen und Lebensläufe gelöscht. Offene Bewerbungen enden. Dies kann nicht rückgängig gemacht werden (Art. 17 DSGVO).",
+    "deleteButton": "Meine Daten löschen",
+    "consentTitle": "Einwilligungsverlauf",
+    "consentText": "Alle erteilten Einwilligungen mit Version der Datenschutzerklärung und Datum.",
+    "consentType": "Zweck",
+    "policyVersion": "Version",
+    "givenAt": "Erteilt am",
+    "status": "Status",
+    "active": "Aktiv",
+    "withdrawn": "Widerrufen am {{date}}",
+    "noConsents": "Sie haben noch keine Einwilligung erteilt.",
+    "types": {
+      "APPLICATION_PROCESSING": "Verarbeitung der Bewerbungsdaten"
+    },
+    "confirmTitle": "Alle Daten löschen?",
+    "confirmText": "Wir anonymisieren Ihr Bewerberprofil, löschen Ihre Lebensläufe und widerrufen Ihre Einwilligungen. Recruiter sehen Ihren Namen und Ihre Kontaktdaten nicht mehr. Sie werden abgemeldet.",
+    "confirmCheck": "Mir ist bewusst, dass dies nicht rückgängig gemacht werden kann.",
+    "confirmButton": "Endgültig löschen"
+  },
+  "admin": {
+    "eyebrow": "Administration",
+    "users": {
+      "title": "Benutzer",
+      "subtitle": "Konten verwalten und die Rolle festlegen, die die Berechtigungen bestimmt.",
+      "search": "Nach Name oder E-Mail suchen...",
+      "count_one": "{{count}} Benutzer",
+      "count_other": "{{count}} Benutzer",
+      "user": "Benutzer",
+      "role": "Rolle",
+      "status": "Status",
+      "you": "Sie",
+      "noRole": "Keine Rolle",
+      "active": "Aktiv",
+      "disabled": "Deaktiviert",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren"
+    },
+    "retention": {
+      "title": "Aufbewahrung",
+      "subtitle": "Bewerberdaten nur so lange speichern wie nötig (Speicherbegrenzung nach DSGVO).",
+      "policyTitle": "Abgelehnte Bewerber",
+      "policyText": "Bewerber, deren Bewerbungen alle abgelehnt wurden, werden nach diesem Zeitraum anonymisiert.",
+      "months": "Aufbewahrungsdauer in Monaten",
+      "monthsInvalid": "Bitte eine Zahl zwischen 1 und 120 eingeben.",
+      "auto": "Automatische Anonymisierung",
+      "on": "An – läuft täglich um 03:00",
+      "off": "Aus",
+      "hint": "Die Anonymisierung entfernt Name, Kontaktdaten, Lebensläufe und Anschreiben. Anonyme Statistiken bleiben erhalten.",
+      "updated": "Zuletzt geändert am {{date}}",
+      "save": "Richtlinie speichern",
+      "saved": "Gespeichert",
+      "runNow": "Jetzt ausführen",
+      "runResult_one": "{{count}} Bewerber wurde anonymisiert.",
+      "runResult_other": "{{count}} Bewerber wurden anonymisiert."
+    },
+    "audit": {
+      "title": "Audit-Log",
+      "subtitle": "Wer wann auf personenbezogene Daten zugegriffen oder sie geändert hat.",
+      "allActions": "Alle Aktionen",
+      "count_one": "{{count}} Eintrag",
+      "count_other": "{{count}} Einträge",
+      "time": "Zeit",
+      "actor": "Person",
+      "action": "Aktion",
+      "entity": "Objekt",
+      "details": "Details",
+      "empty": "Noch keine Einträge",
+      "actions": {
+        "STAGE_CHANGED": "Phase geändert",
+        "CV_VIEWED": "Lebenslauf angesehen",
+        "CV_DOWNLOADED": "Lebenslauf heruntergeladen",
+        "DATA_EXPORTED": "Daten exportiert",
+        "CANDIDATE_DELETED": "Bewerber gelöscht",
+        "RETENTION_POLICY_CHANGED": "Aufbewahrung geändert",
+        "USER_ROLE_CHANGED": "Rolle geändert",
+        "USER_STATUS_CHANGED": "Kontostatus geändert"
+      }
+    }
   }
 }

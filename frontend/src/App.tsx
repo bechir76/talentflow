@@ -14,6 +14,10 @@ import JobFormPage from "@/features/jobs/pages/JobFormPage";
 import JobsPage from "@/features/jobs/pages/JobsPage";
 import PipelinePage from "@/features/pipeline/pages/PipelinePage";
 import MyApplicationsPage from "@/features/portal/pages/MyApplicationsPage";
+import PrivacyPage from "@/features/portal/pages/PrivacyPage";
+import AuditLogPage from "@/features/admin/pages/AuditLogPage";
+import RetentionPage from "@/features/admin/pages/RetentionPage";
+import UsersPage from "@/features/admin/pages/UsersPage";
 import { useAuth } from "@/lib/auth/AuthContext";
 import RequireAuth from "@/lib/auth/RequireAuth";
 import { homePathFor, STAFF_ROLES } from "@/lib/auth/roles";
@@ -61,6 +65,12 @@ export default function App() {
         </Route>
         <Route element={<RequireAuth roles={["CANDIDATE"]}/>}>
           <Route path="/portal/applications" element={<MyApplicationsPage/>}/>
+          <Route path="/portal/privacy" element={<PrivacyPage/>}/>
+        </Route>
+        <Route element={<RequireAuth roles={["ADMIN"]}/>}>
+          <Route path="/admin/users" element={<UsersPage/>}/>
+          <Route path="/admin/retention" element={<RetentionPage/>}/>
+          <Route path="/admin/audit" element={<AuditLogPage/>}/>
         </Route>
       </Route>
     </Route>

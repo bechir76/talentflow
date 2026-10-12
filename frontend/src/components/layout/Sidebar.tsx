@@ -28,11 +28,6 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
       </button>)}
     </nav>
     <div className="sidebar-bottom">
-      {isStaff && <>
-        {!collapsed && <span className="nav-label">{t("shell.manage")}</span>}
-        <button><Icon name="settings"/>{!collapsed && <span>{t("shell.settings")}</span>}</button>
-        <button><Icon name="shield"/>{!collapsed && <span>{t("shell.compliance")}</span>}</button>
-      </>}
       <div className="role-switch">
         <Avatar initials={user.initials} color="violet" small/>
         {!collapsed && <div><strong>{user.fullName}</strong>{user.primaryRole && <small>{t(`roles.${user.primaryRole}`)}</small>}</div>}
