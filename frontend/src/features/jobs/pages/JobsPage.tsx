@@ -1,46 +1,97 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate, useSearchParams } from "react-router";
 import Icon from "@/components/common/Icon";
-import { jobRows } from "../mock";
+import Pagination from "@/components/common/Pagination";
+import RowMenu, { type RowMenuItem } from "@/components/common/RowMenu";
+import { formatDate } from "@/lib/format";
+import { useDebouncedValue } from "@/lib/useDebouncedValue";
+import { useChangeJobStatus, useDepartments, useJobs, useJobStats, type JobStatus, type JobSummary } from "../api/jobs";
+import { JobStatusBadge, WorkModeBadge } from "../components/JobBadges";
+
+const STATUSES: JobStatus[] = ["PUBLISHED", "DRAFT", "CLOSED"];
 
 export default function JobsPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const [query, setQuery] = useState("");
-  const [status, setStatus] = useState("All statuses");
-  const visibleJobs = jobRows.filter(job =>
-    job.title.toLowerCase().includes(query.toLowerCase()) && (status === "All statuses" || job.status === status)
-  );
+  const [params, setParams] = useSearchParams();
+  const status = (params.get("status") as JobStatus | null) ?? undefined;
+  const departmentId = params.get("departmentId") ?? undefined;
+  const page = Number(params.get("page") ?? 0);
+  const [query, setQuery] = useState(params.get("q") ?? "");
+  const debouncedQuery = useDebouncedValue(query.trim());
+
+  const updateParams = (changes: Record<string, string | undefined>) => {
+    const next = new URLSearchParams(params);
+    for (const [key, value] of Object.entries(changes)) {
+      if (value) next.set(key, value); else next.delete(key);
+    }
+    setParams(next, { replace: true });
+  };
+
+  useEffect(() => {
+    if (debouncedQuery !== (params.get("q") ?? "")) updateParams({ q: debouncedQuery || undefined, page: undefined });
+    // Only react to the debounced text; params changes are written by this page itself.
+  }, [debouncedQuery]);
+
+  const jobs = useJobs({ q: debouncedQuery || undefined, status, departmentId, page });
+  const stats = useJobStats();
+  const departments = useDepartments();
+  const changeStatus = useChangeJobStatus();
+
+  const menuItems = (job: JobSummary): RowMenuItem[] => {
+    const items: RowMenuItem[] = [{ label: t("jobs.actions.edit"), onSelect: () => navigate(`/jobs/${job.id}/edit`) }];
+    if (job.status === "PUBLISHED") {
+      items.push({ label: t("jobs.actions.viewOnCareers"), onSelect: () => window.open(`/careers/${job.id}`, "_blank", "noopener") });
+      items.push({ label: t("jobs.actions.close"), danger: true, onSelect: () => changeStatus.mutate({ id: job.id, status: "CLOSED" }) });
+    } else {
+      items.push({ label: t(job.status === "DRAFT" ? "jobs.actions.publish" : "jobs.actions.reopen"), onSelect: () => changeStatus.mutate({ id: job.id, status: "PUBLISHED" }) });
+    }
+    return items;
+  };
+
+  const data = jobs.data;
+  const statValue = (value: number | undefined) => value ?? "–";
+  const total = stats.data ? stats.data.published + stats.data.drafts + stats.data.closed : undefined;
+
   return <div className="page jobs-page">
-    <div className="page-heading jobs-heading"><div><span className="eyebrow">Recruitment</span><h1>Jobs</h1><p>Manage job postings and track applicants across your hiring team.</p></div><button className="primary-button" onClick={() => navigate("/jobs/new")}><Icon name="plus"/>Create Job</button></div>
+    <div className="page-heading jobs-heading"><div><span className="eyebrow">{t("jobs.eyebrow")}</span><h1>{t("jobs.title")}</h1><p>{t("jobs.subtitle")}</p></div><button className="primary-button" onClick={() => navigate("/jobs/new")}><Icon name="plus"/>{t("jobs.create")}</button></div>
     <section className="jobs-summary">
-      <div><span className="kpi-icon indigo"><Icon name="briefcase"/></span><p><strong>12</strong><span>Open jobs</span></p></div>
-      <div><span className="kpi-icon blue"><Icon name="users"/></span><p><strong>148</strong><span>Active applicants</span></p></div>
-      <div><span className="kpi-icon amber"><Icon name="file"/></span><p><strong>3</strong><span>Drafts</span></p></div>
-      <div><span className="kpi-icon green"><Icon name="check"/></span><p><strong>8</strong><span>Hired this quarter</span></p></div>
+      <div><span className="kpi-icon indigo"><Icon name="briefcase"/></span><p><strong>{statValue(stats.data?.published)}</strong><span>{t("jobs.stats.open")}</span></p></div>
+      <div><span className="kpi-icon amber"><Icon name="file"/></span><p><strong>{statValue(stats.data?.drafts)}</strong><span>{t("jobs.stats.drafts")}</span></p></div>
+      <div><span className="kpi-icon blue"><Icon name="lock"/></span><p><strong>{statValue(stats.data?.closed)}</strong><span>{t("jobs.stats.closed")}</span></p></div>
+      <div><span className="kpi-icon green"><Icon name="chart"/></span><p><strong>{statValue(total)}</strong><span>{t("jobs.stats.total")}</span></p></div>
     </section>
     <section className="jobs-table-panel panel">
       <div className="table-toolbar">
-        <div className="table-search"><Icon name="search"/><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search jobs..."/></div>
-        <select value={status} onChange={(e) => setStatus(e.target.value)}><option>All statuses</option><option>Published</option><option>Draft</option><option>Closed</option></select>
-        <button className="filter-button"><Icon name="filter"/>Department<Icon name="chevron" size={13}/></button>
-        <button className="filter-button"><Icon name="map"/>Location<Icon name="chevron" size={13}/></button>
-        <span>{visibleJobs.length} jobs</span>
+        <div className="table-search"><Icon name="search"/><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("jobs.searchPlaceholder")} aria-label={t("jobs.searchPlaceholder")}/></div>
+        <select value={status ?? ""} onChange={(e) => updateParams({ status: e.target.value || undefined, page: undefined })} aria-label={t("jobs.filters.status")}>
+          <option value="">{t("jobs.filters.allStatuses")}</option>
+          {STATUSES.map((s) => <option key={s} value={s}>{t(`jobs.status.${s}`)}</option>)}
+        </select>
+        <select value={departmentId ?? ""} onChange={(e) => updateParams({ departmentId: e.target.value || undefined, page: undefined })} aria-label={t("jobs.filters.department")}>
+          <option value="">{t("jobs.filters.allDepartments")}</option>
+          {departments.data?.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
+        </select>
+        {data && <span>{t("jobs.count", { count: data.totalElements })}</span>}
       </div>
       <div className="jobs-table-wrap">
         <table className="jobs-table">
-          <thead><tr><th>Title</th><th>Department</th><th>Location</th><th>Work Mode</th><th>Applicants</th><th>Status</th><th>Created Date</th><th><span className="sr-only">Actions</span></th></tr></thead>
-          <tbody>{visibleJobs.map((job) => <tr key={job.title}>
-            <td><button className="job-link" onClick={() => job.title === "Senior Java Developer" ? navigate("/pipeline") : undefined}><span className="job-table-icon"><Icon name="briefcase" size={16}/></span><span><strong>{job.title}</strong><small>{job.status === "Draft" ? "Not visible to candidates" : "careers.talentflow.eu"}</small></span></button></td>
-            <td>{job.department}</td><td>{job.location}</td>
-            <td><span className={`work-badge ${job.mode.toLowerCase().replace("-", "")}`}><i></i>{job.mode}</span></td>
-            <td><button className="applicant-count" onClick={() => navigate("/pipeline")}><span>{job.applicants}</span>{job.applicants === 1 ? "applicant" : "applicants"}</button></td>
-            <td><span className={`job-status ${job.status.toLowerCase()}`}><i></i>{job.status}</span></td>
-            <td>{job.created}</td><td><button className="more-button"><Icon name="more"/></button></td>
+          <thead><tr><th>{t("jobs.columns.title")}</th><th>{t("jobs.columns.department")}</th><th>{t("jobs.columns.location")}</th><th>{t("jobs.columns.workMode")}</th><th>{t("jobs.columns.status")}</th><th>{t("jobs.columns.created")}</th><th><span className="sr-only">{t("common.actions")}</span></th></tr></thead>
+          <tbody>{data?.content.map((job) => <tr key={job.id}>
+            <td><button className="job-link" onClick={() => navigate(`/jobs/${job.id}/edit`)}><span className="job-table-icon"><Icon name="briefcase" size={16}/></span><span><strong>{job.title}</strong><small>{t(job.status === "PUBLISHED" ? "jobs.visibleOnCareers" : "jobs.notVisible")}</small></span></button></td>
+            <td>{job.departmentName}</td><td>{job.location}</td>
+            <td><WorkModeBadge mode={job.workMode}/></td>
+            <td><JobStatusBadge status={job.status}/></td>
+            <td>{formatDate(job.createdAt)}</td>
+            <td><RowMenu items={menuItems(job)}/></td>
           </tr>)}</tbody>
         </table>
-        {visibleJobs.length === 0 && <div className="table-empty"><Icon name="search" size={24}/><strong>No jobs found</strong><span>Try changing your search or filters.</span></div>}
+        {jobs.isPending && <div className="table-empty"><strong>{t("common.loading")}</strong></div>}
+        {jobs.isError && <div className="table-empty"><Icon name="info" size={24}/><strong>{t("common.loadError")}</strong><span>{jobs.error.message}</span></div>}
+        {data?.totalElements === 0 && <div className="table-empty"><Icon name="search" size={24}/><strong>{t("jobs.empty.title")}</strong><span>{t("jobs.empty.text")}</span></div>}
       </div>
-      <div className="table-footer"><span>Showing 1–{visibleJobs.length} of {visibleJobs.length} jobs</span><div><button disabled>Previous</button><button className="active">1</button><button>2</button><button>Next</button></div></div>
+      {data && data.totalElements > 0 && <Pagination {...data} onPageChange={(p) => updateParams({ page: p > 0 ? String(p) : undefined })}/>}
     </section>
   </div>;
 }

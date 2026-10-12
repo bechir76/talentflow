@@ -2,7 +2,15 @@
   "common": {
     "appName": "TalentFlow",
     "retry": "Erneut versuchen",
-    "loading": "Wird geladen…"
+    "loading": "Wird geladen…",
+    "actions": "Aktionen",
+    "cancel": "Abbrechen",
+    "loadError": "Beim Laden ist ein Fehler aufgetreten",
+    "pagination": {
+      "showing": "{{from}}–{{to}} von {{total}}",
+      "previous": "Zurück",
+      "next": "Weiter"
+    }
   },
   "roles": {
     "CANDIDATE": "Bewerber:in",
@@ -55,7 +63,8 @@
     "allJobs": "Alle Stellen",
     "candidates": "Bewerber",
     "shortlists": "Shortlists",
-    "myApplications": "Meine Bewerbungen"
+    "myApplications": "Meine Bewerbungen",
+    "findJobs": "Stellen finden"
   },
   "portal": {
     "eyebrow": "Bewerberportal",
@@ -63,5 +72,136 @@
     "subtitle": "Verfolgen Sie den Status all Ihrer Bewerbungen.",
     "emptyTitle": "Noch keine Bewerbungen",
     "emptyText": "Sobald Sie sich auf eine Stelle bewerben, können Sie den Fortschritt hier verfolgen."
+  },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich.",
+    "tooLong": "Dieser Text ist zu lang.",
+    "number": "Bitte eine ganze Zahl eingeben.",
+    "nonNegative": "Der Wert darf nicht negativ sein.",
+    "salaryRange": "Das Maximum muss mindestens dem Minimum entsprechen.",
+    "skillsRequired": "Fügen Sie mindestens eine Anforderung hinzu.",
+    "tooManySkills": "Höchstens 30 Skills sind möglich.",
+    "descriptionTooShort": "Bitte mindestens 50 Zeichen schreiben."
+  },
+  "jobs": {
+    "eyebrow": "Recruiting",
+    "title": "Stellen",
+    "subtitle": "Verwalten Sie Stellenanzeigen und behalten Sie Bewerbungen im Team im Blick.",
+    "create": "Stelle erstellen",
+    "searchPlaceholder": "Stellen suchen...",
+    "count_one": "{{count}} Stelle",
+    "count_other": "{{count}} Stellen",
+    "visibleOnCareers": "Auf der Karriereseite sichtbar",
+    "notVisible": "Für Bewerber nicht sichtbar",
+    "stats": {
+      "open": "Offene Stellen",
+      "drafts": "Entwürfe",
+      "closed": "Geschlossene Stellen",
+      "total": "Stellen insgesamt"
+    },
+    "filters": {
+      "status": "Status",
+      "allStatuses": "Alle Status",
+      "department": "Abteilung",
+      "allDepartments": "Alle Abteilungen"
+    },
+    "columns": {
+      "title": "Titel",
+      "department": "Abteilung",
+      "location": "Standort",
+      "workMode": "Arbeitsmodell",
+      "status": "Status",
+      "created": "Erstellt am"
+    },
+    "empty": {
+      "title": "Keine Stellen gefunden",
+      "text": "Ändern Sie Suche oder Filter oder erstellen Sie Ihre erste Stelle."
+    },
+    "actions": {
+      "edit": "Bearbeiten",
+      "publish": "Veröffentlichen",
+      "reopen": "Wieder öffnen",
+      "close": "Stelle schließen",
+      "viewOnCareers": "Auf Karriereseite ansehen"
+    },
+    "workMode": {
+      "REMOTE": "Remote",
+      "HYBRID": "Hybrid",
+      "ONSITE": "Vor Ort"
+    },
+    "status": {
+      "DRAFT": "Entwurf",
+      "PUBLISHED": "Veröffentlicht",
+      "CLOSED": "Geschlossen"
+    },
+    "form": {
+      "createBreadcrumb": "Neue Stelle",
+      "editBreadcrumb": "Stelle bearbeiten",
+      "createTitle": "Neue Stelle erstellen",
+      "editTitle": "Stelle bearbeiten",
+      "subtitle": "Beschreiben Sie Rolle, Anforderungen und Vergütung. Sie können jederzeit zwischenspeichern.",
+      "gdprBadge": "DSGVO-konformer Bewerbungsprozess",
+      "detailsTitle": "Stellendetails",
+      "detailsText": "Grundinformationen, die Bewerber in der Anzeige sehen.",
+      "title": "Stellentitel",
+      "titlePlaceholder": "z. B. Senior Java Developer",
+      "department": "Abteilung",
+      "selectDepartment": "Abteilung wählen",
+      "location": "Standort",
+      "locationPlaceholder": "Stadt, Land",
+      "workMode": "Arbeitsmodell",
+      "workModeHint": {
+        "REMOTE": "Von überall arbeiten",
+        "HYBRID": "Büro und remote",
+        "ONSITE": "Arbeit im Büro"
+      },
+      "compensationTitle": "Vergütung & Skills",
+      "compensationText": "Transparente Gehaltsspanne und zentrale Anforderungen festlegen.",
+      "salaryRange": "Jahresgehalt in EUR",
+      "salaryMin": "Minimum",
+      "salaryMax": "Maximum",
+      "to": "bis",
+      "salaryHint": "Gehaltstransparenz unterstützt die Umsetzung der EU-Entgelttransparenzrichtlinie.",
+      "skills": "Erforderliche Skills",
+      "skillsPlaceholder": "Skill eingeben und Enter drücken",
+      "skillsHint": "Fügen Sie die Skills hinzu, die für die Rolle entscheidend sind.",
+      "removeSkill": "{{skill}} entfernen",
+      "descriptionTitle": "Stellenbeschreibung",
+      "descriptionText": "Beschreiben Sie Aufgaben, Verantwortung und Ihr Team.",
+      "description": "Stellenbeschreibung",
+      "descriptionPlaceholder": "Über die Rolle, die Aufgaben und was die Person mitbringt…",
+      "inclusiveHint": "Nutzen Sie inklusive, kompetenzorientierte Sprache.",
+      "characters": "{{count}} Zeichen",
+      "saveDraft": "Als Entwurf speichern",
+      "publish": "Veröffentlichen",
+      "publishing": "Wird veröffentlicht...",
+      "saveChanges": "Änderungen speichern"
+    }
+  },
+  "careers": {
+    "eyebrow": "Wir stellen ein",
+    "title": "Offene Stellen",
+    "subtitle": "Finden Sie eine Rolle, in der Sie Ihr Bestes geben können. Jede Bewerbung wird von einem Menschen geprüft.",
+    "searchPlaceholder": "Nach Titel oder Ort suchen...",
+    "allWorkModes": "Alle Arbeitsmodelle",
+    "count_one": "{{count}} offene Stelle",
+    "count_other": "{{count}} offene Stellen",
+    "openWorkspace": "Zum Arbeitsbereich",
+    "posted": "Veröffentlicht am {{date}}",
+    "applyNow": "Jetzt bewerben",
+    "aboutRole": "Über die Rolle",
+    "facts": "Auf einen Blick",
+    "salary": "Gehalt",
+    "salaryNotGiven": "Wird im Prozess besprochen",
+    "privacyNote": "Ihre Daten werden in der EU verarbeitet und nur für diese Bewerbung genutzt.",
+    "backToJobs": "Zurück zu allen Stellen",
+    "empty": {
+      "title": "Keine offenen Stellen gefunden",
+      "text": "Versuchen Sie eine andere Suche oder schauen Sie bald wieder vorbei."
+    },
+    "notFound": {
+      "title": "Diese Stelle ist nicht mehr verfügbar",
+      "text": "Sie wurde möglicherweise besetzt oder geschlossen."
+    }
   }
 }

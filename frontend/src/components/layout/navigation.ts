@@ -30,6 +30,7 @@ const navByRole: Record<Role, NavItem[]> = {
   ],
   CANDIDATE: [
     { icon: "file", labelKey: "nav.myApplications", to: "/portal/applications", activeFor: ["/portal/applications"] },
+    { icon: "briefcase", labelKey: "nav.findJobs", to: "/careers", activeFor: ["/careers"] },
   ],
 };
 

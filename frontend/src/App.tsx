@@ -4,9 +4,12 @@ import AppShell from "@/components/layout/AppShell";
 import AuthStatusScreen from "@/features/auth/components/AuthStatusScreen";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import NoAccessPage from "@/features/auth/pages/NoAccessPage";
+import PublicLayout from "@/features/careers/components/PublicLayout";
+import CareerJobPage from "@/features/careers/pages/CareerJobPage";
+import CareersPage from "@/features/careers/pages/CareersPage";
 import CandidateDetailPage from "@/features/candidates/pages/CandidateDetailPage";
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
-import CreateJobPage from "@/features/jobs/pages/CreateJobPage";
+import JobFormPage from "@/features/jobs/pages/JobFormPage";
 import JobsPage from "@/features/jobs/pages/JobsPage";
 import PipelinePage from "@/features/pipeline/pages/PipelinePage";
 import MyApplicationsPage from "@/features/portal/pages/MyApplicationsPage";
@@ -38,6 +41,10 @@ export default function App() {
   return <Routes>
     <Route path="/login" element={<LoginPage/>}/>
     <Route path="/no-access" element={<NoAccessPage/>}/>
+    <Route element={<PublicLayout/>}>
+      <Route path="/careers" element={<CareersPage/>}/>
+      <Route path="/careers/:id" element={<CareerJobPage/>}/>
+    </Route>
     <Route element={<RequireAuth/>}>
       <Route element={<AppShell/>}>
         <Route element={<RequireAuth roles={STAFF_ROLES}/>}>
@@ -47,7 +54,8 @@ export default function App() {
         </Route>
         <Route element={<RequireAuth roles={["RECRUITER", "ADMIN"]}/>}>
           <Route path="/jobs" element={<JobsPage/>}/>
-          <Route path="/jobs/new" element={<CreateJobPage/>}/>
+          <Route path="/jobs/new" element={<JobFormPage/>}/>
+          <Route path="/jobs/:id/edit" element={<JobFormPage/>}/>
         </Route>
         <Route element={<RequireAuth roles={["CANDIDATE"]}/>}>
           <Route path="/portal/applications" element={<MyApplicationsPage/>}/>

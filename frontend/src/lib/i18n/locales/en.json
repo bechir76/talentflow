@@ -2,7 +2,15 @@
   "common": {
     "appName": "TalentFlow",
     "retry": "Try again",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "actions": "Actions",
+    "cancel": "Cancel",
+    "loadError": "Something went wrong while loading",
+    "pagination": {
+      "showing": "Showing {{from}}–{{to}} of {{total}}",
+      "previous": "Previous",
+      "next": "Next"
+    }
   },
   "roles": {
     "CANDIDATE": "Candidate",
@@ -55,7 +63,8 @@
     "allJobs": "All Jobs",
     "candidates": "Candidates",
     "shortlists": "Shortlists",
-    "myApplications": "My Applications"
+    "myApplications": "My Applications",
+    "findJobs": "Find Jobs"
   },
   "portal": {
     "eyebrow": "Candidate portal",
@@ -63,5 +72,136 @@
     "subtitle": "Track the status of every application you have submitted.",
     "emptyTitle": "No applications yet",
     "emptyText": "Once you apply for a job, you can follow its progress here."
+  },
+  "validation": {
+    "required": "This field is required.",
+    "tooLong": "This text is too long.",
+    "number": "Enter a whole number.",
+    "nonNegative": "The value cannot be negative.",
+    "salaryRange": "The maximum must be at least the minimum.",
+    "skillsRequired": "Add at least one required skill.",
+    "tooManySkills": "Add at most 30 skills.",
+    "descriptionTooShort": "Write at least 50 characters."
+  },
+  "jobs": {
+    "eyebrow": "Recruitment",
+    "title": "Jobs",
+    "subtitle": "Manage job postings and track applicants across your hiring team.",
+    "create": "Create Job",
+    "searchPlaceholder": "Search jobs...",
+    "count_one": "{{count}} job",
+    "count_other": "{{count}} jobs",
+    "visibleOnCareers": "Visible on the career page",
+    "notVisible": "Not visible to candidates",
+    "stats": {
+      "open": "Open jobs",
+      "drafts": "Drafts",
+      "closed": "Closed jobs",
+      "total": "Jobs in total"
+    },
+    "filters": {
+      "status": "Status",
+      "allStatuses": "All statuses",
+      "department": "Department",
+      "allDepartments": "All departments"
+    },
+    "columns": {
+      "title": "Title",
+      "department": "Department",
+      "location": "Location",
+      "workMode": "Work Mode",
+      "status": "Status",
+      "created": "Created Date"
+    },
+    "empty": {
+      "title": "No jobs found",
+      "text": "Try changing your search or filters, or create your first job."
+    },
+    "actions": {
+      "edit": "Edit",
+      "publish": "Publish",
+      "reopen": "Reopen",
+      "close": "Close job",
+      "viewOnCareers": "View on career page"
+    },
+    "workMode": {
+      "REMOTE": "Remote",
+      "HYBRID": "Hybrid",
+      "ONSITE": "On-site"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "PUBLISHED": "Published",
+      "CLOSED": "Closed"
+    },
+    "form": {
+      "createBreadcrumb": "Create new job",
+      "editBreadcrumb": "Edit job",
+      "createTitle": "Create a new job",
+      "editTitle": "Edit job",
+      "subtitle": "Define the role, requirements and compensation. You can save your progress at any time.",
+      "gdprBadge": "GDPR-ready application workflow",
+      "detailsTitle": "Job details",
+      "detailsText": "Basic information candidates will see on the job posting.",
+      "title": "Job title",
+      "titlePlaceholder": "e.g. Senior Java Developer",
+      "department": "Department",
+      "selectDepartment": "Select a department",
+      "location": "Location",
+      "locationPlaceholder": "City, country",
+      "workMode": "Work mode",
+      "workModeHint": {
+        "REMOTE": "Work from anywhere",
+        "HYBRID": "Office and remote",
+        "ONSITE": "Office-based role"
+      },
+      "compensationTitle": "Compensation & skills",
+      "compensationText": "Set a transparent salary range and core role requirements.",
+      "salaryRange": "Yearly salary range in EUR",
+      "salaryMin": "Minimum",
+      "salaryMax": "Maximum",
+      "to": "to",
+      "salaryHint": "Salary transparency supports compliance with the EU Pay Transparency Directive.",
+      "skills": "Required skills",
+      "skillsPlaceholder": "Type a skill and press Enter",
+      "skillsHint": "Add the skills that are essential for success in this role.",
+      "removeSkill": "Remove {{skill}}",
+      "descriptionTitle": "Job description",
+      "descriptionText": "Describe the opportunity, responsibilities and your team.",
+      "description": "Job description",
+      "descriptionPlaceholder": "About the role, what the person will do, and what they bring…",
+      "inclusiveHint": "Use inclusive, skills-focused language.",
+      "characters": "{{count}} characters",
+      "saveDraft": "Save as Draft",
+      "publish": "Publish",
+      "publishing": "Publishing...",
+      "saveChanges": "Save changes"
+    }
+  },
+  "careers": {
+    "eyebrow": "We are hiring",
+    "title": "Open positions",
+    "subtitle": "Find a role where you can do your best work. Every application is reviewed by a person.",
+    "searchPlaceholder": "Search by title or location...",
+    "allWorkModes": "All work modes",
+    "count_one": "{{count}} open position",
+    "count_other": "{{count}} open positions",
+    "openWorkspace": "Open workspace",
+    "posted": "Posted {{date}}",
+    "applyNow": "Apply now",
+    "aboutRole": "About the role",
+    "facts": "At a glance",
+    "salary": "Salary",
+    "salaryNotGiven": "Discussed in the process",
+    "privacyNote": "Your data is processed in the EU and only used for this application.",
+    "backToJobs": "Back to all jobs",
+    "empty": {
+      "title": "No open positions found",
+      "text": "Try a different search or check back soon."
+    },
+    "notFound": {
+      "title": "This job is no longer available",
+      "text": "It may have been filled or closed."
+    }
   }
 }
