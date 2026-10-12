@@ -614,3 +614,4 @@ button { cursor: pointer; }
 .interviews-panel .interview-row { width: 100%; border-left: 0; border-right: 0; border-bottom: 0; background: transparent; text-align: left; color: inherit; }
 .interviews-panel .interview-row:hover { background: color-mix(in srgb, var(--indigo-soft) 40%, transparent); }
 .lists-grid.single { grid-template-columns: 1fr; }
+.page-loading { min-height: 50vh; gap: 10px; }
