@@ -39,10 +39,20 @@ type RequestOptions = {
   signal?: AbortSignal;
 };
 
-async function request<T>(path: string, { method = "GET", body, signal }: RequestOptions = {}): Promise<T> {
-  const headers = new Headers({ Accept: "application/json", "Accept-Language": currentLanguage() });
+async function authHeaders(accept: string): Promise<Headers> {
+  const headers = new Headers({ Accept: accept, "Accept-Language": currentLanguage() });
   const token = await tokenProvider();
   if (token) headers.set("Authorization", `Bearer ${token}`);
+  return headers;
+}
+
+async function toApiError(response: Response): Promise<ApiError> {
+  const problem = (await response.json().catch(() => undefined)) as ProblemDetail | undefined;
+  return new ApiError(response.status, problem);
+}
+
+async function request<T>(path: string, { method = "GET", body, signal }: RequestOptions = {}): Promise<T> {
+  const headers = await authHeaders("application/json");
 
   let payload: BodyInit | undefined;
   if (body instanceof FormData) {
@@ -53,11 +63,8 @@ async function request<T>(path: string, { method = "GET", body, signal }: Reques
   }
 
   const response = await fetch(API_BASE + path, { method, headers, body: payload, signal });
-  if (!response.ok) {
-    const problem = (await response.json().catch(() => undefined)) as ProblemDetail | undefined;
-    throw new ApiError(response.status, problem);
-  }
-  if (response.status === 204) return undefined as T;
+  if (!response.ok) throw await toApiError(response);
+  if (response.status === 204 || response.status === 202) return undefined as T;
   return (await response.json()) as T;
 }
 
@@ -67,4 +74,10 @@ export const api = {
   put: <T>(path: string, body?: unknown) => request<T>(path, { method: "PUT", body }),
   patch: <T>(path: string, body?: unknown) => request<T>(path, { method: "PATCH", body }),
   delete: <T = void>(path: string) => request<T>(path, { method: "DELETE" }),
+  /** Downloads a binary resource such as a CV. */
+  blob: async (path: string, signal?: AbortSignal): Promise<Blob> => {
+    const response = await fetch(API_BASE + path, { headers: await authHeaders("*/*"), signal });
+    if (!response.ok) throw await toApiError(response);
+    return response.blob();
+  },
 };

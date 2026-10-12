@@ -260,5 +260,69 @@
       "viewApplications": "Meine Bewerbungen ansehen",
       "moreJobs": "Weitere Stellen ansehen"
     }
+  },
+  "pipeline": {
+    "stages": {
+      "APPLIED": "Beworben",
+      "SCREENING": "Prüfung",
+      "INTERVIEW": "Interview",
+      "OFFER": "Angebot",
+      "HIRED": "Eingestellt",
+      "REJECTED": "Abgelehnt"
+    }
+  },
+  "candidate": {
+    "consentVerified": "DSGVO-Einwilligung geprüft",
+    "appliedFor": "Beworben auf",
+    "appliedOn": "Beworben am {{date}}",
+    "consentGiven": "Einwilligung am {{date}} · Datenschutzerklärung {{version}}",
+    "coverLetter": "Anschreiben",
+    "cv": {
+      "title": "Lebenslauf",
+      "download": "Lebenslauf herunterladen",
+      "unavailable": "Der Lebenslauf ist nicht mehr verfügbar"
+    },
+    "ai": {
+      "title": "KI-Screening-Analyse",
+      "subtitle": "Abgleich mit den Stellenanforderungen",
+      "pendingTitle": "Analyse läuft",
+      "pendingText": "Der Lebenslauf wird mit den Anforderungen abgeglichen. Das dauert meist nur wenige Sekunden.",
+      "failedTitle": "Die Analyse konnte nicht abgeschlossen werden",
+      "failedText": "Das kann bei gescannten Lebensläufen oder einem nicht erreichbaren KI-Dienst passieren. Prüfen Sie den Lebenslauf manuell oder versuchen Sie es erneut.",
+      "rerun": "Analyse erneut starten",
+      "experience_one": "Etwa {{count}} Jahr relevante Erfahrung erkannt, basierend auf Skills und Anforderungen.",
+      "experience_other": "Etwa {{count}} Jahre relevante Erfahrung erkannt, basierend auf Skills und Anforderungen.",
+      "basis": "Basierend auf Erfahrung, technischen Skills und Anforderungen der Rolle.",
+      "matching": "Passende Skills",
+      "missing": "Fehlende Skills",
+      "ofRequired": "{{count}} von {{total}} gefordert",
+      "identified_one": "{{count}} erkannt",
+      "identified_other": "{{count}} erkannt",
+      "none": "Keine",
+      "summary": "KI-Zusammenfassung",
+      "tone": {
+        "excellent": "Starke Übereinstimmung",
+        "good": "Gute Übereinstimmung",
+        "low": "Teilweise passend"
+      },
+      "noticeTitle": "Menschliche Entscheidung erforderlich",
+      "notice": "KI-Vorschläge unterstützen Ihre Entscheidung. Die endgültige Entscheidung trifft ein Mensch."
+    },
+    "tabs": {
+      "timeline": "Aktivitäten",
+      "feedback": "Interview-Feedback"
+    },
+    "timeline": {
+      "by": "von {{name}}",
+      "applied": "Bewerbung eingegangen",
+      "appliedDetail": "Beworben über die TalentFlow-Karriereseite",
+      "aiDone": "KI-Screening abgeschlossen",
+      "aiFailed": "KI-Screening fehlgeschlagen",
+      "aiDetail": "Vorgeschlagener Match-Score: {{score}} %"
+    },
+    "feedback": {
+      "emptyTitle": "Noch kein Interview-Feedback",
+      "emptyText": "Das Feedback der Interviewer erscheint hier, sobald Interviews stattgefunden haben."
+    }
   }
 }

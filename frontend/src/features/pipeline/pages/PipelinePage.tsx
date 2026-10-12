@@ -24,7 +24,7 @@ export default function PipelinePage() {
     <div className="kanban">
       {filtered.map((column) => <section className="kanban-column" key={column.title}>
         <div className="column-head"><span className={`stage-dot ${column.tone}`}></span><strong>{column.title}</strong><b>{column.people.length}</b><button className="more-button"><Icon name="more"/></button></div>
-        <div className="column-cards">{column.people.map(person => <CandidateCard key={person.id} person={person} onOpen={() => navigate(`/candidates/${person.id}`)}/>)}
+        <div className="column-cards">{column.people.map(person => <CandidateCard key={person.id} person={person} onOpen={() => navigate("/pipeline")}/>)}
           {column.people.length === 0 && <div className="empty-column">No matching candidates</div>}
         </div>
       </section>)}

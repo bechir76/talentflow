@@ -27,7 +27,7 @@ export default function DashboardPage() {
           <Avatar initials={candidate.initials} color={candidate.color}/><div className="match-info"><strong>{candidate.name}</strong><span>{candidate.role}</span></div>
           <div className="match-job"><span>Matched for</span><strong>Senior Java Developer</strong></div>
           <span className={`score-pill ${i === 2 ? "good" : ""}`}><Icon name="sparkles" size={13}/>{candidate.score}% match</span>
-          <button className="secondary-button" onClick={() => navigate(`/candidates/${candidate.id}`)}>View</button>
+          <button className="secondary-button" onClick={() => navigate("/pipeline")}>View</button>
         </div>)}</div>
       </article>
       <article className="panel interviews-panel">

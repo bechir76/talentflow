@@ -17,16 +17,16 @@ const navByRole: Record<Role, NavItem[]> = {
   RECRUITER: [
     overview,
     { icon: "briefcase", labelKey: "nav.jobs", to: "/jobs", activeFor: ["/jobs"] },
-    { icon: "users", labelKey: "nav.candidates", to: "/pipeline", activeFor: ["/pipeline", "/candidates"] },
+    { icon: "users", labelKey: "nav.candidates", to: "/pipeline", activeFor: ["/pipeline", "/applications"] },
   ],
   HIRING_MANAGER: [
     overview,
-    { icon: "users", labelKey: "nav.shortlists", to: "/pipeline", activeFor: ["/pipeline", "/candidates"] },
+    { icon: "users", labelKey: "nav.shortlists", to: "/pipeline", activeFor: ["/pipeline", "/applications"] },
   ],
   ADMIN: [
     overview,
     { icon: "briefcase", labelKey: "nav.allJobs", to: "/jobs", activeFor: ["/jobs"] },
-    { icon: "users", labelKey: "nav.candidates", to: "/pipeline", activeFor: ["/pipeline", "/candidates"] },
+    { icon: "users", labelKey: "nav.candidates", to: "/pipeline", activeFor: ["/pipeline", "/applications"] },
   ],
   CANDIDATE: [
     { icon: "file", labelKey: "nav.myApplications", to: "/portal/applications", activeFor: ["/portal/applications"] },

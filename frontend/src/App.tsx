@@ -52,7 +52,7 @@ export default function App() {
         <Route element={<RequireAuth roles={STAFF_ROLES}/>}>
           <Route path="/dashboard" element={<DashboardPage/>}/>
           <Route path="/pipeline" element={<PipelinePage/>}/>
-          <Route path="/candidates/:id" element={<CandidateDetailPage/>}/>
+          <Route path="/applications/:id" element={<CandidateDetailPage/>}/>
         </Route>
         <Route element={<RequireAuth roles={["RECRUITER", "ADMIN"]}/>}>
           <Route path="/jobs" element={<JobsPage/>}/>

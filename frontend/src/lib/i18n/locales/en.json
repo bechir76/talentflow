@@ -260,5 +260,69 @@
       "viewApplications": "View my applications",
       "moreJobs": "Browse more jobs"
     }
+  },
+  "pipeline": {
+    "stages": {
+      "APPLIED": "Applied",
+      "SCREENING": "Screening",
+      "INTERVIEW": "Interview",
+      "OFFER": "Offer",
+      "HIRED": "Hired",
+      "REJECTED": "Rejected"
+    }
+  },
+  "candidate": {
+    "consentVerified": "GDPR consent verified",
+    "appliedFor": "Applied for",
+    "appliedOn": "Applied {{date}}",
+    "consentGiven": "Consent given on {{date}} · privacy policy {{version}}",
+    "coverLetter": "Cover letter",
+    "cv": {
+      "title": "Curriculum vitae",
+      "download": "Download CV",
+      "unavailable": "The CV is no longer available"
+    },
+    "ai": {
+      "title": "AI Screening Analysis",
+      "subtitle": "Compared with job requirements",
+      "pendingTitle": "Analysis in progress",
+      "pendingText": "The CV is being compared with the job requirements. This usually takes a few seconds.",
+      "failedTitle": "The analysis could not be completed",
+      "failedText": "This can happen with scanned CVs or when the AI service is unavailable. Review the CV manually or try again.",
+      "rerun": "Run analysis again",
+      "experience_one": "About {{count}} year of relevant experience identified, based on skills and role requirements.",
+      "experience_other": "About {{count}} years of relevant experience identified, based on skills and role requirements.",
+      "basis": "Based on experience, technical skills and role requirements.",
+      "matching": "Matching skills",
+      "missing": "Missing skills",
+      "ofRequired": "{{count}} of {{total}} required",
+      "identified_one": "{{count}} identified",
+      "identified_other": "{{count}} identified",
+      "none": "None",
+      "summary": "AI summary",
+      "tone": {
+        "excellent": "Strong match",
+        "good": "Good match",
+        "low": "Partial match"
+      },
+      "noticeTitle": "Human decision required",
+      "notice": "AI suggestions support your decision. Final decisions are made by a human."
+    },
+    "tabs": {
+      "timeline": "Activity Timeline",
+      "feedback": "Interview Feedback"
+    },
+    "timeline": {
+      "by": "by {{name}}",
+      "applied": "Application received",
+      "appliedDetail": "Applied via the TalentFlow career page",
+      "aiDone": "AI screening completed",
+      "aiFailed": "AI screening failed",
+      "aiDetail": "Suggested match score: {{score}}%"
+    },
+    "feedback": {
+      "emptyTitle": "No interview feedback yet",
+      "emptyText": "Feedback from interviewers will appear here after interviews have taken place."
+    }
   }
 }

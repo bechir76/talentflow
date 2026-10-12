@@ -458,3 +458,30 @@ button { cursor: pointer; }
   .stage-stepper small { display: none; }
   .application-card-head { flex-wrap: wrap; }
 }
+
+/* Candidate detail */
+.cv-frame { width: 100%; height: 100%; border: 0; border-radius: 4px; background: white; box-shadow: 0 4px 18px rgba(25,31,45,.12); }
+.cv-panel .pdf-canvas { padding: 14px; }
+.cv-toolbar a.icon-button { text-decoration: none; }
+.candidate-side { display: flex; flex-direction: column; gap: 17px; }
+.cover-letter { padding: 16px 17px; }
+.cover-letter h3 { margin: 0 0 8px; font-size: 12px; }
+.cover-letter p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.7; white-space: pre-line; }
+.analysis-state { padding: 28px 20px; display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--muted); text-align: center; border-bottom: 1px solid var(--border); }
+.analysis-state strong { color: var(--text); font-size: 11px; }
+.analysis-state p { max-width: 280px; margin: 0; font-size: 8px; line-height: 1.6; }
+.analysis-state .secondary-button { margin-top: 6px; }
+.analysis-rerun { padding: 0 17px 4px; display: flex; justify-content: flex-end; }
+.analysis-tags small { color: var(--subtle); font-size: 8px; }
+.spinner { width: 26px; height: 26px; border: 3px solid var(--indigo-soft); border-top-color: var(--indigo); border-radius: 50%; animation: spin .9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 3s; } }
+.large-score .score-progress { stroke-dasharray: none; transition: stroke-dasharray .6s; }
+.large-score.good .score-progress { stroke: #e4a641; }
+.large-score.good span { color: #b37517; }
+.large-score.low .score-progress { stroke: #e87878; }
+.large-score.low span { color: #c54c4c; }
+.stage-pill { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 20px; color: var(--indigo); background: var(--indigo-soft); font-size: 9px; font-weight: 600; }
+.stage-pill.stage-hired { color: #177554; background: #e6f7f0; }
+.stage-pill.stage-rejected { color: #c74646; background: #fff3f3; }
+.stage-pill.stage-applied { color: #596273; background: #f0f1f4; }
