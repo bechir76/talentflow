@@ -46,12 +46,14 @@ class JobServiceTest {
     private DepartmentRepository departments;
     @Mock
     private CurrentUserProvider currentUser;
+    @Mock
+    private ApplicantCounter applicants;
 
     private JobService service;
 
     @BeforeEach
     void setUp() {
-        service = new JobService(jobs, departments, currentUser, Clock.fixed(NOW, ZoneOffset.UTC));
+        service = new JobService(jobs, departments, currentUser, applicants, Clock.fixed(NOW, ZoneOffset.UTC));
     }
 
     @Test
@@ -63,6 +65,7 @@ class JobServiceTest {
 
         JobView view = service.create(details(), JobStatus.PUBLISHED);
 
+        assertThat(view.applicantCount()).isZero();
         assertThat(view.job().getCreatedBy()).isEqualTo("kc-1");
         assertThat(view.job().getCreatedAt()).isEqualTo(NOW);
         assertThat(view.departmentName()).isEqualTo("Engineering");

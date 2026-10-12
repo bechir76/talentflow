@@ -23,6 +23,10 @@ spring:
           issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8180/realms/talentflow}
           jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8180/realms/talentflow/protocol/openid-connect/certs}
           audiences: ${KEYCLOAK_AUDIENCE:talentflow-api}
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
   data:
     web:
       pageable:
@@ -35,6 +39,11 @@ server:
   port: ${SERVER_PORT:8080}
 
 talentflow:
+  storage:
+    cv-directory: ${CV_STORAGE_DIR:./data/cvs}
+  privacy:
+    # Stored with every consent; bump it whenever the privacy policy text changes.
+    policy-version: ${PRIVACY_POLICY_VERSION:2026-10}
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
 

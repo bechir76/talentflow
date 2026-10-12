@@ -1,12 +1,15 @@
 package com.talentflow.job.application;
 
 import java.time.Clock;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,13 +36,15 @@ public class JobService {
     private final JobRepository jobs;
     private final DepartmentRepository departments;
     private final CurrentUserProvider currentUser;
+    private final ApplicantCounter applicants;
     private final Clock clock;
 
     public JobService(JobRepository jobs, DepartmentRepository departments, CurrentUserProvider currentUser,
-            Clock clock) {
+            ApplicantCounter applicants, Clock clock) {
         this.jobs = jobs;
         this.departments = departments;
         this.currentUser = currentUser;
+        this.applicants = applicants;
         this.clock = clock;
     }
 
@@ -75,7 +80,8 @@ public class JobService {
     @Transactional(readOnly = true)
     public JobStats stats() {
         Map<JobStatus, Long> counts = jobs.countByStatus();
-        return new JobStats(counts.get(JobStatus.PUBLISHED), counts.get(JobStatus.DRAFT), counts.get(JobStatus.CLOSED));
+        return new JobStats(counts.get(JobStatus.PUBLISHED), counts.get(JobStatus.DRAFT), counts.get(JobStatus.CLOSED),
+                applicants.countActive());
     }
 
     @Transactional(readOnly = true)
@@ -88,6 +94,13 @@ public class JobService {
     public JobView getPublished(UUID id) {
         Job job = jobs.findById(id).filter(Job::isPublished).orElseThrow(() -> new NotFoundException("Job", id));
         return withDepartment(job);
+    }
+
+    /** Jobs by id, in any status, for other modules (for example a candidate's application list). */
+    @Transactional(readOnly = true)
+    public Map<UUID, JobView> findViews(Collection<UUID> ids) {
+        return views(jobs.findAllById(ids)).stream()
+                .collect(Collectors.toMap(view -> view.job().getId(), Function.identity()));
     }
 
     @Transactional(readOnly = true)
@@ -106,22 +119,23 @@ public class JobService {
     }
 
     private JobView withDepartment(Job job) {
-        return withDepartments(List.of(job)).getFirst();
+        return views(List.of(job)).getFirst();
     }
 
     private Page<JobView> withDepartments(Page<Job> page) {
-        Map<UUID, String> names = departmentNames(page.getContent());
-        return page.map(job -> new JobView(job, names.get(job.getDepartmentId())));
+        List<JobView> content = views(page.getContent());
+        return new PageImpl<>(content, page.getPageable(), page.getTotalElements());
     }
 
-    private List<JobView> withDepartments(List<Job> jobList) {
-        Map<UUID, String> names = departmentNames(jobList);
-        return jobList.stream().map(job -> new JobView(job, names.get(job.getDepartmentId()))).toList();
-    }
-
-    private Map<UUID, String> departmentNames(List<Job> jobList) {
-        List<UUID> ids = jobList.stream().map(Job::getDepartmentId).distinct().toList();
-        return departments.findAllById(ids).stream()
+    /** Adds department names and applicant counts with one query each, whatever the number of jobs. */
+    private List<JobView> views(List<Job> jobList) {
+        List<UUID> jobIds = jobList.stream().map(Job::getId).toList();
+        List<UUID> departmentIds = jobList.stream().map(Job::getDepartmentId).distinct().toList();
+        Map<UUID, String> names = departments.findAllById(departmentIds).stream()
                 .collect(Collectors.toMap(Department::getId, Department::getName, (a, b) -> a));
+        Map<UUID, Long> counts = jobIds.isEmpty() ? Map.of() : applicants.countByJobIds(jobIds);
+        return jobList.stream()
+                .map(job -> new JobView(job, names.get(job.getDepartmentId()), counts.getOrDefault(job.getId(), 0L)))
+                .toList();
     }
 }

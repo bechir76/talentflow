@@ -8,7 +8,8 @@ RUN ./mvnw -B -q -DskipTests package && cp target/talentflow-backend-*.jar app.j
 
 FROM eclipse-temurin:25-jre
 WORKDIR /app
-RUN groupadd --system talentflow && useradd --system --gid talentflow talentflow
+RUN groupadd --system talentflow && useradd --system --gid talentflow talentflow \
+    && mkdir -p /var/lib/talentflow/cvs && chown -R talentflow:talentflow /var/lib/talentflow
 COPY --from=build /workspace/app.jar app.jar
 USER talentflow
 EXPOSE 8080

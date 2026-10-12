@@ -35,12 +35,12 @@ final class JobResponses {
 
     /** Row in the staff jobs table. */
     record JobSummaryResponse(UUID id, String title, String departmentName, String location, WorkMode workMode,
-            JobStatus status, Instant createdAt) {
+            JobStatus status, long applicantCount, Instant createdAt) {
 
         static JobSummaryResponse from(JobView view) {
             Job job = view.job();
             return new JobSummaryResponse(job.getId(), job.getTitle(), view.departmentName(), job.getLocation(),
-                    job.getWorkMode(), job.getStatus(), job.getCreatedAt());
+                    job.getWorkMode(), job.getStatus(), view.applicantCount(), job.getCreatedAt());
         }
     }
 
@@ -70,10 +70,10 @@ final class JobResponses {
         }
     }
 
-    record JobStatsResponse(long published, long drafts, long closed) {
+    record JobStatsResponse(long published, long drafts, long closed, long activeApplicants) {
 
         static JobStatsResponse from(JobStats stats) {
-            return new JobStatsResponse(stats.published(), stats.drafts(), stats.closed());
+            return new JobStatsResponse(stats.published(), stats.drafts(), stats.closed(), stats.activeApplicants());
         }
     }
 

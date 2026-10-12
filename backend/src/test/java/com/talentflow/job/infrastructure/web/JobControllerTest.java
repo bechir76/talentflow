@@ -114,7 +114,8 @@ class JobControllerTest {
 
         assertThat(response).hasStatusOk().bodyJson().isLenientlyEqualTo("""
                 {"page": 0, "size": 20, "totalElements": 1, "totalPages": 1,
-                 "content": [{"title": "Senior Java Developer", "status": "DRAFT", "departmentName": "Engineering"}]}
+                 "content": [{"title": "Senior Java Developer", "status": "DRAFT", "departmentName": "Engineering",
+                              "applicantCount": 3}]}
                 """);
     }
 
@@ -128,7 +129,7 @@ class JobControllerTest {
         JobDetails details = new JobDetails("Senior Java Developer", "Build reliable services. ".repeat(4),
                 List.of("Java"), "Berlin, Germany", WorkMode.HYBRID, 75000, 95000, DEPARTMENT_ID);
         return new JobView(Job.create(details, status, "kc-1", Instant.parse("2026-10-01T10:00:00Z")),
-                "Engineering");
+                "Engineering", 3);
     }
 
     private static RequestPostProcessor as(String role) {

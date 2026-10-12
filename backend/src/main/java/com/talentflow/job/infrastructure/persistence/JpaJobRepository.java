@@ -1,6 +1,8 @@
 package com.talentflow.job.infrastructure.persistence;
 
+import java.util.Collection;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,6 +33,11 @@ class JpaJobRepository implements JobRepository {
     @Override
     public Optional<Job> findById(UUID id) {
         return jpa.findById(id);
+    }
+
+    @Override
+    public List<Job> findAllById(Collection<UUID> ids) {
+        return jpa.findAllById(ids);
     }
 
     @Override
