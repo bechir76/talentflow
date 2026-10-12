@@ -23,6 +23,10 @@ spring:
           issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8180/realms/talentflow}
           jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8180/realms/talentflow/protocol/openid-connect/certs}
           audiences: ${KEYCLOAK_AUDIENCE:talentflow-api}
+  data:
+    web:
+      pageable:
+        max-page-size: 100
   threads:
     virtual:
       enabled: true

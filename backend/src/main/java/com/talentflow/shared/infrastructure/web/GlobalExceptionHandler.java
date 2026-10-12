@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.data.core.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -16,6 +18,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.talentflow.shared.domain.BusinessRuleException;
+import com.talentflow.shared.domain.ConflictException;
+import com.talentflow.shared.domain.NotFoundException;
 
 /**
  * Translates exceptions into RFC 9457 Problem Details responses.
@@ -36,6 +42,33 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .toList();
         problem.setProperty("errors", violations);
         return handleExceptionInternal(ex, problem, headers, status, request);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    ProblemDetail handleNotFound(NotFoundException ex) {
+        return problem(HttpStatus.NOT_FOUND, "Not found", ex.getMessage());
+    }
+
+    @ExceptionHandler(BusinessRuleException.class)
+    ProblemDetail handleBusinessRule(BusinessRuleException ex) {
+        return problem(HttpStatus.UNPROCESSABLE_CONTENT, "Business rule violated", ex.getMessage());
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    ProblemDetail handleConflict(ConflictException ex) {
+        return problem(HttpStatus.CONFLICT, "Conflict", ex.getMessage());
+    }
+
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    ProblemDetail handleOptimisticLock(OptimisticLockingFailureException ex) {
+        return problem(HttpStatus.CONFLICT, "Conflict",
+                "The resource was changed by someone else. Reload it and try again.");
+    }
+
+    /** Unknown property in a {@code sort} query parameter. */
+    @ExceptionHandler(PropertyReferenceException.class)
+    ProblemDetail handleUnknownProperty(PropertyReferenceException ex) {
+        return problem(HttpStatus.BAD_REQUEST, "Invalid request", "Unknown sort property: " + ex.getPropertyName());
     }
 
     /** Raised by method security ({@code @PreAuthorize}) after the filter chain has already run. */
@@ -61,6 +94,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(
                 HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred.");
         problem.setTitle("Internal server error");
+        return problem;
+    }
+
+    private static ProblemDetail problem(HttpStatus status, String title, String detail) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(status, detail);
+        problem.setTitle(title);
         return problem;
     }
 
