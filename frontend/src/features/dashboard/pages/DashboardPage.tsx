@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import Avatar from "@/components/common/Avatar";
 import Icon from "@/components/common/Icon";
+import { useCurrentUser } from "@/lib/auth/AuthContext";
 import ApplicationsChart from "../components/ApplicationsChart";
 import FunnelChart from "../components/FunnelChart";
 import KpiCard from "../components/KpiCard";
@@ -8,8 +9,10 @@ import { todaysInterviews, topMatches } from "../mock";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
+  const user = useCurrentUser();
+  const canCreateJobs = user.roles.includes("RECRUITER") || user.roles.includes("ADMIN");
   return <div className="page dashboard">
-    <div className="page-heading"><div><span className="eyebrow">Tuesday, 18 February</span><h1>Good morning, Anna</h1><p>Here's what's happening with your hiring pipeline today.</p></div><button className="primary-button" onClick={() => navigate("/jobs/new")}><Icon name="plus"/>Create job</button></div>
+    <div className="page-heading"><div><span className="eyebrow">Tuesday, 18 February</span><h1>Good morning, {user.firstName ?? user.fullName}</h1><p>Here's what's happening with your hiring pipeline today.</p></div>{canCreateJobs && <button className="primary-button" onClick={() => navigate("/jobs/new")}><Icon name="plus"/>Create job</button>}</div>
     <section className="kpi-grid">
       <KpiCard icon="briefcase" label="Open Jobs" value="12" trend="8.2%" note="vs. last month" color="indigo"/>
       <KpiCard icon="users" label="Active Candidates" value="148" trend="12.4%" note="vs. last month" color="blue"/>

@@ -6,9 +6,8 @@ import Topbar from "./Topbar";
 export default function AppShell() {
   const [collapsed, setCollapsed] = useState(false);
   const [dark, setDark] = useState(false);
-  const [role, setRole] = useState("Recruiter");
   return <div className={`app-shell ${dark ? "dark" : ""}`}>
-    <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} role={role} setRole={setRole}/>
+    <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}/>
     <div className="app-main">
       <Topbar dark={dark} setDark={setDark}/>
       <Outlet/>

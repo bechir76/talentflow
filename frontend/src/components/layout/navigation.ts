@@ -1,49 +1,42 @@
+import type { ParseKeys } from "i18next";
 import type { IconName } from "@/components/common/Icon";
+import type { Role } from "@/lib/auth/roles";
 
 export type NavItem = {
   icon: IconName;
-  label: string;
+  labelKey: ParseKeys;
   to: string;
-  badge?: string;
-  /** Path prefixes that mark this item as active. Items without it are never highlighted. */
-  activeFor?: string[];
+  /** Path prefixes that mark this item as active. */
+  activeFor: string[];
 };
 
-const recruiterNav: NavItem[] = [
-  { icon: "grid", label: "Overview", to: "/dashboard", activeFor: ["/dashboard"] },
-  { icon: "briefcase", label: "Jobs", to: "/jobs", badge: "12", activeFor: ["/jobs"] },
-  { icon: "users", label: "Candidates", to: "/pipeline", activeFor: ["/pipeline", "/candidates"] },
-  { icon: "calendar", label: "Interviews", to: "/dashboard", badge: "9" },
-  { icon: "chart", label: "Reports", to: "/dashboard" },
-];
+const overview: NavItem = { icon: "grid", labelKey: "nav.overview", to: "/dashboard", activeFor: ["/dashboard"] };
 
-export const roleNav: Record<string, NavItem[]> = {
-  Recruiter: recruiterNav,
-  "Hiring Manager": [
-    { icon: "grid", label: "Overview", to: "/dashboard", activeFor: ["/dashboard"] },
-    { icon: "briefcase", label: "My Openings", to: "/jobs", badge: "4", activeFor: ["/jobs"] },
-    { icon: "users", label: "Shortlists", to: "/pipeline", activeFor: ["/pipeline", "/candidates"] },
-    { icon: "calendar", label: "Interviews", to: "/dashboard", badge: "3" },
+/** Sidebar entries per role. Only screens that exist are listed; later phases add more. */
+const navByRole: Record<Role, NavItem[]> = {
+  RECRUITER: [
+    overview,
+    { icon: "briefcase", labelKey: "nav.jobs", to: "/jobs", activeFor: ["/jobs"] },
+    { icon: "users", labelKey: "nav.candidates", to: "/pipeline", activeFor: ["/pipeline", "/candidates"] },
   ],
-  Admin: [
-    { icon: "grid", label: "Overview", to: "/dashboard", activeFor: ["/dashboard"] },
-    { icon: "users", label: "Team", to: "/dashboard" },
-    { icon: "briefcase", label: "All Jobs", to: "/jobs", badge: "12", activeFor: ["/jobs"] },
-    { icon: "chart", label: "Analytics", to: "/dashboard" },
-    { icon: "shield", label: "Audit Log", to: "/dashboard" },
+  HIRING_MANAGER: [
+    overview,
+    { icon: "users", labelKey: "nav.shortlists", to: "/pipeline", activeFor: ["/pipeline", "/candidates"] },
   ],
-  Candidate: [
-    { icon: "grid", label: "My Overview", to: "/dashboard", activeFor: ["/dashboard"] },
-    { icon: "briefcase", label: "Find Jobs", to: "/jobs", activeFor: ["/jobs"] },
-    { icon: "chart", label: "Applications", to: "/dashboard", badge: "3" },
-    { icon: "calendar", label: "My Interviews", to: "/dashboard", badge: "1" },
+  ADMIN: [
+    overview,
+    { icon: "briefcase", labelKey: "nav.allJobs", to: "/jobs", activeFor: ["/jobs"] },
+    { icon: "users", labelKey: "nav.candidates", to: "/pipeline", activeFor: ["/pipeline", "/candidates"] },
+  ],
+  CANDIDATE: [
+    { icon: "file", labelKey: "nav.myApplications", to: "/portal/applications", activeFor: ["/portal/applications"] },
   ],
 };
 
-export function navFor(role: string): NavItem[] {
-  return roleNav[role] ?? recruiterNav;
+export function navFor(role: Role | undefined): NavItem[] {
+  return role ? navByRole[role] : [];
 }
 
 export function isActive(item: NavItem, pathname: string): boolean {
-  return item.activeFor?.some((prefix) => pathname.startsWith(prefix)) ?? false;
+  return item.activeFor.some((prefix) => pathname.startsWith(prefix));
 }

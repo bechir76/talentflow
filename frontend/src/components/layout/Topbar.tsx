@@ -1,19 +1,25 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 import Avatar from "@/components/common/Avatar";
 import Icon from "@/components/common/Icon";
+import { useMe } from "@/features/auth/api/useMe";
+import { useAuth, useCurrentUser } from "@/lib/auth/AuthContext";
+import { changeLanguage, currentLanguage } from "@/lib/i18n";
 
 export default function Topbar({ dark, setDark }: { dark: boolean; setDark: (value: boolean) => void }) {
-  const navigate = useNavigate();
-  const [language, setLanguage] = useState("EN");
+  const { t } = useTranslation();
+  const { logout } = useAuth();
+  const user = useCurrentUser();
+  const { data: me } = useMe();
+  const displayName = me?.fullName ?? user.fullName;
   return <header className="topbar">
-    <div className="global-search"><Icon name="search"/><input placeholder="Search candidates, jobs, interviews..."/><kbd>⌘ K</kbd></div>
+    {user.primaryRole === "CANDIDATE" ? <span></span> : <div className="global-search"><Icon name="search"/><input placeholder={t("shell.searchPlaceholder")}/><kbd>⌘ K</kbd></div>}
     <div className="top-actions">
-      <button className="icon-button theme-button" onClick={() => setDark(!dark)} aria-label="Toggle dark mode"><Icon name={dark ? "sun" : "moon"}/></button>
-      <button className="language-button" onClick={() => setLanguage(language === "EN" ? "DE" : "EN")}><Icon name="globe" size={16}/>{language}</button>
-      <button className="icon-button notification"><Icon name="bell"/><i></i></button>
+      <button className="icon-button theme-button" onClick={() => setDark(!dark)} aria-label={t("shell.toggleDarkMode")}><Icon name={dark ? "sun" : "moon"}/></button>
+      <button className="language-button" onClick={() => changeLanguage(currentLanguage() === "en" ? "de" : "en")}><Icon name="globe" size={16}/>{t("shell.languageLabel")}</button>
+      <button className="icon-button notification" aria-label={t("shell.notifications")}><Icon name="bell"/><i></i></button>
       <span className="top-divider"></span>
-      <button className="profile-button" onClick={() => navigate("/login")}><Avatar initials="AK" color="violet" small/><span><strong>Anna Keller</strong><small>Recruiter</small></span><Icon name="chevron" size={14}/></button>
+      <div className="profile-button"><Avatar initials={user.initials} color="violet" small/><span><strong>{displayName}</strong>{user.primaryRole && <small>{t(`roles.${user.primaryRole}`)}</small>}</span></div>
+      <button className="icon-button" onClick={logout} aria-label={t("shell.signOut")} title={t("shell.signOut")}><Icon name="logout"/></button>
     </div>
   </header>;
 }
