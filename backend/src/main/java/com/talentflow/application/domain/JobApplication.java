@@ -14,12 +14,15 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.OptimisticLock;
 import org.hibernate.type.SqlTypes;
 
 import com.talentflow.shared.domain.BusinessRuleException;
 
 /**
  * A candidate's application for a job, including the AI screening suggestion (never a decision).
+ * The AI fields are written by a background job and are excluded from optimistic locking, so a screening
+ * finishing at the same moment never makes a recruiter's stage change fail.
  */
 @Entity
 @Table(name = "job_application")
@@ -49,34 +52,45 @@ public class JobApplication {
     private ApplicationStage stage;
 
     @Column(name = "ai_score")
+    @OptimisticLock(excluded = true)
     private Integer aiScore;
 
     @JdbcTypeCode(SqlTypes.ARRAY)
     @Column(name = "ai_matching_skills", columnDefinition = "text[]")
+    @OptimisticLock(excluded = true)
     private List<String> aiMatchingSkills = new ArrayList<>();
 
     @JdbcTypeCode(SqlTypes.ARRAY)
     @Column(name = "ai_missing_skills", columnDefinition = "text[]")
+    @OptimisticLock(excluded = true)
     private List<String> aiMissingSkills = new ArrayList<>();
 
     @Column(name = "ai_summary", columnDefinition = "text")
+    @OptimisticLock(excluded = true)
     private String aiSummary;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ai_status")
+    @OptimisticLock(excluded = true)
     private AiStatus aiStatus;
 
     @Column(name = "ai_years_of_experience")
+    @OptimisticLock(excluded = true)
     private Integer aiYearsOfExperience;
 
     @Column(name = "ai_model")
+    @OptimisticLock(excluded = true)
     private String aiModel;
 
     @Column(name = "ai_analyzed_at")
+    @OptimisticLock(excluded = true)
     private Instant aiAnalyzedAt;
 
     @Column(name = "applied_at")
     private Instant appliedAt;
+
+    @Column(name = "stage_changed_at")
+    private Instant stageChangedAt;
 
     protected JobApplication() {
     }
@@ -96,7 +110,30 @@ public class JobApplication {
         application.stage = ApplicationStage.APPLIED;
         application.aiStatus = AiStatus.PENDING;
         application.appliedAt = now;
+        application.stageChangedAt = now;
         return application;
+    }
+
+    /**
+     * Moves the application through the pipeline. Active stages can move freely in both directions,
+     * HIRED is only reachable from OFFER, REJECTED from any active stage, and finished applications stay put.
+     *
+     * @return the stage before the move
+     */
+    public ApplicationStage moveTo(ApplicationStage target, Instant now) {
+        if (target == stage) {
+            throw new BusinessRuleException("The application is already in stage " + stage + ".");
+        }
+        if (!stage.isActive()) {
+            throw new BusinessRuleException("A " + stage + " application cannot be moved.");
+        }
+        if (target == ApplicationStage.HIRED && stage != ApplicationStage.OFFER) {
+            throw new BusinessRuleException("Only candidates with an offer can be marked as hired.");
+        }
+        ApplicationStage previous = stage;
+        stage = target;
+        stageChangedAt = now;
+        return previous;
     }
 
     /** Queues a new AI screening, for example after a failure. Earlier results stay visible until replaced. */
@@ -176,6 +213,10 @@ public class JobApplication {
 
     public Instant getAiAnalyzedAt() {
         return aiAnalyzedAt;
+    }
+
+    public Instant getStageChangedAt() {
+        return stageChangedAt;
     }
 
     public Instant getAppliedAt() {

@@ -21,6 +21,8 @@ public interface JobApplicationRepository {
 
     Page<JobApplication> findByCandidateId(UUID candidateId, Pageable pageable);
 
+    Page<JobApplication> findByJobId(UUID jobId, Pageable pageable);
+
     /** Number of applications per job; jobs without applications are missing from the map. */
     Map<UUID, Long> countByJobIds(Collection<UUID> jobIds);
 

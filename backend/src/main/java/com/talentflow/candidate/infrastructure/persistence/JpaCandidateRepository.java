@@ -1,5 +1,7 @@
 package com.talentflow.candidate.infrastructure.persistence;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,6 +31,11 @@ class JpaCandidateRepository implements CandidateRepository {
     @Override
     public Optional<Candidate> findById(UUID id) {
         return candidates.findById(id);
+    }
+
+    @Override
+    public List<Candidate> findAllById(Collection<UUID> ids) {
+        return candidates.findAllById(ids);
     }
 
     @Override

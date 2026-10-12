@@ -1,5 +1,7 @@
 package com.talentflow.candidate.domain;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -11,6 +13,8 @@ public interface CandidateRepository {
     Candidate save(Candidate candidate);
 
     Optional<Candidate> findById(UUID id);
+
+    List<Candidate> findAllById(Collection<UUID> ids);
 
     Optional<Candidate> findByKeycloakUserId(String keycloakUserId);
 

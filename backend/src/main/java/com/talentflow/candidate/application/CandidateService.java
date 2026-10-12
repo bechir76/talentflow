@@ -1,8 +1,12 @@
 package com.talentflow.candidate.application;
 
 import java.time.Clock;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -53,6 +57,11 @@ public class CandidateService {
     @Transactional(readOnly = true)
     public Candidate get(UUID id) {
         return candidates.findById(id).orElseThrow(() -> new NotFoundException("Candidate", id));
+    }
+
+    @Transactional(readOnly = true)
+    public Map<UUID, Candidate> findAllById(Collection<UUID> ids) {
+        return candidates.findAllById(ids).stream().collect(Collectors.toMap(Candidate::getId, Function.identity()));
     }
 
     @Transactional(readOnly = true)

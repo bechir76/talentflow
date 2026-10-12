@@ -51,6 +51,11 @@ class JpaJobApplicationRepository implements JobApplicationRepository, Applicant
     }
 
     @Override
+    public Page<JobApplication> findByJobId(UUID jobId, Pageable pageable) {
+        return jpa.findByJobId(jobId, pageable);
+    }
+
+    @Override
     public Map<UUID, Long> countByJobIds(Collection<UUID> jobIds) {
         return jpa.countByJobIds(jobIds).stream()
                 .collect(Collectors.toMap(SpringDataJobApplicationRepository.JobCount::getJobId,

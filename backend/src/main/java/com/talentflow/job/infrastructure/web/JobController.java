@@ -35,7 +35,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api/v1/jobs")
 @PreAuthorize("hasAnyRole('RECRUITER', 'ADMIN')")
-@Tag(name = "Jobs", description = "Manage job postings (recruiters and admins)")
+@Tag(name = "Jobs", description = "Manage job postings (recruiters and admins; hiring managers can read)")
 public class JobController {
 
     private final JobService jobService;
@@ -45,6 +45,7 @@ public class JobController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('RECRUITER', 'HIRING_MANAGER', 'ADMIN')")
     @Operation(summary = "Lists jobs, optionally filtered by text, status and department")
     public PageResponse<JobSummaryResponse> list(
             @RequestParam(required = false) String q,
@@ -56,12 +57,14 @@ public class JobController {
     }
 
     @GetMapping("/stats")
+    @PreAuthorize("hasAnyRole('RECRUITER', 'HIRING_MANAGER', 'ADMIN')")
     @Operation(summary = "Counts jobs per status")
     public JobStatsResponse stats() {
         return JobStatsResponse.from(jobService.stats());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('RECRUITER', 'HIRING_MANAGER', 'ADMIN')")
     public JobResponse get(@PathVariable UUID id) {
         return JobResponse.from(jobService.get(id));
     }
