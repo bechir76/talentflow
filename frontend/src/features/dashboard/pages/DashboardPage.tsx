@@ -4,7 +4,7 @@ import Avatar from "@/components/common/Avatar";
 import Icon from "@/components/common/Icon";
 import { scoreTone } from "@/features/candidates/score";
 import { useCurrentUser } from "@/lib/auth/AuthContext";
-import { initialsOf } from "@/lib/format";
+import { formatTime, formatWeekday, initialsOf } from "@/lib/format";
 import { currentLanguage } from "@/lib/i18n";
 import { useDashboard } from "../api/dashboard";
 import ApplicationsChart from "../components/ApplicationsChart";
@@ -58,9 +58,8 @@ export default function DashboardPage() {
       <article className="panel interviews-panel">
         <div className="panel-head"><div><h3>{t("dashboard.interviewsTitle")}</h3><p>{t("dashboard.interviewsSubtitle")}</p></div><button className="icon-button" onClick={() => navigate("/interviews")} aria-label={t("nav.interviews")}><Icon name="calendar"/></button></div>
         {data?.upcomingInterviews.map((interview, i) => {
-          const start = new Date(interview.scheduledAt);
           return <button className="interview-row" key={interview.interviewId} onClick={() => navigate(`/applications/${interview.applicationId}`)}>
-            <div className="time"><strong>{start.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })}</strong><span>{start.toLocaleDateString(undefined, { weekday: "short", day: "numeric" })}</span></div><i className="timeline-dot"></i>
+            <div className="time"><strong>{formatTime(interview.scheduledAt)}</strong><span>{formatWeekday(interview.scheduledAt)}</span></div><i className="timeline-dot"></i>
             <Avatar initials={initialsOf(interview.candidateName ?? "?")} color={AVATAR_COLORS[i % AVATAR_COLORS.length]} small/>
             <div className="interview-info"><strong>{interview.candidateName}</strong><span>{interview.jobTitle} · {t("interviews.minutes", { count: interview.durationMinutes })}</span></div>
             <Avatar initials={initialsOf(interview.interviewerNames[0] ?? "?")} color="gray" small/>

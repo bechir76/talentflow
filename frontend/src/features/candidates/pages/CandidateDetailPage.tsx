@@ -7,7 +7,7 @@ import InterviewList from "@/features/interviews/components/InterviewList";
 import ScheduleInterviewModal from "@/features/interviews/components/ScheduleInterviewModal";
 import { useStageHistory, type StageChange } from "@/features/pipeline/api/pipeline";
 import { useCurrentUser } from "@/lib/auth/AuthContext";
-import { formatDate, initialsOf } from "@/lib/format";
+import { formatDate, formatDateTime, initialsOf } from "@/lib/format";
 import { useApplication, type ApplicationDetail } from "../api/applications";
 import AiAnalysis from "../components/AiAnalysis";
 import CandidateTabs, { type TimelineEntry } from "../components/CandidateTabs";
@@ -52,7 +52,6 @@ export default function CandidateDetailPage() {
 
   const application = query.data;
   const { candidate, job } = application;
-  const formatDateTime = (iso: string) => new Date(iso).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
 
   return <div className="page candidate-page">
     <div className="breadcrumbs"><button onClick={() => navigate(`/pipeline?jobId=${job.id}`)}>{t("nav.candidates")}</button><Icon name="chevron" size={13}/><span>{job.title}</span><Icon name="chevron" size={13}/><strong>{candidate.fullName}</strong></div>

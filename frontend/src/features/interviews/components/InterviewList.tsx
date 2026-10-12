@@ -2,12 +2,10 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Avatar from "@/components/common/Avatar";
 import Icon from "@/components/common/Icon";
-import { initialsOf } from "@/lib/format";
+import { formatDateTime, initialsOf } from "@/lib/format";
 import { useApplicationInterviews, useCancelInterview } from "../api/interviews";
 import FeedbackModal from "./FeedbackModal";
 import Rating from "./Rating";
-
-const formatDateTime = (iso: string) => new Date(iso).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
 
 /** Interviews of one application with every interviewer's scorecard. */
 export default function InterviewList({ applicationId, canManage }: { applicationId: string; canManage: boolean }) {

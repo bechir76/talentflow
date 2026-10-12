@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Icon from "@/components/common/Icon";
 import Pagination from "@/components/common/Pagination";
+import { formatDateTime } from "@/lib/format";
 import { AUDIT_ACTIONS, useAuditLog, type AuditAction } from "../api/admin";
 
 export default function AuditLogPage() {
@@ -9,7 +10,6 @@ export default function AuditLogPage() {
   const [action, setAction] = useState<AuditAction>();
   const [page, setPage] = useState(0);
   const log = useAuditLog(action, page);
-  const formatTime = (iso: string) => new Date(iso).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "medium" });
 
   return <div className="page jobs-page">
     <div className="page-heading"><div><span className="eyebrow">{t("admin.eyebrow")}</span><h1>{t("admin.audit.title")}</h1><p>{t("admin.audit.subtitle")}</p></div></div>
@@ -25,7 +25,7 @@ export default function AuditLogPage() {
         <table className="jobs-table">
           <thead><tr><th>{t("admin.audit.time")}</th><th>{t("admin.audit.actor")}</th><th>{t("admin.audit.action")}</th><th>{t("admin.audit.entity")}</th><th>{t("admin.audit.details")}</th></tr></thead>
           <tbody>{log.data?.content.map((entry) => <tr key={entry.id}>
-            <td>{formatTime(entry.timestamp)}</td>
+            <td>{formatDateTime(entry.timestamp)}</td>
             <td><strong className="audit-actor">{entry.actorName ?? entry.actorId}</strong></td>
             <td><span className={`audit-action ${entry.action.toLowerCase()}`}>{t(`admin.audit.actions.${entry.action}`)}</span></td>
             <td>{entry.entityType}{entry.entityId && <small className="audit-id">{entry.entityId.slice(0, 8)}</small>}</td>

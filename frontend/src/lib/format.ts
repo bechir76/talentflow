@@ -24,3 +24,16 @@ export function formatSalaryRange(min: number | null, max: number | null, curren
 export function initialsOf(name: string): string {
   return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]!.toUpperCase()).join("") || "?";
 }
+
+/** Date and time in the app language, e.g. "13 Oct 2026, 10:00". */
+export function formatDateTime(iso: string): string {
+  return new Intl.DateTimeFormat(locale(), { dateStyle: "medium", timeStyle: "short" }).format(new Date(iso));
+}
+
+export function formatTime(iso: string): string {
+  return new Intl.DateTimeFormat(locale(), { hour: "2-digit", minute: "2-digit" }).format(new Date(iso));
+}
+
+export function formatWeekday(iso: string): string {
+  return new Intl.DateTimeFormat(locale(), { weekday: "short", day: "numeric" }).format(new Date(iso));
+}
