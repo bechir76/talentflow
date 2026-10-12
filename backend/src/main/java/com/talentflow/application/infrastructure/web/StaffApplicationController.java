@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.talentflow.application.application.ApplicationQueryService;
@@ -45,13 +46,15 @@ public class StaffApplicationController {
     }
 
     @GetMapping("/cv")
-    @Operation(summary = "Returns the CV as PDF for viewing in the browser")
-    public ResponseEntity<byte[]> cv(@PathVariable UUID id) {
+    @Operation(summary = "Returns the CV as PDF; the access is audit-logged as viewed or downloaded")
+    public ResponseEntity<byte[]> cv(@PathVariable UUID id, @RequestParam(defaultValue = "false") boolean download) {
+        ContentDisposition disposition = (download ? ContentDisposition.attachment() : ContentDisposition.inline())
+                .filename("cv.pdf").build();
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
-                .header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.inline().filename("cv.pdf").build().toString())
+                .header(HttpHeaders.CONTENT_DISPOSITION, disposition.toString())
                 .cacheControl(CacheControl.noStore())
-                .body(queries.cv(id));
+                .body(queries.cv(id, download));
     }
 
     public record ApplicationDetailResponse(UUID id, ApplicationStage stage, Instant appliedAt, String coverLetter,

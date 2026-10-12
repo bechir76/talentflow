@@ -136,6 +136,19 @@ public class JobApplication {
         return previous;
     }
 
+    /**
+     * Removes the personal content of the application (cover letter, CV reference and the AI output derived
+     * from the CV). Stage and dates stay for anonymous statistics. The caller deletes the CV file itself.
+     */
+    public void anonymize() {
+        cvStorageKey = null;
+        coverLetter = null;
+        aiSummary = null;
+        aiMatchingSkills = new ArrayList<>();
+        aiMissingSkills = new ArrayList<>();
+        aiYearsOfExperience = null;
+    }
+
     /** Queues a new AI screening, for example after a failure. Earlier results stay visible until replaced. */
     public void requestAiAnalysis() {
         aiStatus = AiStatus.PENDING;

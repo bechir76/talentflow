@@ -21,6 +21,8 @@ interface SpringDataJobApplicationRepository extends JpaRepository<JobApplicatio
 
     Page<JobApplication> findByJobId(UUID jobId, Pageable pageable);
 
+    List<JobApplication> findAllByCandidateIdOrderByAppliedAtDesc(UUID candidateId);
+
     @Query("""
             select a.jobId as jobId, count(a) as total from JobApplication a
             where a.jobId in :jobIds group by a.jobId""")

@@ -1,6 +1,7 @@
 package com.talentflow.application.domain;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,6 +21,8 @@ public interface JobApplicationRepository {
     boolean existsByJobIdAndCandidateId(UUID jobId, UUID candidateId);
 
     Page<JobApplication> findByCandidateId(UUID candidateId, Pageable pageable);
+
+    List<JobApplication> findAllByCandidateId(UUID candidateId);
 
     Page<JobApplication> findByJobId(UUID jobId, Pageable pageable);
 

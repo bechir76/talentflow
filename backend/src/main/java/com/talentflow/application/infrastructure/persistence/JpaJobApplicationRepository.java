@@ -51,6 +51,11 @@ class JpaJobApplicationRepository implements JobApplicationRepository, Applicant
     }
 
     @Override
+    public List<JobApplication> findAllByCandidateId(UUID candidateId) {
+        return jpa.findAllByCandidateIdOrderByAppliedAtDesc(candidateId);
+    }
+
+    @Override
     public Page<JobApplication> findByJobId(UUID jobId, Pageable pageable) {
         return jpa.findByJobId(jobId, pageable);
     }

@@ -23,6 +23,9 @@ public class AuditLog {
     @Column(name = "actor_id")
     private String actorId;
 
+    @Column(name = "actor_name")
+    private String actorName;
+
     @Enumerated(EnumType.STRING)
     private AuditAction action;
 
@@ -41,11 +44,12 @@ public class AuditLog {
     protected AuditLog() {
     }
 
-    public static AuditLog of(String actorId, AuditAction action, String entityType, UUID entityId, String details,
-            Instant now) {
+    public static AuditLog of(String actorId, String actorName, AuditAction action, String entityType, UUID entityId,
+            String details, Instant now) {
         AuditLog entry = new AuditLog();
         entry.id = UUID.randomUUID();
         entry.actorId = actorId;
+        entry.actorName = actorName;
         entry.action = action;
         entry.entityType = entityType;
         entry.entityId = entityId;
@@ -60,6 +64,10 @@ public class AuditLog {
 
     public String getActorId() {
         return actorId;
+    }
+
+    public String getActorName() {
+        return actorName;
     }
 
     public AuditAction getAction() {

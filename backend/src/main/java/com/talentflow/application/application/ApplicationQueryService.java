@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.talentflow.application.domain.JobApplication;
 import com.talentflow.application.domain.JobApplicationRepository;
+import com.talentflow.audit.application.AuditService;
+import com.talentflow.audit.domain.AuditAction;
 import com.talentflow.candidate.application.CandidateService;
 import com.talentflow.candidate.domain.Candidate;
 import com.talentflow.candidate.domain.Consent;
@@ -27,13 +29,15 @@ public class ApplicationQueryService {
     private final CandidateService candidates;
     private final JobService jobs;
     private final CvStorage cvStorage;
+    private final AuditService audit;
 
     public ApplicationQueryService(JobApplicationRepository applications, CandidateService candidates,
-            JobService jobs, CvStorage cvStorage) {
+            JobService jobs, CvStorage cvStorage, AuditService audit) {
         this.applications = applications;
         this.candidates = candidates;
         this.jobs = jobs;
         this.cvStorage = cvStorage;
+        this.audit = audit;
     }
 
     public ApplicationDetails get(UUID id) {
@@ -44,11 +48,14 @@ public class ApplicationQueryService {
                 candidates.latestApplicationConsent(candidate.getId()));
     }
 
-    public byte[] cv(UUID id) {
+    /** Every access to a CV is written to the audit log (viewed in the browser or downloaded). */
+    @Transactional
+    public byte[] cv(UUID id, boolean download) {
         JobApplication application = load(id);
         if (application.getCvStorageKey() == null) {
             throw new NotFoundException("CV of application", id);
         }
+        audit.record(download ? AuditAction.CV_DOWNLOADED : AuditAction.CV_VIEWED, "JobApplication", id, null);
         return cvStorage.load(application.getCvStorageKey());
     }
 

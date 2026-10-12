@@ -32,6 +32,9 @@ public class Candidate {
 
     private boolean anonymized;
 
+    @Column(name = "anonymized_at")
+    private Instant anonymizedAt;
+
     @Column(name = "created_at")
     private Instant createdAt;
 
@@ -60,6 +63,20 @@ public class Candidate {
         }
     }
 
+    /**
+     * Right to erasure (GDPR Art. 17): removes every identifying field and the link to the login account.
+     * The row stays so that anonymous statistics (funnel, time to hire) remain correct.
+     */
+    public void anonymize(Instant now) {
+        fullName = "Anonymised candidate";
+        email = "deleted-" + id + "@anonymised.invalid";
+        phone = null;
+        location = null;
+        keycloakUserId = null;
+        anonymized = true;
+        anonymizedAt = now;
+    }
+
     public UUID getId() {
         return id;
     }
@@ -86,6 +103,10 @@ public class Candidate {
 
     public boolean isAnonymized() {
         return anonymized;
+    }
+
+    public Instant getAnonymizedAt() {
+        return anonymizedAt;
     }
 
     public Instant getCreatedAt() {

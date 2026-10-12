@@ -2,6 +2,7 @@ package com.talentflow.candidate.application;
 
 import java.time.Clock;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -62,6 +63,11 @@ public class CandidateService {
     @Transactional(readOnly = true)
     public Map<UUID, Candidate> findAllById(Collection<UUID> ids) {
         return candidates.findAllById(ids).stream().collect(Collectors.toMap(Candidate::getId, Function.identity()));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Consent> consents(UUID candidateId) {
+        return candidates.findConsents(candidateId);
     }
 
     @Transactional(readOnly = true)

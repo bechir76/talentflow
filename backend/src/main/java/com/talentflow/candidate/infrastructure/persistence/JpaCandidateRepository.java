@@ -49,6 +49,11 @@ class JpaCandidateRepository implements CandidateRepository {
     }
 
     @Override
+    public List<Consent> findConsents(UUID candidateId) {
+        return consents.findByCandidateIdOrderByGivenAtDesc(candidateId);
+    }
+
+    @Override
     public Consent save(Consent consent) {
         return consents.save(consent);
     }

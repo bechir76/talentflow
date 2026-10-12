@@ -22,4 +22,7 @@ public interface CandidateRepository {
     Optional<Consent> findLatestConsent(UUID candidateId, ConsentType type);
 
     Consent save(Consent consent);
+
+    /** All consents of a candidate, newest first. */
+    List<Consent> findConsents(UUID candidateId);
 }

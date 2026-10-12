@@ -48,6 +48,12 @@ public class Consent {
         return consent;
     }
 
+    public void withdraw(Instant now) {
+        if (withdrawnAt == null) {
+            withdrawnAt = now;
+        }
+    }
+
     public UUID getId() {
         return id;
     }
