@@ -71,7 +71,18 @@
     "title": "My Applications",
     "subtitle": "Track the status of every application you have submitted.",
     "emptyTitle": "No applications yet",
-    "emptyText": "Once you apply for a job, you can follow its progress here."
+    "emptyText": "Once you apply for a job, you can follow its progress here.",
+    "stageLabel": "Application progress",
+    "appliedOn": "Applied on {{date}}",
+    "jobRemoved": "Job no longer available",
+    "rejected": "Thank you for your interest. The team has decided not to continue with your application for this role.",
+    "stages": {
+      "APPLIED": "Applied",
+      "SCREENING": "Screening",
+      "INTERVIEW": "Interview",
+      "OFFER": "Offer",
+      "HIRED": "Hired"
+    }
   },
   "validation": {
     "required": "This field is required.",
@@ -81,7 +92,11 @@
     "salaryRange": "The maximum must be at least the minimum.",
     "skillsRequired": "Add at least one required skill.",
     "tooManySkills": "Add at most 30 skills.",
-    "descriptionTooShort": "Write at least 50 characters."
+    "descriptionTooShort": "Write at least 50 characters.",
+    "cvRequired": "Please attach your CV.",
+    "cvPdfOnly": "The CV must be a PDF file.",
+    "cvTooLarge": "The CV must not be larger than 5 MB.",
+    "consentRequired": "Please agree to the processing of your data to apply."
   },
   "jobs": {
     "eyebrow": "Recruitment",
@@ -97,7 +112,7 @@
       "open": "Open jobs",
       "drafts": "Drafts",
       "closed": "Closed jobs",
-      "total": "Jobs in total"
+      "activeApplicants": "Active applicants"
     },
     "filters": {
       "status": "Status",
@@ -111,7 +126,8 @@
       "location": "Location",
       "workMode": "Work Mode",
       "status": "Status",
-      "created": "Created Date"
+      "created": "Created Date",
+      "applicants": "Applicants"
     },
     "empty": {
       "title": "No jobs found",
@@ -176,7 +192,9 @@
       "publish": "Publish",
       "publishing": "Publishing...",
       "saveChanges": "Save changes"
-    }
+    },
+    "applicants_one": "applicant",
+    "applicants_other": "applicants"
   },
   "careers": {
     "eyebrow": "We are hiring",
@@ -202,6 +220,45 @@
     "notFound": {
       "title": "This job is no longer available",
       "text": "It may have been filled or closed."
+    }
+  },
+  "apply": {
+    "breadcrumb": "Apply",
+    "eyebrow": "Your application",
+    "signInTitle": "Sign in to apply",
+    "signInText": "With a free candidate account you can apply in minutes and follow the status of your applications.",
+    "staffTitle": "Applications need a candidate account",
+    "staffText": "You are signed in with a staff account. Please use a candidate account to apply for jobs.",
+    "contactTitle": "Contact details",
+    "contactText": "Name and email come from your account. Phone and location are optional.",
+    "fullName": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Current location",
+    "accountNote": "To change your name or email, update your account profile.",
+    "documentsTitle": "CV & cover letter",
+    "documentsText": "Upload your CV as a PDF. A short cover letter is optional.",
+    "cv": {
+      "label": "CV (PDF)",
+      "drop": "Drop your CV here or click to browse",
+      "hint": "PDF only, up to 5 MB",
+      "replace": "Replace"
+    },
+    "coverLetter": "Cover letter (optional)",
+    "coverLetterPlaceholder": "Tell us briefly why this role interests you…",
+    "coverLetterHint": "Please do not include sensitive data such as health or religion.",
+    "privacyTitle": "Privacy & consent",
+    "privacyText": "We only process your data for this application and in the EU.",
+    "consentLabel": "I agree to the processing of my data",
+    "consentText": "TalentFlow may process my CV and contact details to evaluate this application, as described in the privacy policy. I can withdraw my consent and request deletion at any time in my candidate portal.",
+    "aiNotice": "An AI assistant may summarise your CV against the job requirements. It only makes suggestions; every decision is made by a person.",
+    "submit": "Submit application",
+    "submitting": "Submitting...",
+    "success": {
+      "title": "Application submitted",
+      "text": "Thank you! We have received your application and will get back to you. You can follow its progress in your candidate portal.",
+      "viewApplications": "View my applications",
+      "moreJobs": "Browse more jobs"
     }
   }
 }

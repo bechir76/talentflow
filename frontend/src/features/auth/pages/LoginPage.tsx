@@ -44,7 +44,7 @@ export default function LoginPage() {
         <div className="form-heading"><h2>{t("auth.welcome")}</h2><p>{t("auth.subtitle")}</p></div>
         <button className="primary-button login-submit" onClick={() => login(from)}>{t("auth.signIn")} <Icon name="arrow" size={17}/></button>
         <div className="divider"><span>{t("auth.newHere")}</span></div>
-        <button className="sso-button" onClick={register}><Icon name="users" size={17}/>{t("auth.createAccount")}</button>
+        <button className="sso-button" onClick={() => register()}><Icon name="users" size={17}/>{t("auth.createAccount")}</button>
         <p className="form-help"><Icon name="lock" size={13}/> {t("auth.secureNote")}</p>
       </div>
       <div className="login-footer">

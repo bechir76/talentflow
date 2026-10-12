@@ -21,8 +21,8 @@ export type AuthContextValue = {
   state: AuthState;
   /** Redirects to the identity provider; returns to `returnPath` afterwards. */
   login: (returnPath?: string) => void;
-  /** Opens the identity provider's self-registration page. */
-  register: () => void;
+  /** Opens the identity provider's self-registration page; returns to `returnPath` afterwards. */
+  register: (returnPath?: string) => void;
   logout: () => void;
 };
 

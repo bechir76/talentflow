@@ -69,8 +69,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     void keycloak.login({ redirectUri: window.location.origin + returnPath, locale: currentLanguage() });
   }, []);
 
-  const register = useCallback(() => {
-    void keycloak.register({ redirectUri: window.location.origin + "/", locale: currentLanguage() });
+  const register = useCallback((returnPath = "/") => {
+    void keycloak.register({ redirectUri: window.location.origin + returnPath, locale: currentLanguage() });
   }, []);
 
   const logout = useCallback(() => {

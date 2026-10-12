@@ -52,15 +52,14 @@ export default function JobsPage() {
 
   const data = jobs.data;
   const statValue = (value: number | undefined) => value ?? "–";
-  const total = stats.data ? stats.data.published + stats.data.drafts + stats.data.closed : undefined;
 
   return <div className="page jobs-page">
     <div className="page-heading jobs-heading"><div><span className="eyebrow">{t("jobs.eyebrow")}</span><h1>{t("jobs.title")}</h1><p>{t("jobs.subtitle")}</p></div><button className="primary-button" onClick={() => navigate("/jobs/new")}><Icon name="plus"/>{t("jobs.create")}</button></div>
     <section className="jobs-summary">
       <div><span className="kpi-icon indigo"><Icon name="briefcase"/></span><p><strong>{statValue(stats.data?.published)}</strong><span>{t("jobs.stats.open")}</span></p></div>
       <div><span className="kpi-icon amber"><Icon name="file"/></span><p><strong>{statValue(stats.data?.drafts)}</strong><span>{t("jobs.stats.drafts")}</span></p></div>
-      <div><span className="kpi-icon blue"><Icon name="lock"/></span><p><strong>{statValue(stats.data?.closed)}</strong><span>{t("jobs.stats.closed")}</span></p></div>
-      <div><span className="kpi-icon green"><Icon name="chart"/></span><p><strong>{statValue(total)}</strong><span>{t("jobs.stats.total")}</span></p></div>
+      <div><span className="kpi-icon blue"><Icon name="users"/></span><p><strong>{statValue(stats.data?.activeApplicants)}</strong><span>{t("jobs.stats.activeApplicants")}</span></p></div>
+      <div><span className="kpi-icon green"><Icon name="lock"/></span><p><strong>{statValue(stats.data?.closed)}</strong><span>{t("jobs.stats.closed")}</span></p></div>
     </section>
     <section className="jobs-table-panel panel">
       <div className="table-toolbar">
@@ -77,11 +76,12 @@ export default function JobsPage() {
       </div>
       <div className="jobs-table-wrap">
         <table className="jobs-table">
-          <thead><tr><th>{t("jobs.columns.title")}</th><th>{t("jobs.columns.department")}</th><th>{t("jobs.columns.location")}</th><th>{t("jobs.columns.workMode")}</th><th>{t("jobs.columns.status")}</th><th>{t("jobs.columns.created")}</th><th><span className="sr-only">{t("common.actions")}</span></th></tr></thead>
+          <thead><tr><th>{t("jobs.columns.title")}</th><th>{t("jobs.columns.department")}</th><th>{t("jobs.columns.location")}</th><th>{t("jobs.columns.workMode")}</th><th>{t("jobs.columns.applicants")}</th><th>{t("jobs.columns.status")}</th><th>{t("jobs.columns.created")}</th><th><span className="sr-only">{t("common.actions")}</span></th></tr></thead>
           <tbody>{data?.content.map((job) => <tr key={job.id}>
             <td><button className="job-link" onClick={() => navigate(`/jobs/${job.id}/edit`)}><span className="job-table-icon"><Icon name="briefcase" size={16}/></span><span><strong>{job.title}</strong><small>{t(job.status === "PUBLISHED" ? "jobs.visibleOnCareers" : "jobs.notVisible")}</small></span></button></td>
             <td>{job.departmentName}</td><td>{job.location}</td>
             <td><WorkModeBadge mode={job.workMode}/></td>
+            <td><button className="applicant-count" onClick={() => navigate("/pipeline")}><span>{job.applicantCount}</span>{t("jobs.applicants", { count: job.applicantCount })}</button></td>
             <td><JobStatusBadge status={job.status}/></td>
             <td>{formatDate(job.createdAt)}</td>
             <td><RowMenu items={menuItems(job)}/></td>

@@ -22,9 +22,10 @@ export type Job = {
   updatedAt: string;
 };
 
-export type JobSummary = Pick<Job, "id" | "title" | "departmentName" | "location" | "workMode" | "status" | "createdAt">;
+export type JobSummary = Pick<Job, "id" | "title" | "departmentName" | "location" | "workMode" | "status" | "createdAt">
+  & { applicantCount: number };
 
-export type JobStats = { published: number; drafts: number; closed: number };
+export type JobStats = { published: number; drafts: number; closed: number; activeApplicants: number };
 
 export type Department = { id: string; name: string };
 

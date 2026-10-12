@@ -71,7 +71,18 @@
     "title": "Meine Bewerbungen",
     "subtitle": "Verfolgen Sie den Status all Ihrer Bewerbungen.",
     "emptyTitle": "Noch keine Bewerbungen",
-    "emptyText": "Sobald Sie sich auf eine Stelle bewerben, können Sie den Fortschritt hier verfolgen."
+    "emptyText": "Sobald Sie sich auf eine Stelle bewerben, können Sie den Fortschritt hier verfolgen.",
+    "stageLabel": "Fortschritt der Bewerbung",
+    "appliedOn": "Beworben am {{date}}",
+    "jobRemoved": "Stelle nicht mehr verfügbar",
+    "rejected": "Vielen Dank für Ihr Interesse. Das Team hat entschieden, Ihre Bewerbung für diese Rolle nicht weiterzuverfolgen.",
+    "stages": {
+      "APPLIED": "Beworben",
+      "SCREENING": "Prüfung",
+      "INTERVIEW": "Interview",
+      "OFFER": "Angebot",
+      "HIRED": "Eingestellt"
+    }
   },
   "validation": {
     "required": "Dieses Feld ist erforderlich.",
@@ -81,7 +92,11 @@
     "salaryRange": "Das Maximum muss mindestens dem Minimum entsprechen.",
     "skillsRequired": "Fügen Sie mindestens eine Anforderung hinzu.",
     "tooManySkills": "Höchstens 30 Skills sind möglich.",
-    "descriptionTooShort": "Bitte mindestens 50 Zeichen schreiben."
+    "descriptionTooShort": "Bitte mindestens 50 Zeichen schreiben.",
+    "cvRequired": "Bitte fügen Sie Ihren Lebenslauf hinzu.",
+    "cvPdfOnly": "Der Lebenslauf muss eine PDF-Datei sein.",
+    "cvTooLarge": "Der Lebenslauf darf höchstens 5 MB groß sein.",
+    "consentRequired": "Bitte stimmen Sie der Verarbeitung Ihrer Daten zu, um sich zu bewerben."
   },
   "jobs": {
     "eyebrow": "Recruiting",
@@ -97,7 +112,7 @@
       "open": "Offene Stellen",
       "drafts": "Entwürfe",
       "closed": "Geschlossene Stellen",
-      "total": "Stellen insgesamt"
+      "activeApplicants": "Aktive Bewerbungen"
     },
     "filters": {
       "status": "Status",
@@ -111,7 +126,8 @@
       "location": "Standort",
       "workMode": "Arbeitsmodell",
       "status": "Status",
-      "created": "Erstellt am"
+      "created": "Erstellt am",
+      "applicants": "Bewerbungen"
     },
     "empty": {
       "title": "Keine Stellen gefunden",
@@ -176,7 +192,9 @@
       "publish": "Veröffentlichen",
       "publishing": "Wird veröffentlicht...",
       "saveChanges": "Änderungen speichern"
-    }
+    },
+    "applicants_one": "Bewerbung",
+    "applicants_other": "Bewerbungen"
   },
   "careers": {
     "eyebrow": "Wir stellen ein",
@@ -202,6 +220,45 @@
     "notFound": {
       "title": "Diese Stelle ist nicht mehr verfügbar",
       "text": "Sie wurde möglicherweise besetzt oder geschlossen."
+    }
+  },
+  "apply": {
+    "breadcrumb": "Bewerben",
+    "eyebrow": "Ihre Bewerbung",
+    "signInTitle": "Zum Bewerben anmelden",
+    "signInText": "Mit einem kostenlosen Bewerberkonto bewerben Sie sich in wenigen Minuten und verfolgen den Status Ihrer Bewerbungen.",
+    "staffTitle": "Bewerbungen benötigen ein Bewerberkonto",
+    "staffText": "Sie sind mit einem Mitarbeiterkonto angemeldet. Bitte nutzen Sie ein Bewerberkonto, um sich zu bewerben.",
+    "contactTitle": "Kontaktdaten",
+    "contactText": "Name und E-Mail stammen aus Ihrem Konto. Telefon und Ort sind optional.",
+    "fullName": "Vollständiger Name",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "location": "Aktueller Wohnort",
+    "accountNote": "Name oder E-Mail ändern Sie in Ihrem Kontoprofil.",
+    "documentsTitle": "Lebenslauf & Anschreiben",
+    "documentsText": "Laden Sie Ihren Lebenslauf als PDF hoch. Ein kurzes Anschreiben ist optional.",
+    "cv": {
+      "label": "Lebenslauf (PDF)",
+      "drop": "Lebenslauf hierher ziehen oder klicken",
+      "hint": "Nur PDF, bis 5 MB",
+      "replace": "Ersetzen"
+    },
+    "coverLetter": "Anschreiben (optional)",
+    "coverLetterPlaceholder": "Erzählen Sie kurz, warum Sie diese Rolle interessiert…",
+    "coverLetterHint": "Bitte keine sensiblen Daten wie Gesundheit oder Religion angeben.",
+    "privacyTitle": "Datenschutz & Einwilligung",
+    "privacyText": "Wir verarbeiten Ihre Daten nur für diese Bewerbung und in der EU.",
+    "consentLabel": "Ich stimme der Verarbeitung meiner Daten zu",
+    "consentText": "TalentFlow darf meinen Lebenslauf und meine Kontaktdaten zur Prüfung dieser Bewerbung verarbeiten, wie in der Datenschutzerklärung beschrieben. Ich kann meine Einwilligung jederzeit im Bewerberportal widerrufen und die Löschung verlangen.",
+    "aiNotice": "Ein KI-Assistent kann Ihren Lebenslauf mit den Anforderungen abgleichen. Er macht nur Vorschläge; jede Entscheidung trifft ein Mensch.",
+    "submit": "Bewerbung absenden",
+    "submitting": "Wird gesendet...",
+    "success": {
+      "title": "Bewerbung gesendet",
+      "text": "Vielen Dank! Wir haben Ihre Bewerbung erhalten und melden uns bei Ihnen. Den Fortschritt sehen Sie in Ihrem Bewerberportal.",
+      "viewApplications": "Meine Bewerbungen ansehen",
+      "moreJobs": "Weitere Stellen ansehen"
     }
   }
 }

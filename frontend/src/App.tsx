@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Navigate, Route, Routes } from "react-router";
 import AppShell from "@/components/layout/AppShell";
+import ApplyPage from "@/features/applications/pages/ApplyPage";
 import AuthStatusScreen from "@/features/auth/components/AuthStatusScreen";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import NoAccessPage from "@/features/auth/pages/NoAccessPage";
@@ -44,6 +45,7 @@ export default function App() {
     <Route element={<PublicLayout/>}>
       <Route path="/careers" element={<CareersPage/>}/>
       <Route path="/careers/:id" element={<CareerJobPage/>}/>
+      <Route path="/careers/:id/apply" element={<ApplyPage/>}/>
     </Route>
     <Route element={<RequireAuth/>}>
       <Route element={<AppShell/>}>
