@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: talentflow
+  datasource:
+    # Defaults match the local docker compose stack; override via environment in any other setup.
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/talentflow}
+    username: ${DB_USERNAME:talentflow}
+    password: ${DB_PASSWORD:talentflow}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  mvc:
+    problemdetails:
+      enabled: true
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  port: ${SERVER_PORT:8080}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
