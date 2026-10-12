@@ -1,0 +1,67 @@
+{
+  "common": {
+    "appName": "TalentFlow",
+    "retry": "Erneut versuchen",
+    "loading": "Wird geladen…"
+  },
+  "roles": {
+    "CANDIDATE": "Bewerber:in",
+    "RECRUITER": "Recruiter:in",
+    "HIRING_MANAGER": "Hiring Manager",
+    "ADMIN": "Admin"
+  },
+  "auth": {
+    "eyebrow": "Für moderne europäische Teams",
+    "headlineLine1": "Klüger einstellen.",
+    "headlineLine2": "Konform bleiben.",
+    "tagline": "KI-gestütztes Recruiting, das Ihnen hilft, außergewöhnliche Menschen zu finden – mit Datenschutz im Mittelpunkt jeder Entscheidung.",
+    "artMatch": "Kandidaten-Match",
+    "artGdprTitle": "DSGVO-konform",
+    "artGdprText": "Datenverarbeitung in der EU",
+    "artAiLabel": "KI-Screening",
+    "artAiValue": "18 Std. gespart",
+    "brandFoot": "DSGVO-konform · Gehostet in der EU",
+    "welcome": "Willkommen zurück",
+    "subtitle": "Melden Sie sich an, um fortzufahren.",
+    "signIn": "Anmelden",
+    "newHere": "Neu bei TalentFlow?",
+    "createAccount": "Bewerberkonto erstellen",
+    "secureNote": "Die Anmeldung erfolgt über unseren Identitätsanbieter. Ihr Passwort sehen wir nie.",
+    "footerCopyright": "© {{year}} TalentFlow",
+    "footerPrivacy": "Datenschutz",
+    "footerImprint": "Impressum",
+    "switchLanguage": "English",
+    "connecting": "Verbindung zum Anmeldedienst wird hergestellt…",
+    "unavailableTitle": "Anmeldung derzeit nicht möglich",
+    "unavailableText": "Der Identitätsanbieter ist nicht erreichbar. Bitte prüfen Sie, ob er läuft, und versuchen Sie es erneut.",
+    "noAccessTitle": "Noch kein Zugriff",
+    "noAccessText": "Ihrem Konto ist keine TalentFlow-Rolle zugewiesen. Bitte wenden Sie sich an Ihre Administration."
+  },
+  "shell": {
+    "workspace": "Arbeitsbereich",
+    "manage": "Verwalten",
+    "settings": "Einstellungen",
+    "compliance": "Compliance",
+    "searchPlaceholder": "Bewerber, Stellen, Interviews suchen...",
+    "toggleDarkMode": "Dunkelmodus umschalten",
+    "toggleSidebar": "Seitenleiste umschalten",
+    "notifications": "Benachrichtigungen",
+    "signOut": "Abmelden",
+    "languageLabel": "DE"
+  },
+  "nav": {
+    "overview": "Übersicht",
+    "jobs": "Stellen",
+    "allJobs": "Alle Stellen",
+    "candidates": "Bewerber",
+    "shortlists": "Shortlists",
+    "myApplications": "Meine Bewerbungen"
+  },
+  "portal": {
+    "eyebrow": "Bewerberportal",
+    "title": "Meine Bewerbungen",
+    "subtitle": "Verfolgen Sie den Status all Ihrer Bewerbungen.",
+    "emptyTitle": "Noch keine Bewerbungen",
+    "emptyText": "Sobald Sie sich auf eine Stelle bewerben, können Sie den Fortschritt hier verfolgen."
+  }
+}

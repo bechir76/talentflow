@@ -1,0 +1,67 @@
+{
+  "common": {
+    "appName": "TalentFlow",
+    "retry": "Try again",
+    "loading": "Loading…"
+  },
+  "roles": {
+    "CANDIDATE": "Candidate",
+    "RECRUITER": "Recruiter",
+    "HIRING_MANAGER": "Hiring Manager",
+    "ADMIN": "Admin"
+  },
+  "auth": {
+    "eyebrow": "Built for modern European teams",
+    "headlineLine1": "Hire smarter.",
+    "headlineLine2": "Stay compliant.",
+    "tagline": "AI-assisted recruiting that helps you find exceptional people while keeping privacy at the heart of every decision.",
+    "artMatch": "Candidate match",
+    "artGdprTitle": "GDPR ready",
+    "artGdprText": "Data processed in EU",
+    "artAiLabel": "AI screening",
+    "artAiValue": "18h saved",
+    "brandFoot": "GDPR compliant · Hosted in the EU",
+    "welcome": "Welcome back",
+    "subtitle": "Sign in to continue to your workspace.",
+    "signIn": "Sign in",
+    "newHere": "New to TalentFlow?",
+    "createAccount": "Create a candidate account",
+    "secureNote": "Sign-in is handled by our identity provider. We never see your password.",
+    "footerCopyright": "© {{year}} TalentFlow",
+    "footerPrivacy": "Privacy",
+    "footerImprint": "Imprint",
+    "switchLanguage": "Deutsch",
+    "connecting": "Connecting to sign-in service…",
+    "unavailableTitle": "Sign-in is currently unavailable",
+    "unavailableText": "We could not reach the identity provider. Please check that it is running and try again.",
+    "noAccessTitle": "No access yet",
+    "noAccessText": "Your account does not have a TalentFlow role assigned. Please contact your administrator."
+  },
+  "shell": {
+    "workspace": "Workspace",
+    "manage": "Manage",
+    "settings": "Settings",
+    "compliance": "Compliance",
+    "searchPlaceholder": "Search candidates, jobs, interviews...",
+    "toggleDarkMode": "Toggle dark mode",
+    "toggleSidebar": "Toggle sidebar",
+    "notifications": "Notifications",
+    "signOut": "Sign out",
+    "languageLabel": "EN"
+  },
+  "nav": {
+    "overview": "Overview",
+    "jobs": "Jobs",
+    "allJobs": "All Jobs",
+    "candidates": "Candidates",
+    "shortlists": "Shortlists",
+    "myApplications": "My Applications"
+  },
+  "portal": {
+    "eyebrow": "Candidate portal",
+    "title": "My Applications",
+    "subtitle": "Track the status of every application you have submitted.",
+    "emptyTitle": "No applications yet",
+    "emptyText": "Once you apply for a job, you can follow its progress here."
+  }
+}
