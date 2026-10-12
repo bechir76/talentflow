@@ -24,8 +24,11 @@ services:
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USER:-admin}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?Set KEYCLOAK_ADMIN_PASSWORD in .env}
       KC_HEALTH_ENABLED: "true"
+      # Tokens always carry the browser-facing issuer, even when fetched from inside the network.
+      KC_HOSTNAME: http://localhost:${KEYCLOAK_PORT:-8180}
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
     ports:
-      - "8180:8080"
+      - "${KEYCLOAK_PORT:-8180}:8080"
     volumes:
       - ./infra/keycloak:/opt/keycloak/data/import:ro
 
@@ -41,6 +44,9 @@ services:
       DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-talentflow}
       DB_USERNAME: ${POSTGRES_USER:-talentflow}
       DB_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      KEYCLOAK_ISSUER_URI: http://localhost:${KEYCLOAK_PORT:-8180}/realms/talentflow
+      KEYCLOAK_JWK_SET_URI: http://keycloak:8080/realms/talentflow/protocol/openid-connect/certs
+      CORS_ALLOWED_ORIGINS: http://localhost:${FRONTEND_PORT:-3000},http://localhost:5173
     ports:
       - "${BACKEND_PORT:-8080}:8080"
     depends_on:

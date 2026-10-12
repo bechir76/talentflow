@@ -1,0 +1,130 @@
+{
+  "realm": "talentflow",
+  "displayName": "TalentFlow",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "rememberMe": true,
+  "internationalizationEnabled": true,
+  "supportedLocales": ["en", "de"],
+  "defaultLocale": "en",
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "roles": {
+    "realm": [
+      { "name": "CANDIDATE", "description": "Applies to jobs and manages own data" },
+      { "name": "RECRUITER", "description": "Manages jobs, applications and the pipeline" },
+      { "name": "HIRING_MANAGER", "description": "Reviews assigned candidates and gives interview feedback" },
+      { "name": "ADMIN", "description": "Manages users, data retention and the audit log" },
+      { "name": "offline_access", "description": "${role_offline-access}" },
+      { "name": "uma_authorization", "description": "${role_uma_authorization}" },
+      {
+        "name": "default-roles-talentflow",
+        "description": "Roles granted to self-registered users",
+        "composite": true,
+        "composites": {
+          "realm": ["offline_access", "uma_authorization", "CANDIDATE"]
+        }
+      }
+    ]
+  },
+  "defaultRole": {
+    "name": "default-roles-talentflow",
+    "composite": true
+  },
+  "clients": [
+    {
+      "clientId": "talentflow-frontend",
+      "name": "TalentFlow web app",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "rootUrl": "http://localhost:5173",
+      "baseUrl": "/",
+      "redirectUris": ["http://localhost:5173/*", "http://localhost:3000/*"],
+      "webOrigins": ["+"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:5173/*##http://localhost:3000/*"
+      },
+      "protocolMappers": [
+        {
+          "name": "talentflow-api-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "talentflow-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "talentflow-api",
+      "name": "TalentFlow API",
+      "description": "Audience for access tokens validated by the backend",
+      "enabled": true,
+      "publicClient": false,
+      "bearerOnly": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false
+    }
+  ],
+  "users": [
+    {
+      "username": "candidate@talentflow.dev",
+      "email": "candidate@talentflow.dev",
+      "emailVerified": true,
+      "firstName": "Clara",
+      "lastName": "Candidate",
+      "enabled": true,
+      "credentials": [{ "type": "password", "value": "demo1234", "temporary": false }],
+      "realmRoles": ["CANDIDATE", "offline_access", "uma_authorization"]
+    },
+    {
+      "username": "recruiter@talentflow.dev",
+      "email": "recruiter@talentflow.dev",
+      "emailVerified": true,
+      "firstName": "Anna",
+      "lastName": "Keller",
+      "enabled": true,
+      "credentials": [{ "type": "password", "value": "demo1234", "temporary": false }],
+      "realmRoles": ["RECRUITER", "offline_access", "uma_authorization"]
+    },
+    {
+      "username": "manager@talentflow.dev",
+      "email": "manager@talentflow.dev",
+      "emailVerified": true,
+      "firstName": "Martin",
+      "lastName": "Richter",
+      "enabled": true,
+      "credentials": [{ "type": "password", "value": "demo1234", "temporary": false }],
+      "realmRoles": ["HIRING_MANAGER", "offline_access", "uma_authorization"]
+    },
+    {
+      "username": "admin@talentflow.dev",
+      "email": "admin@talentflow.dev",
+      "emailVerified": true,
+      "firstName": "Alex",
+      "lastName": "Admin",
+      "enabled": true,
+      "credentials": [{ "type": "password", "value": "demo1234", "temporary": false }],
+      "realmRoles": ["ADMIN", "offline_access", "uma_authorization"]
+    }
+  ]
+}
