@@ -19,6 +19,7 @@ import com.talentflow.application.domain.JobApplicationRepository;
 import com.talentflow.candidate.application.CandidateService;
 import com.talentflow.candidate.domain.Candidate;
 import com.talentflow.candidate.domain.Consent;
+import com.talentflow.interview.application.InterviewService;
 
 /**
  * Anonymises a candidate and everything personal attached to them (right to erasure, Art. 17).
@@ -33,12 +34,14 @@ public class CandidateErasureService {
     private final CandidateService candidates;
     private final JobApplicationRepository applications;
     private final CvStorage cvStorage;
+    private final InterviewService interviews;
 
     public CandidateErasureService(CandidateService candidates, JobApplicationRepository applications,
-            CvStorage cvStorage) {
+            CvStorage cvStorage, InterviewService interviews) {
         this.candidates = candidates;
         this.applications = applications;
         this.cvStorage = cvStorage;
+        this.interviews = interviews;
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
@@ -50,6 +53,7 @@ public class CandidateErasureService {
                 cvKeys.add(application.getCvStorageKey());
             }
             application.anonymize();
+            interviews.anonymizeForApplication(application.getId());
         }
         for (Consent consent : candidates.consents(candidateId)) {
             consent.withdraw(now);

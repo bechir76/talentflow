@@ -42,7 +42,7 @@ public class PipelineController {
     }
 
     @GetMapping("/api/v1/jobs/{jobId}/applications")
-    @PreAuthorize("hasAnyRole('RECRUITER', 'HIRING_MANAGER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('RECRUITER', 'ADMIN')")
     @Operation(summary = "Applications of a job for the Kanban board")
     public PageResponse<PipelineCardResponse> board(@PathVariable UUID jobId,
             @PageableDefault(size = 100, sort = "appliedAt", direction = Sort.Direction.DESC) Pageable pageable) {

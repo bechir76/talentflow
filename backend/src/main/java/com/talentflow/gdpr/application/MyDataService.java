@@ -17,8 +17,10 @@ import com.talentflow.candidate.domain.Candidate;
 import com.talentflow.gdpr.application.CandidateDataExport.AiScreening;
 import com.talentflow.gdpr.application.CandidateDataExport.ApplicationRecord;
 import com.talentflow.gdpr.application.CandidateDataExport.ConsentRecord;
+import com.talentflow.gdpr.application.CandidateDataExport.InterviewRecord;
 import com.talentflow.gdpr.application.CandidateDataExport.Profile;
 import com.talentflow.gdpr.application.CandidateDataExport.StageRecord;
+import com.talentflow.interview.application.InterviewService;
 import com.talentflow.job.application.JobService;
 import com.talentflow.job.application.JobView;
 import com.talentflow.pipeline.domain.StageChangeRepository;
@@ -37,6 +39,7 @@ public class MyDataService {
     private final CandidateService candidates;
     private final JobApplicationRepository applications;
     private final StageChangeRepository stageChanges;
+    private final InterviewService interviews;
     private final JobService jobs;
     private final CandidateErasureService erasure;
     private final AuditService audit;
@@ -44,11 +47,12 @@ public class MyDataService {
     private final Clock clock;
 
     public MyDataService(CandidateService candidates, JobApplicationRepository applications,
-            StageChangeRepository stageChanges, JobService jobs,
+            StageChangeRepository stageChanges, InterviewService interviews, JobService jobs,
             CandidateErasureService erasure, AuditService audit, CurrentUserProvider currentUser, Clock clock) {
         this.candidates = candidates;
         this.applications = applications;
         this.stageChanges = stageChanges;
+        this.interviews = interviews;
         this.jobs = jobs;
         this.erasure = erasure;
         this.audit = audit;
@@ -74,6 +78,9 @@ public class MyDataService {
                 stageChanges.findByApplicationId(application.getId()).stream()
                         .map(change -> new StageRecord(change.getFromStage().name(), change.getToStage().name(),
                                 change.getChangedAt()))
+                        .toList(),
+                interviews.interviewsOf(application.getId()).stream()
+                        .map(i -> new InterviewRecord(i.getScheduledAt(), i.getDurationMinutes(), i.getMeetingLink()))
                         .toList()))
                 .toList();
 

@@ -30,17 +30,20 @@ public class ApplicationQueryService {
     private final JobService jobs;
     private final CvStorage cvStorage;
     private final AuditService audit;
+    private final ApplicationAccessGuard access;
 
     public ApplicationQueryService(JobApplicationRepository applications, CandidateService candidates,
-            JobService jobs, CvStorage cvStorage, AuditService audit) {
+            JobService jobs, CvStorage cvStorage, AuditService audit, ApplicationAccessGuard access) {
         this.applications = applications;
         this.candidates = candidates;
         this.jobs = jobs;
         this.cvStorage = cvStorage;
         this.audit = audit;
+        this.access = access;
     }
 
     public ApplicationDetails get(UUID id) {
+        access.requireAccess(id);
         JobApplication application = load(id);
         Candidate candidate = candidates.get(application.getCandidateId());
         JobView job = jobs.findViews(List.of(application.getJobId())).get(application.getJobId());
@@ -51,6 +54,7 @@ public class ApplicationQueryService {
     /** Every access to a CV is written to the audit log (viewed in the browser or downloaded). */
     @Transactional
     public byte[] cv(UUID id, boolean download) {
+        access.requireAccess(id);
         JobApplication application = load(id);
         if (application.getCvStorageKey() == null) {
             throw new NotFoundException("CV of application", id);

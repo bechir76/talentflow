@@ -21,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
+import com.talentflow.application.application.ApplicationAccessGuard;
 import com.talentflow.application.domain.ApplicationStage;
 import com.talentflow.application.domain.JobApplication;
 import com.talentflow.application.domain.JobApplicationRepository;
@@ -52,6 +53,8 @@ class PipelineServiceTest {
     private CurrentUserProvider currentUser;
     @Mock
     private ApplicationEventPublisher events;
+    @Mock
+    private ApplicationAccessGuard access;
 
     private PipelineService service;
     private final JobApplication application = JobApplication.submit(UUID.randomUUID(), UUID.randomUUID(), "cv.pdf",
@@ -59,7 +62,7 @@ class PipelineServiceTest {
 
     @BeforeEach
     void setUp() {
-        service = new PipelineService(applications, stageChanges, candidates, audit, currentUser, events,
+        service = new PipelineService(applications, stageChanges, candidates, audit, currentUser, events, access,
                 Clock.fixed(NOW, ZoneOffset.UTC));
     }
 

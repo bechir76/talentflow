@@ -43,6 +43,8 @@ server:
   port: ${SERVER_PORT:8080}
 
 talentflow:
+  # Used for interview e-mails and "this week" on the dashboard.
+  time-zone: ${TIME_ZONE:Europe/Berlin}
   keycloak-admin:
     base-url: ${KEYCLOAK_ADMIN_URL:http://localhost:8180}
     realm: ${KEYCLOAK_REALM:talentflow}

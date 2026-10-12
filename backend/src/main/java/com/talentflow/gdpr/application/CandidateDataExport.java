@@ -21,7 +21,8 @@ public record CandidateDataExport(
     }
 
     public record ApplicationRecord(UUID id, String jobTitle, String stage, Instant appliedAt, String coverLetter,
-            boolean cvStored, AiScreening aiScreening, List<StageRecord> stageHistory) {
+            boolean cvStored, AiScreening aiScreening, List<StageRecord> stageHistory,
+            List<InterviewRecord> interviews) {
     }
 
     public record AiScreening(String status, Integer score, List<String> matchingSkills, List<String> missingSkills,
@@ -30,5 +31,8 @@ public record CandidateDataExport(
     }
 
     public record StageRecord(String from, String to, Instant changedAt) {
+    }
+
+    public record InterviewRecord(Instant scheduledAt, int durationMinutes, String meetingLink) {
     }
 }

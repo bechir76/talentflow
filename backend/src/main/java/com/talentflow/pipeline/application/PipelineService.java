@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.talentflow.application.application.ApplicationAccessGuard;
 import com.talentflow.application.domain.ApplicationStage;
 import com.talentflow.application.domain.JobApplication;
 import com.talentflow.application.domain.JobApplicationRepository;
@@ -38,17 +39,19 @@ public class PipelineService {
     private final AuditService audit;
     private final CurrentUserProvider currentUser;
     private final ApplicationEventPublisher events;
+    private final ApplicationAccessGuard access;
     private final Clock clock;
 
     public PipelineService(JobApplicationRepository applications, StageChangeRepository stageChanges,
             CandidateService candidates, AuditService audit, CurrentUserProvider currentUser,
-            ApplicationEventPublisher events, Clock clock) {
+            ApplicationEventPublisher events, ApplicationAccessGuard access, Clock clock) {
         this.applications = applications;
         this.stageChanges = stageChanges;
         this.candidates = candidates;
         this.audit = audit;
         this.currentUser = currentUser;
         this.events = events;
+        this.access = access;
         this.clock = clock;
     }
 
@@ -76,6 +79,7 @@ public class PipelineService {
 
     @Transactional(readOnly = true)
     public List<StageChange> history(UUID applicationId) {
+        access.requireAccess(applicationId);
         if (applications.findById(applicationId).isEmpty()) {
             throw new NotFoundException("Application", applicationId);
         }
