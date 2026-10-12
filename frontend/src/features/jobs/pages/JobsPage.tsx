@@ -40,7 +40,10 @@ export default function JobsPage() {
   const changeStatus = useChangeJobStatus();
 
   const menuItems = (job: JobSummary): RowMenuItem[] => {
-    const items: RowMenuItem[] = [{ label: t("jobs.actions.edit"), onSelect: () => navigate(`/jobs/${job.id}/edit`) }];
+    const items: RowMenuItem[] = [
+      { label: t("jobs.actions.edit"), onSelect: () => navigate(`/jobs/${job.id}/edit`) },
+      { label: t("jobs.actions.viewPipeline"), onSelect: () => navigate(`/pipeline?jobId=${job.id}`) },
+    ];
     if (job.status === "PUBLISHED") {
       items.push({ label: t("jobs.actions.viewOnCareers"), onSelect: () => window.open(`/careers/${job.id}`, "_blank", "noopener") });
       items.push({ label: t("jobs.actions.close"), danger: true, onSelect: () => changeStatus.mutate({ id: job.id, status: "CLOSED" }) });
@@ -81,7 +84,7 @@ export default function JobsPage() {
             <td><button className="job-link" onClick={() => navigate(`/jobs/${job.id}/edit`)}><span className="job-table-icon"><Icon name="briefcase" size={16}/></span><span><strong>{job.title}</strong><small>{t(job.status === "PUBLISHED" ? "jobs.visibleOnCareers" : "jobs.notVisible")}</small></span></button></td>
             <td>{job.departmentName}</td><td>{job.location}</td>
             <td><WorkModeBadge mode={job.workMode}/></td>
-            <td><button className="applicant-count" onClick={() => navigate("/pipeline")}><span>{job.applicantCount}</span>{t("jobs.applicants", { count: job.applicantCount })}</button></td>
+            <td><button className="applicant-count" onClick={() => navigate(`/pipeline?jobId=${job.id}`)}><span>{job.applicantCount}</span>{t("jobs.applicants", { count: job.applicantCount })}</button></td>
             <td><JobStatusBadge status={job.status}/></td>
             <td>{formatDate(job.createdAt)}</td>
             <td><RowMenu items={menuItems(job)}/></td>

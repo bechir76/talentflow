@@ -1,44 +1,62 @@
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import Avatar from "@/components/common/Avatar";
 import Icon from "@/components/common/Icon";
+import { scoreTone } from "@/features/candidates/score";
 import { useCurrentUser } from "@/lib/auth/AuthContext";
+import { initialsOf } from "@/lib/format";
+import { currentLanguage } from "@/lib/i18n";
+import { useDashboard } from "../api/dashboard";
 import ApplicationsChart from "../components/ApplicationsChart";
 import FunnelChart from "../components/FunnelChart";
 import KpiCard from "../components/KpiCard";
-import { todaysInterviews, topMatches } from "../mock";
+
+const AVATAR_COLORS = ["violet", "rose", "blue"];
+
+function greetingKey(hour: number): "morning" | "afternoon" | "evening" {
+  if (hour < 12) return "morning";
+  if (hour < 18) return "afternoon";
+  return "evening";
+}
 
 export default function DashboardPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const user = useCurrentUser();
+  const dashboard = useDashboard();
   const canCreateJobs = user.roles.includes("RECRUITER") || user.roles.includes("ADMIN");
+  const now = new Date();
+  const today = new Intl.DateTimeFormat(currentLanguage() === "de" ? "de-DE" : "en-GB", { weekday: "long", day: "numeric", month: "long" }).format(now);
+  const data = dashboard.data;
+  const daysToHire = data?.averageDaysToHire;
+
   return <div className="page dashboard">
-    <div className="page-heading"><div><span className="eyebrow">Tuesday, 18 February</span><h1>Good morning, {user.firstName ?? user.fullName}</h1><p>Here's what's happening with your hiring pipeline today.</p></div>{canCreateJobs && <button className="primary-button" onClick={() => navigate("/jobs/new")}><Icon name="plus"/>Create job</button>}</div>
+    <div className="page-heading"><div><span className="eyebrow">{today}</span><h1>{t(`dashboard.greeting.${greetingKey(now.getHours())}`, { name: user.firstName ?? user.fullName })}</h1><p>{t("dashboard.subtitle")}</p></div>{canCreateJobs && <button className="primary-button" onClick={() => navigate("/jobs/new")}><Icon name="plus"/>{t("jobs.create")}</button>}</div>
+    {dashboard.isError && <div className="form-error-banner" role="alert"><Icon name="info" size={16}/>{t("common.loadError")}</div>}
     <section className="kpi-grid">
-      <KpiCard icon="briefcase" label="Open Jobs" value="12" trend="8.2%" note="vs. last month" color="indigo"/>
-      <KpiCard icon="users" label="Active Candidates" value="148" trend="12.4%" note="vs. last month" color="blue"/>
-      <KpiCard icon="calendar" label="Interviews This Week" value="9" note="3 scheduled today" color="amber"/>
-      <KpiCard icon="clock" label="Avg. Time to Hire" value="21 days" trend="3 days faster" note="than last quarter" color="green"/>
+      <KpiCard icon="briefcase" label={t("dashboard.kpi.openJobs")} value={data ? String(data.openJobs) : "–"} note={t("dashboard.kpi.openJobsNote")} color="indigo"/>
+      <KpiCard icon="users" label={t("dashboard.kpi.activeCandidates")} value={data ? String(data.activeCandidates) : "–"} note={t("dashboard.kpi.activeCandidatesNote")} color="blue"/>
+      <KpiCard icon="calendar" label={t("dashboard.kpi.interviews")} value="–" note={t("dashboard.kpi.interviewsNote")} color="amber"/>
+      <KpiCard icon="clock" label={t("dashboard.kpi.timeToHire")} value={daysToHire != null ? t("dashboard.kpi.days", { count: Math.round(daysToHire) }) : "–"} note={t("dashboard.kpi.timeToHireNote")} color="green"/>
     </section>
-    <section className="analytics-grid"><ApplicationsChart/><FunnelChart/></section>
+    {data && <section className="analytics-grid"><ApplicationsChart data={data.applicationsPerJob}/><FunnelChart funnel={data.funnel}/></section>}
     <section className="lists-grid">
       <article className="panel matches-panel">
-        <div className="panel-head"><div><div className="title-with-icon"><span className="sparkle-icon"><Icon name="sparkles" size={16}/></span><h3>Top AI Matches Today</h3></div><p>Best new candidates based on job requirements</p></div><button className="link-button" onClick={() => navigate("/pipeline")}>View all <Icon name="arrow" size={15}/></button></div>
-        <div className="match-list">{topMatches.map((candidate, i) => <div className="match-row" key={candidate.name}>
-          <Avatar initials={candidate.initials} color={candidate.color}/><div className="match-info"><strong>{candidate.name}</strong><span>{candidate.role}</span></div>
-          <div className="match-job"><span>Matched for</span><strong>Senior Java Developer</strong></div>
-          <span className={`score-pill ${i === 2 ? "good" : ""}`}><Icon name="sparkles" size={13}/>{candidate.score}% match</span>
-          <button className="secondary-button" onClick={() => navigate("/pipeline")}>View</button>
-        </div>)}</div>
+        <div className="panel-head"><div><div className="title-with-icon"><span className="sparkle-icon"><Icon name="sparkles" size={16}/></span><h3>{t("dashboard.topMatches")}</h3></div><p>{t("dashboard.topMatchesSubtitle")}</p></div><button className="link-button" onClick={() => navigate("/pipeline")}>{t("dashboard.viewAll")} <Icon name="arrow" size={15}/></button></div>
+        <div className="match-list">
+          {data?.topMatches.map((match, i) => <div className="match-row" key={match.applicationId}>
+            <Avatar initials={initialsOf(match.candidateName)} color={AVATAR_COLORS[i % AVATAR_COLORS.length]}/><div className="match-info"><strong>{match.candidateName}</strong></div>
+            <div className="match-job"><span>{t("dashboard.matchedFor")}</span><strong>{match.jobTitle}</strong></div>
+            <span className={`score-pill ${scoreTone(match.score) === "excellent" ? "" : "good"}`}><Icon name="sparkles" size={13}/>{t("dashboard.match", { score: match.score })}</span>
+            <button className="secondary-button" onClick={() => navigate(`/applications/${match.applicationId}`)}>{t("dashboard.view")}</button>
+          </div>)}
+          {data?.topMatches.length === 0 && <div className="table-empty list-empty"><strong>{t("dashboard.noMatches")}</strong><span>{t("dashboard.noMatchesText")}</span></div>}
+        </div>
+        <p className="ai-footnote"><Icon name="info" size={12}/>{t("candidate.ai.notice")}</p>
       </article>
       <article className="panel interviews-panel">
-        <div className="panel-head"><div><h3>Upcoming Interviews</h3><p>Your schedule this week</p></div><button className="icon-button"><Icon name="calendar"/></button></div>
-        <div className="date-heading"><span>Today</span><b>3 interviews</b></div>
-        {todaysInterviews.map(([time, name, type, interviewer], i) => <div className="interview-row" key={name}>
-          <div className="time"><strong>{time}</strong><span>{i === 0 ? "60 min" : "45 min"}</span></div><i className={`timeline-dot dot-${i}`}></i>
-          <Avatar initials={name.split(" ").map(x => x[0]).join("")} color={i === 0 ? "rose" : i === 1 ? "violet" : "blue"} small/>
-          <div className="interview-info"><strong>{name}</strong><span>{type}</span></div><Avatar initials={interviewer} color="gray" small/>
-        </div>)}
-        <button className="full-link">Open calendar <Icon name="arrow" size={15}/></button>
+        <div className="panel-head"><div><h3>{t("dashboard.interviewsTitle")}</h3><p>{t("dashboard.interviewsSubtitle")}</p></div><span className="icon-button"><Icon name="calendar"/></span></div>
+        <div className="table-empty list-empty"><Icon name="calendar" size={22}/><strong>{t("dashboard.noInterviews")}</strong><span>{t("dashboard.noInterviewsText")}</span></div>
       </article>
     </section>
   </div>;

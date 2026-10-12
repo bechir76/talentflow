@@ -138,7 +138,8 @@
       "publish": "Publish",
       "reopen": "Reopen",
       "close": "Close job",
-      "viewOnCareers": "View on career page"
+      "viewOnCareers": "View on career page",
+      "viewPipeline": "View pipeline"
     },
     "workMode": {
       "REMOTE": "Remote",
@@ -269,7 +270,26 @@
       "OFFER": "Offer",
       "HIRED": "Hired",
       "REJECTED": "Rejected"
-    }
+    },
+    "title": "Pipeline",
+    "selectJob": "Select job",
+    "searchPlaceholder": "Search candidates...",
+    "sortScore": "AI score: High to low",
+    "sortNewest": "Newest first",
+    "total_one": "{{count}} candidate",
+    "total_other": "{{count}} candidates",
+    "emptyColumn": "No candidates",
+    "readOnly": "View only: recruiters move candidates between stages.",
+    "noJobsTitle": "No open jobs yet",
+    "noJobsText": "Publish a job to start receiving candidates.",
+    "unknownCandidate": "Unknown candidate",
+    "cardLabel": "{{name}}: open details or drag to another stage",
+    "today": "Today",
+    "daysInStage_one": "{{count}}d in stage",
+    "daysInStage_other": "{{count}}d in stage",
+    "aiScore": "AI match score (suggestion)",
+    "aiPending": "AI screening in progress",
+    "aiFailed": "AI screening not available"
   },
   "candidate": {
     "consentVerified": "GDPR consent verified",
@@ -318,11 +338,56 @@
       "appliedDetail": "Applied via the TalentFlow career page",
       "aiDone": "AI screening completed",
       "aiFailed": "AI screening failed",
-      "aiDetail": "Suggested match score: {{score}}%"
+      "aiDetail": "Suggested match score: {{score}}%",
+      "moved": "Moved to {{stage}}",
+      "movedDetail": "Stage changed from {{from}} to {{to}}"
     },
     "feedback": {
       "emptyTitle": "No interview feedback yet",
       "emptyText": "Feedback from interviewers will appear here after interviews have taken place."
-    }
+    },
+    "currentStage": "Current stage",
+    "moveTo": "Move to {{stage}}",
+    "reject": "Reject"
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Good morning, {{name}}",
+      "afternoon": "Good afternoon, {{name}}",
+      "evening": "Good evening, {{name}}"
+    },
+    "subtitle": "Here's what's happening with your hiring pipeline today.",
+    "kpi": {
+      "openJobs": "Open Jobs",
+      "openJobsNote": "Published on the career page",
+      "activeCandidates": "Active Candidates",
+      "activeCandidatesNote": "Applications in progress",
+      "interviews": "Interviews This Week",
+      "interviewsNote": "Interview scheduling is not set up yet",
+      "timeToHire": "Avg. Time to Hire",
+      "timeToHireNote": "Hires in the last 90 days",
+      "days_one": "{{count}} day",
+      "days_other": "{{count}} days"
+    },
+    "chartTitle": "Applications per Job",
+    "chartSubtitle": "New applications in the last 30 days",
+    "chartEmpty": "No applications in the last 30 days",
+    "applications": "Applications",
+    "funnelTitle": "Pipeline Conversion",
+    "funnelSubtitle": "Applications that reached each stage",
+    "overallConversion": "{{rate}}% overall conversion",
+    "overallNote": "From application to hire",
+    "topMatches": "Top AI Matches",
+    "topMatchesSubtitle": "Highest suggested matches from the last 7 days",
+    "viewAll": "View all",
+    "matchedFor": "Matched for",
+    "match": "{{score}}% match",
+    "view": "View",
+    "noMatches": "No screened applications yet",
+    "noMatchesText": "New applications appear here once the AI screening has finished.",
+    "interviewsTitle": "Upcoming Interviews",
+    "interviewsSubtitle": "Your schedule this week",
+    "noInterviews": "No interviews scheduled",
+    "noInterviewsText": "Scheduled interviews will appear here."
   }
 }

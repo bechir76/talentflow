@@ -485,3 +485,30 @@ button { cursor: pointer; }
 .stage-pill.stage-hired { color: #177554; background: #e6f7f0; }
 .stage-pill.stage-rejected { color: #c74646; background: #fff3f3; }
 .stage-pill.stage-applied { color: #596273; background: #f0f1f4; }
+
+/* Pipeline board */
+.job-select { height: 32px; max-width: 260px; padding: 0 10px; border: 1px solid var(--border); border-radius: 8px; color: var(--text); background: var(--surface); font-size: 10px; font-weight: 600; outline: none; }
+.filter-button.active { color: var(--indigo); border-color: #bbb8ef; background: var(--indigo-soft); }
+.pipeline-hint { display: flex; align-items: center; gap: 6px; margin: -6px 0 12px; color: var(--muted); font-size: 9px; }
+.pipeline-page .form-error-banner { margin-bottom: 12px; }
+.column-cards.drop-target { outline: 2px dashed #bbb8ef; outline-offset: -2px; background: color-mix(in srgb, var(--indigo-soft) 60%, transparent); }
+.candidate-card { touch-action: none; }
+.candidate-card:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+.candidate-card.dragging { opacity: .35; }
+.candidate-card.overlay { cursor: grabbing; transform: rotate(2deg); box-shadow: 0 14px 30px rgba(25,32,60,.18); }
+.candidate-card.locked { cursor: pointer; }
+.candidate-card-head > .icon { color: var(--subtle); }
+.circle-score.pending { color: var(--subtle); border-color: var(--border); background: var(--canvas); }
+.stage-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.stage-controls button:disabled, .stage-controls select:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.stage-error { margin: 0; color: #d74a4a; font-size: 8px; }
+
+/* Dashboard */
+.bar-chart-recharts { height: 230px; margin-top: 8px; }
+.chart-tick { fill: var(--muted); font-size: 8px; }
+.chart-grid line { stroke: var(--border); }
+.chart-cursor { fill: var(--indigo-soft); opacity: .6; }
+.chart-empty { min-height: 230px; }
+.list-empty { min-height: 180px; text-align: center; }
+.ai-footnote { display: flex; align-items: center; gap: 5px; margin: 10px 0 0; color: var(--subtle); font-size: 7px; }
+.funnel-bar { min-width: 34px; }

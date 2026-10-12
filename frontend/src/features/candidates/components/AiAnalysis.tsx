@@ -2,16 +2,9 @@ import { useTranslation } from "react-i18next";
 import Icon from "@/components/common/Icon";
 import { formatDate } from "@/lib/format";
 import { useRerunAiAnalysis, type ApplicationDetail } from "../api/applications";
+import { scoreTone } from "../score";
 
 const RING_CIRCUMFERENCE = 2 * Math.PI * 52;
-
-export type ScoreTone = "excellent" | "good" | "low";
-
-export function scoreTone(score: number): ScoreTone {
-  if (score >= 80) return "excellent";
-  if (score >= 60) return "good";
-  return "low";
-}
 
 /** AI screening suggestion. It supports the recruiter; the decision is always made by a person. */
 export default function AiAnalysis({ applicationId, ai, canRerun }: { applicationId: string; ai: ApplicationDetail["ai"]; canRerun: boolean }) {

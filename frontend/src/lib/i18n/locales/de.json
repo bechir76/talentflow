@@ -138,7 +138,8 @@
       "publish": "Veröffentlichen",
       "reopen": "Wieder öffnen",
       "close": "Stelle schließen",
-      "viewOnCareers": "Auf Karriereseite ansehen"
+      "viewOnCareers": "Auf Karriereseite ansehen",
+      "viewPipeline": "Pipeline ansehen"
     },
     "workMode": {
       "REMOTE": "Remote",
@@ -269,7 +270,26 @@
       "OFFER": "Angebot",
       "HIRED": "Eingestellt",
       "REJECTED": "Abgelehnt"
-    }
+    },
+    "title": "Pipeline",
+    "selectJob": "Stelle wählen",
+    "searchPlaceholder": "Bewerber suchen...",
+    "sortScore": "KI-Score: absteigend",
+    "sortNewest": "Neueste zuerst",
+    "total_one": "{{count}} Bewerbung",
+    "total_other": "{{count}} Bewerbungen",
+    "emptyColumn": "Keine Bewerber",
+    "readOnly": "Nur Ansicht: Recruiter verschieben Bewerber zwischen den Phasen.",
+    "noJobsTitle": "Noch keine offenen Stellen",
+    "noJobsText": "Veröffentlichen Sie eine Stelle, um Bewerbungen zu erhalten.",
+    "unknownCandidate": "Unbekannte Person",
+    "cardLabel": "{{name}}: Details öffnen oder in eine andere Phase ziehen",
+    "today": "Heute",
+    "daysInStage_one": "{{count}} T. in Phase",
+    "daysInStage_other": "{{count}} T. in Phase",
+    "aiScore": "KI-Match-Score (Vorschlag)",
+    "aiPending": "KI-Screening läuft",
+    "aiFailed": "KI-Screening nicht verfügbar"
   },
   "candidate": {
     "consentVerified": "DSGVO-Einwilligung geprüft",
@@ -318,11 +338,56 @@
       "appliedDetail": "Beworben über die TalentFlow-Karriereseite",
       "aiDone": "KI-Screening abgeschlossen",
       "aiFailed": "KI-Screening fehlgeschlagen",
-      "aiDetail": "Vorgeschlagener Match-Score: {{score}} %"
+      "aiDetail": "Vorgeschlagener Match-Score: {{score}} %",
+      "moved": "Verschoben nach {{stage}}",
+      "movedDetail": "Phase geändert von {{from}} zu {{to}}"
     },
     "feedback": {
       "emptyTitle": "Noch kein Interview-Feedback",
       "emptyText": "Das Feedback der Interviewer erscheint hier, sobald Interviews stattgefunden haben."
-    }
+    },
+    "currentStage": "Aktuelle Phase",
+    "moveTo": "Weiter zu {{stage}}",
+    "reject": "Absagen"
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Guten Morgen, {{name}}",
+      "afternoon": "Guten Tag, {{name}}",
+      "evening": "Guten Abend, {{name}}"
+    },
+    "subtitle": "Das passiert heute in Ihrer Recruiting-Pipeline.",
+    "kpi": {
+      "openJobs": "Offene Stellen",
+      "openJobsNote": "Auf der Karriereseite veröffentlicht",
+      "activeCandidates": "Aktive Bewerbungen",
+      "activeCandidatesNote": "Bewerbungen in Bearbeitung",
+      "interviews": "Interviews diese Woche",
+      "interviewsNote": "Interviewplanung ist noch nicht eingerichtet",
+      "timeToHire": "Ø Zeit bis zur Einstellung",
+      "timeToHireNote": "Einstellungen der letzten 90 Tage",
+      "days_one": "{{count}} Tag",
+      "days_other": "{{count}} Tage"
+    },
+    "chartTitle": "Bewerbungen pro Stelle",
+    "chartSubtitle": "Neue Bewerbungen der letzten 30 Tage",
+    "chartEmpty": "Keine Bewerbungen in den letzten 30 Tagen",
+    "applications": "Bewerbungen",
+    "funnelTitle": "Pipeline-Konversion",
+    "funnelSubtitle": "Bewerbungen, die jede Phase erreicht haben",
+    "overallConversion": "{{rate}} % Gesamtkonversion",
+    "overallNote": "Von der Bewerbung bis zur Einstellung",
+    "topMatches": "Top-KI-Matches",
+    "topMatchesSubtitle": "Höchste vorgeschlagene Übereinstimmungen der letzten 7 Tage",
+    "viewAll": "Alle ansehen",
+    "matchedFor": "Passend für",
+    "match": "{{score}} % Match",
+    "view": "Ansehen",
+    "noMatches": "Noch keine geprüften Bewerbungen",
+    "noMatchesText": "Neue Bewerbungen erscheinen hier, sobald das KI-Screening abgeschlossen ist.",
+    "interviewsTitle": "Anstehende Interviews",
+    "interviewsSubtitle": "Ihr Wochenplan",
+    "noInterviews": "Keine Interviews geplant",
+    "noInterviewsText": "Geplante Interviews erscheinen hier."
   }
 }

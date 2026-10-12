@@ -19,3 +19,8 @@ export function formatSalaryRange(min: number | null, max: number | null, curren
   if (max != null) return `≤ ${formatMoney(max, currency)}`;
   return undefined;
 }
+
+/** "Lena Schmidt" → "LS". */
+export function initialsOf(name: string): string {
+  return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]!.toUpperCase()).join("") || "?";
+}

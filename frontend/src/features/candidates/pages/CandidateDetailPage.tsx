@@ -2,18 +2,16 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
 import Avatar from "@/components/common/Avatar";
 import Icon from "@/components/common/Icon";
+import { useStageHistory, type StageChange } from "@/features/pipeline/api/pipeline";
 import { useCurrentUser } from "@/lib/auth/AuthContext";
-import { formatDate } from "@/lib/format";
+import { formatDate, initialsOf } from "@/lib/format";
 import { useApplication, type ApplicationDetail } from "../api/applications";
 import AiAnalysis from "../components/AiAnalysis";
 import CandidateTabs, { type TimelineEntry } from "../components/CandidateTabs";
 import CvPreview from "../components/CvPreview";
+import StageControls from "../components/StageControls";
 
-export function initialsOf(name: string): string {
-  return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]!.toUpperCase()).join("");
-}
-
-function buildTimeline(application: ApplicationDetail, t: (key: string, options?: Record<string, unknown>) => string): TimelineEntry[] {
+function buildTimeline(application: ApplicationDetail, history: StageChange[], t: (key: string, options?: Record<string, unknown>) => string): TimelineEntry[] {
   const entries: TimelineEntry[] = [
     { id: "applied", icon: "file", title: t("candidate.timeline.applied"), detail: t("candidate.timeline.appliedDetail"), by: application.candidate.fullName, at: application.appliedAt },
   ];
@@ -22,6 +20,15 @@ function buildTimeline(application: ApplicationDetail, t: (key: string, options?
       id: "ai", icon: "sparkles", at: application.ai.analyzedAt,
       title: t(application.ai.status === "DONE" ? "candidate.timeline.aiDone" : "candidate.timeline.aiFailed"),
       detail: application.ai.status === "DONE" ? t("candidate.timeline.aiDetail", { score: application.ai.score }) : undefined,
+    });
+  }
+  for (const change of history) {
+    const from = t(`pipeline.stages.${change.fromStage}`);
+    const to = t(`pipeline.stages.${change.toStage}`);
+    entries.push({
+      id: change.id, icon: change.toStage === "REJECTED" ? "info" : "arrow", at: change.changedAt, by: change.changedByName ?? undefined,
+      title: t("candidate.timeline.moved", { stage: to }),
+      detail: [t("candidate.timeline.movedDetail", { from, to }), change.note].filter(Boolean).join(" · "),
     });
   }
   return entries.sort((a, b) => b.at.localeCompare(a.at));
@@ -33,6 +40,7 @@ export default function CandidateDetailPage() {
   const { id } = useParams();
   const user = useCurrentUser();
   const query = useApplication(id);
+  const history = useStageHistory(id ?? "");
   const canManage = user.roles.includes("RECRUITER") || user.roles.includes("ADMIN");
 
   if (query.isPending) return <div className="page candidate-page"><div className="table-empty"><strong>{t("common.loading")}</strong></div></div>;
@@ -49,7 +57,7 @@ export default function CandidateDetailPage() {
         <div><h1>{candidate.fullName}</h1>{application.consent && <span className="gdpr-mini"><Icon name="shield" size={12}/>{t("candidate.consentVerified")}</span>}</div>
         <p><Icon name="mail" size={13}/>{candidate.email}{candidate.location && <><i></i><Icon name="map" size={13}/>{candidate.location}</>}{candidate.phone && <><i></i>{candidate.phone}</>}</p>
       </div></div>
-      <div className="candidate-actions"><span className={`stage-pill stage-${application.stage.toLowerCase()}`}>{t(`pipeline.stages.${application.stage}`)}</span></div>
+      <StageControls applicationId={application.id} jobId={job.id} stage={application.stage} canManage={canManage}/>
     </header>
     <div className="candidate-meta">
       <span>{t("candidate.appliedFor")} <strong>{job.title} – {job.location}</strong></span>
@@ -63,6 +71,6 @@ export default function CandidateDetailPage() {
         {application.coverLetter && <article className="panel cover-letter"><h3>{t("candidate.coverLetter")}</h3><p>{application.coverLetter}</p></article>}
       </div>
     </div>
-    <CandidateTabs timeline={buildTimeline(application, t as never)} formatAt={formatDateTime}/>
+    <CandidateTabs timeline={buildTimeline(application, history.data ?? [], t as never)} formatAt={formatDateTime}/>
   </div>;
 }
