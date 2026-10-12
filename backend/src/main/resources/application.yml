@@ -15,12 +15,24 @@ spring:
   mvc:
     problemdetails:
       enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # The issuer is what browsers see; keys may be fetched from an internal address.
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8180/realms/talentflow}
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:8180/realms/talentflow/protocol/openid-connect/certs}
+          audiences: ${KEYCLOAK_AUDIENCE:talentflow-api}
   threads:
     virtual:
       enabled: true
 
 server:
   port: ${SERVER_PORT:8080}
+
+talentflow:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
 
 springdoc:
   api-docs:
