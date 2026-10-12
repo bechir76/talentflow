@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
 import Avatar from "@/components/common/Avatar";
 import Icon from "@/components/common/Icon";
+import InterviewList from "@/features/interviews/components/InterviewList";
+import ScheduleInterviewModal from "@/features/interviews/components/ScheduleInterviewModal";
 import { useStageHistory, type StageChange } from "@/features/pipeline/api/pipeline";
 import { useCurrentUser } from "@/lib/auth/AuthContext";
 import { formatDate, initialsOf } from "@/lib/format";
@@ -41,6 +44,7 @@ export default function CandidateDetailPage() {
   const user = useCurrentUser();
   const query = useApplication(id);
   const history = useStageHistory(id ?? "");
+  const [scheduling, setScheduling] = useState(false);
   const canManage = user.roles.includes("RECRUITER") || user.roles.includes("ADMIN");
 
   if (query.isPending) return <div className="page candidate-page"><div className="table-empty"><strong>{t("common.loading")}</strong></div></div>;
@@ -57,7 +61,9 @@ export default function CandidateDetailPage() {
         <div><h1>{candidate.fullName}</h1>{application.consent && <span className="gdpr-mini"><Icon name="shield" size={12}/>{t("candidate.consentVerified")}</span>}</div>
         <p><Icon name="mail" size={13}/>{candidate.email}{candidate.location && <><i></i><Icon name="map" size={13}/>{candidate.location}</>}{candidate.phone && <><i></i>{candidate.phone}</>}</p>
       </div></div>
-      <StageControls applicationId={application.id} jobId={job.id} stage={application.stage} canManage={canManage}/>
+      <StageControls applicationId={application.id} jobId={job.id} stage={application.stage} canManage={canManage}>
+        {canManage && application.stage !== "HIRED" && application.stage !== "REJECTED" && <button className="secondary-button" onClick={() => setScheduling(true)}><Icon name="calendar"/>{t("interviews.scheduleButton")}</button>}
+      </StageControls>
     </header>
     <div className="candidate-meta">
       <span>{t("candidate.appliedFor")} <strong>{job.title} – {job.location}</strong></span>
@@ -71,6 +77,7 @@ export default function CandidateDetailPage() {
         {application.coverLetter && <article className="panel cover-letter"><h3>{t("candidate.coverLetter")}</h3><p>{application.coverLetter}</p></article>}
       </div>
     </div>
-    <CandidateTabs timeline={buildTimeline(application, history.data ?? [], t as never)} formatAt={formatDateTime}/>
+    <CandidateTabs timeline={buildTimeline(application, history.data ?? [], t as never)} formatAt={formatDateTime} interviews={<InterviewList applicationId={application.id} canManage={canManage}/>}/>
+    <ScheduleInterviewModal applicationId={application.id} open={scheduling} onClose={() => setScheduling(false)}/>
   </div>;
 }

@@ -5,6 +5,16 @@ import { api } from "@/lib/api/client";
 export type Dashboard = {
   openJobs: number;
   activeCandidates: number;
+  interviewsThisWeek: number;
+  upcomingInterviews: {
+    interviewId: string;
+    applicationId: string;
+    candidateName: string | null;
+    jobTitle: string | null;
+    scheduledAt: string;
+    durationMinutes: number;
+    interviewerNames: string[];
+  }[];
   averageDaysToHire: number | null;
   applicationsPerJob: { jobId: string; jobTitle: string; applications: number }[];
   funnel: { stage: ApplicationStage; applications: number }[];

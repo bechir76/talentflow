@@ -6,7 +6,9 @@ export type TimelineEntry = { id: string; icon: IconName; title: string; detail?
 
 type Tab = "timeline" | "feedback";
 
-export default function CandidateTabs({ timeline, formatAt }: { timeline: TimelineEntry[]; formatAt: (iso: string) => string }) {
+type CandidateTabsProps = { timeline: TimelineEntry[]; formatAt: (iso: string) => string; interviews: ReactNode };
+
+export default function CandidateTabs({ timeline, formatAt, interviews }: CandidateTabsProps) {
   const { t } = useTranslation();
   const [tab, setTab] = useState<Tab>("timeline");
   const tabs: { id: Tab; label: string; badge?: ReactNode }[] = [
@@ -18,6 +20,6 @@ export default function CandidateTabs({ timeline, formatAt }: { timeline: Timeli
     {tab === "timeline" && <div className="timeline">
       {timeline.map((entry) => <div className="timeline-item" key={entry.id}><span className="timeline-icon"><Icon name={entry.icon} size={15}/></span><div><div><strong>{entry.title}</strong><span>{formatAt(entry.at)}</span></div>{entry.detail && <p>{entry.detail}</p>}{entry.by && <small>{t("candidate.timeline.by", { name: entry.by })}</small>}</div></div>)}
     </div>}
-    {tab === "feedback" && <div className="table-empty"><Icon name="star" size={22}/><strong>{t("candidate.feedback.emptyTitle")}</strong><span>{t("candidate.feedback.emptyText")}</span></div>}
+    {tab === "feedback" && interviews}
   </section>;
 }

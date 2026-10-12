@@ -12,6 +12,7 @@ import CandidateDetailPage from "@/features/candidates/pages/CandidateDetailPage
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import JobFormPage from "@/features/jobs/pages/JobFormPage";
 import JobsPage from "@/features/jobs/pages/JobsPage";
+import CalendarPage from "@/features/interviews/pages/CalendarPage";
 import PipelinePage from "@/features/pipeline/pages/PipelinePage";
 import MyApplicationsPage from "@/features/portal/pages/MyApplicationsPage";
 import PrivacyPage from "@/features/portal/pages/PrivacyPage";
@@ -55,8 +56,11 @@ export default function App() {
       <Route element={<AppShell/>}>
         <Route element={<RequireAuth roles={STAFF_ROLES}/>}>
           <Route path="/dashboard" element={<DashboardPage/>}/>
-          <Route path="/pipeline" element={<PipelinePage/>}/>
           <Route path="/applications/:id" element={<CandidateDetailPage/>}/>
+          <Route path="/interviews" element={<CalendarPage/>}/>
+        </Route>
+        <Route element={<RequireAuth roles={["RECRUITER", "ADMIN"]}/>}>
+          <Route path="/pipeline" element={<PipelinePage/>}/>
         </Route>
         <Route element={<RequireAuth roles={["RECRUITER", "ADMIN"]}/>}>
           <Route path="/jobs" element={<JobsPage/>}/>

@@ -60,13 +60,13 @@
     "jobs": "Jobs",
     "allJobs": "All Jobs",
     "candidates": "Candidates",
-    "shortlists": "Shortlists",
     "myApplications": "My Applications",
     "findJobs": "Find Jobs",
     "users": "Users",
     "retention": "Data retention",
     "auditLog": "Audit log",
-    "privacy": "Privacy & Data"
+    "privacy": "Privacy & Data",
+    "interviews": "Interviews"
   },
   "portal": {
     "eyebrow": "Candidate portal",
@@ -332,7 +332,7 @@
     },
     "tabs": {
       "timeline": "Activity Timeline",
-      "feedback": "Interview Feedback"
+      "feedback": "Interviews & Feedback"
     },
     "timeline": {
       "by": "by {{name}}",
@@ -345,8 +345,8 @@
       "movedDetail": "Stage changed from {{from}} to {{to}}"
     },
     "feedback": {
-      "emptyTitle": "No interview feedback yet",
-      "emptyText": "Feedback from interviewers will appear here after interviews have taken place."
+      "emptyTitle": "No interviews yet",
+      "emptyText": "Scheduled interviews and the interviewers' scorecards appear here."
     },
     "currentStage": "Current stage",
     "moveTo": "Move to {{stage}}",
@@ -365,11 +365,12 @@
       "activeCandidates": "Active Candidates",
       "activeCandidatesNote": "Applications in progress",
       "interviews": "Interviews This Week",
-      "interviewsNote": "Interview scheduling is not set up yet",
+      "interviewsNote": "All interviews, Monday to Sunday",
       "timeToHire": "Avg. Time to Hire",
       "timeToHireNote": "Hires in the last 90 days",
       "days_one": "{{count}} day",
-      "days_other": "{{count}} days"
+      "days_other": "{{count}} days",
+      "interviewsNoteOwn": "Interviews you take part in"
     },
     "chartTitle": "Applications per Job",
     "chartSubtitle": "New applications in the last 30 days",
@@ -388,9 +389,10 @@
     "noMatches": "No screened applications yet",
     "noMatchesText": "New applications appear here once the AI screening has finished.",
     "interviewsTitle": "Upcoming Interviews",
-    "interviewsSubtitle": "Your schedule this week",
+    "interviewsSubtitle": "The next 7 days",
     "noInterviews": "No interviews scheduled",
-    "noInterviewsText": "Scheduled interviews will appear here."
+    "noInterviewsText": "Scheduled interviews will appear here.",
+    "openCalendar": "Open calendar"
   },
   "privacy": {
     "title": "Privacy & Data",
@@ -476,6 +478,46 @@
         "USER_ROLE_CHANGED": "Role changed",
         "USER_STATUS_CHANGED": "Account status changed"
       }
+    }
+  },
+  "interviews": {
+    "eyebrow": "Interviews",
+    "title": "Interview calendar",
+    "subtitle": "Interviews of the selected week. Click an interview to open the candidate.",
+    "previousWeek": "Previous week",
+    "nextWeek": "Next week",
+    "today": "This week",
+    "free": "No interviews",
+    "scheduleButton": "Schedule Interview",
+    "scheduleTitle": "Schedule an interview",
+    "schedule": "Schedule and invite",
+    "date": "Date",
+    "time": "Start time",
+    "duration": "Duration",
+    "minutes_one": "{{count}} min",
+    "minutes_other": "{{count}} min",
+    "meetingLink": "Video call link (optional)",
+    "interviewers": "Interviewers",
+    "inviteNote": "The candidate receives an e-mail invitation with date, time and link.",
+    "join": "Join call",
+    "giveFeedback": "Give feedback",
+    "cancel": "Cancel interview",
+    "noFeedbackYet": "No feedback submitted yet.",
+    "feedbackTitle": "Interview scorecard",
+    "submitFeedback": "Submit scorecard",
+    "recommendation": "Recommendation",
+    "comment": "Comment (optional)",
+    "commentPlaceholder": "Strengths, concerns and evidence from the interview. Stay factual and job-related.",
+    "ratingLabel": "{{value}} of 5",
+    "criteria": {
+      "technical": "Technical skills",
+      "communication": "Communication",
+      "cultureFit": "Culture fit"
+    },
+    "recommendations": {
+      "HIRE": "Hire",
+      "NO_HIRE": "No hire",
+      "UNSURE": "Unsure"
     }
   }
 }

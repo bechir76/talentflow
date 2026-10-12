@@ -11,6 +11,7 @@ export type NavItem = {
 };
 
 const overview: NavItem = { icon: "grid", labelKey: "nav.overview", to: "/dashboard", activeFor: ["/dashboard"] };
+const interviewsItem: NavItem = { icon: "calendar", labelKey: "nav.interviews", to: "/interviews", activeFor: ["/interviews"] };
 
 /** Sidebar entries per role. Only screens that exist are listed; later phases add more. */
 const navByRole: Record<Role, NavItem[]> = {
@@ -18,15 +19,17 @@ const navByRole: Record<Role, NavItem[]> = {
     overview,
     { icon: "briefcase", labelKey: "nav.jobs", to: "/jobs", activeFor: ["/jobs"] },
     { icon: "users", labelKey: "nav.candidates", to: "/pipeline", activeFor: ["/pipeline", "/applications"] },
+    interviewsItem,
   ],
   HIRING_MANAGER: [
     overview,
-    { icon: "users", labelKey: "nav.shortlists", to: "/pipeline", activeFor: ["/pipeline", "/applications"] },
+    { ...interviewsItem, activeFor: ["/interviews", "/applications"] },
   ],
   ADMIN: [
     overview,
     { icon: "briefcase", labelKey: "nav.allJobs", to: "/jobs", activeFor: ["/jobs"] },
     { icon: "users", labelKey: "nav.candidates", to: "/pipeline", activeFor: ["/pipeline", "/applications"] },
+    interviewsItem,
     { icon: "settings", labelKey: "nav.users", to: "/admin/users", activeFor: ["/admin/users"] },
     { icon: "clock", labelKey: "nav.retention", to: "/admin/retention", activeFor: ["/admin/retention"] },
     { icon: "shield", labelKey: "nav.auditLog", to: "/admin/audit", activeFor: ["/admin/audit"] },

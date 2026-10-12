@@ -60,13 +60,13 @@
     "jobs": "Stellen",
     "allJobs": "Alle Stellen",
     "candidates": "Bewerber",
-    "shortlists": "Shortlists",
     "myApplications": "Meine Bewerbungen",
     "findJobs": "Stellen finden",
     "users": "Benutzer",
     "retention": "Aufbewahrung",
     "auditLog": "Audit-Log",
-    "privacy": "Datenschutz"
+    "privacy": "Datenschutz",
+    "interviews": "Interviews"
   },
   "portal": {
     "eyebrow": "Bewerberportal",
@@ -332,7 +332,7 @@
     },
     "tabs": {
       "timeline": "Aktivitäten",
-      "feedback": "Interview-Feedback"
+      "feedback": "Interviews & Feedback"
     },
     "timeline": {
       "by": "von {{name}}",
@@ -345,8 +345,8 @@
       "movedDetail": "Phase geändert von {{from}} zu {{to}}"
     },
     "feedback": {
-      "emptyTitle": "Noch kein Interview-Feedback",
-      "emptyText": "Das Feedback der Interviewer erscheint hier, sobald Interviews stattgefunden haben."
+      "emptyTitle": "Noch keine Interviews",
+      "emptyText": "Geplante Interviews und die Bewertungen der Interviewer erscheinen hier."
     },
     "currentStage": "Aktuelle Phase",
     "moveTo": "Weiter zu {{stage}}",
@@ -365,11 +365,12 @@
       "activeCandidates": "Aktive Bewerbungen",
       "activeCandidatesNote": "Bewerbungen in Bearbeitung",
       "interviews": "Interviews diese Woche",
-      "interviewsNote": "Interviewplanung ist noch nicht eingerichtet",
+      "interviewsNote": "Alle Interviews, Montag bis Sonntag",
       "timeToHire": "Ø Zeit bis zur Einstellung",
       "timeToHireNote": "Einstellungen der letzten 90 Tage",
       "days_one": "{{count}} Tag",
-      "days_other": "{{count}} Tage"
+      "days_other": "{{count}} Tage",
+      "interviewsNoteOwn": "Interviews, an denen Sie teilnehmen"
     },
     "chartTitle": "Bewerbungen pro Stelle",
     "chartSubtitle": "Neue Bewerbungen der letzten 30 Tage",
@@ -388,9 +389,10 @@
     "noMatches": "Noch keine geprüften Bewerbungen",
     "noMatchesText": "Neue Bewerbungen erscheinen hier, sobald das KI-Screening abgeschlossen ist.",
     "interviewsTitle": "Anstehende Interviews",
-    "interviewsSubtitle": "Ihr Wochenplan",
+    "interviewsSubtitle": "Die nächsten 7 Tage",
     "noInterviews": "Keine Interviews geplant",
-    "noInterviewsText": "Geplante Interviews erscheinen hier."
+    "noInterviewsText": "Geplante Interviews erscheinen hier.",
+    "openCalendar": "Kalender öffnen"
   },
   "privacy": {
     "title": "Datenschutz & Daten",
@@ -476,6 +478,46 @@
         "USER_ROLE_CHANGED": "Rolle geändert",
         "USER_STATUS_CHANGED": "Kontostatus geändert"
       }
+    }
+  },
+  "interviews": {
+    "eyebrow": "Interviews",
+    "title": "Interviewkalender",
+    "subtitle": "Interviews der gewählten Woche. Klicken Sie auf ein Interview, um die Bewerbung zu öffnen.",
+    "previousWeek": "Vorherige Woche",
+    "nextWeek": "Nächste Woche",
+    "today": "Diese Woche",
+    "free": "Keine Interviews",
+    "scheduleButton": "Interview planen",
+    "scheduleTitle": "Interview planen",
+    "schedule": "Planen und einladen",
+    "date": "Datum",
+    "time": "Beginn",
+    "duration": "Dauer",
+    "minutes_one": "{{count}} Min.",
+    "minutes_other": "{{count}} Min.",
+    "meetingLink": "Videocall-Link (optional)",
+    "interviewers": "Interviewer",
+    "inviteNote": "Die Person erhält eine E-Mail-Einladung mit Datum, Uhrzeit und Link.",
+    "join": "Call beitreten",
+    "giveFeedback": "Feedback geben",
+    "cancel": "Interview absagen",
+    "noFeedbackYet": "Noch kein Feedback abgegeben.",
+    "feedbackTitle": "Interview-Bewertung",
+    "submitFeedback": "Bewertung absenden",
+    "recommendation": "Empfehlung",
+    "comment": "Kommentar (optional)",
+    "commentPlaceholder": "Stärken, Bedenken und Belege aus dem Interview. Sachlich und tätigkeitsbezogen bleiben.",
+    "ratingLabel": "{{value}} von 5",
+    "criteria": {
+      "technical": "Fachliche Skills",
+      "communication": "Kommunikation",
+      "cultureFit": "Team- und Kulturfit"
+    },
+    "recommendations": {
+      "HIRE": "Einstellen",
+      "NO_HIRE": "Nicht einstellen",
+      "UNSURE": "Unsicher"
     }
   }
 }
