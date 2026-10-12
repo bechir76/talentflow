@@ -2,6 +2,7 @@ package com.talentflow.candidate.application;
 
 import java.time.Clock;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.talentflow.candidate.domain.Consent;
 import com.talentflow.candidate.domain.ConsentType;
 import com.talentflow.shared.application.CurrentUser;
 import com.talentflow.shared.domain.BusinessRuleException;
+import com.talentflow.shared.domain.NotFoundException;
 
 @Service
 @Transactional
@@ -46,6 +48,16 @@ public class CandidateService {
     /** Stores proof of consent against the current privacy policy version. */
     public Consent recordConsent(Candidate candidate, ConsentType type) {
         return candidates.save(Consent.give(candidate.getId(), type, privacyPolicyVersion, clock.instant()));
+    }
+
+    @Transactional(readOnly = true)
+    public Candidate get(UUID id) {
+        return candidates.findById(id).orElseThrow(() -> new NotFoundException("Candidate", id));
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Consent> latestApplicationConsent(UUID candidateId) {
+        return candidates.findLatestConsent(candidateId, ConsentType.APPLICATION_PROCESSING);
     }
 
     @Transactional(readOnly = true)

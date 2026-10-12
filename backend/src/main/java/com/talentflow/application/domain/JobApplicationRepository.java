@@ -2,6 +2,7 @@ package com.talentflow.application.domain;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 public interface JobApplicationRepository {
 
     JobApplication save(JobApplication application);
+
+    Optional<JobApplication> findById(UUID id);
 
     boolean existsByJobIdAndCandidateId(UUID jobId, UUID candidateId);
 

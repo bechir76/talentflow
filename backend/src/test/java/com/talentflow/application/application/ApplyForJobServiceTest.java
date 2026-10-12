@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import com.talentflow.application.TestFiles;
 import com.talentflow.application.domain.AiStatus;
@@ -55,13 +56,15 @@ class ApplyForJobServiceTest {
     private CvStorage cvStorage;
     @Mock
     private CurrentUserProvider currentUser;
+    @Mock
+    private ApplicationEventPublisher events;
 
     private ApplyForJobService service;
     private final Candidate candidate = Candidate.register("kc-7", "Clara Candidate", "clara@example.org", NOW);
 
     @BeforeEach
     void setUp() {
-        service = new ApplyForJobService(jobs, candidates, applications, cvStorage, currentUser,
+        service = new ApplyForJobService(jobs, candidates, applications, cvStorage, currentUser, events,
                 Clock.fixed(NOW, ZoneOffset.UTC));
     }
 
@@ -80,6 +83,7 @@ class ApplyForJobServiceTest {
         assertThat(application.getStage()).isEqualTo(ApplicationStage.APPLIED);
         assertThat(application.getAiStatus()).isEqualTo(AiStatus.PENDING);
         verify(candidates).recordConsent(candidate, ConsentType.APPLICATION_PROCESSING);
+        verify(events).publishEvent(new ScreeningRequested(application.getId()));
     }
 
     @Test

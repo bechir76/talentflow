@@ -1,12 +1,14 @@
 package com.talentflow.candidate.infrastructure.persistence;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
 import com.talentflow.candidate.domain.Candidate;
 import com.talentflow.candidate.domain.CandidateRepository;
 import com.talentflow.candidate.domain.Consent;
+import com.talentflow.candidate.domain.ConsentType;
 
 @Repository
 class JpaCandidateRepository implements CandidateRepository {
@@ -22,6 +24,16 @@ class JpaCandidateRepository implements CandidateRepository {
     @Override
     public Candidate save(Candidate candidate) {
         return candidates.save(candidate);
+    }
+
+    @Override
+    public Optional<Candidate> findById(UUID id) {
+        return candidates.findById(id);
+    }
+
+    @Override
+    public Optional<Consent> findLatestConsent(UUID candidateId, ConsentType type) {
+        return consents.findFirstByCandidateIdAndTypeOrderByGivenAtDesc(candidateId, type);
     }
 
     @Override

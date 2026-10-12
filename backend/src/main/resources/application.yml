@@ -44,6 +44,13 @@ talentflow:
   privacy:
     # Stored with every consent; bump it whenever the privacy policy text changes.
     policy-version: ${PRIVACY_POLICY_VERSION:2026-10}
+  ai:
+    # Leave LLM_API_KEY empty to use the offline keyword analyzer. Any OpenAI-compatible API works;
+    # the default is Mistral (EU-hosted).
+    base-url: ${LLM_BASE_URL:https://api.mistral.ai/v1}
+    api-key: ${LLM_API_KEY:}
+    model: ${LLM_MODEL:mistral-small-latest}
+    timeout: ${LLM_TIMEOUT:60s}
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
 

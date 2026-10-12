@@ -47,6 +47,9 @@ services:
       KEYCLOAK_ISSUER_URI: http://localhost:${KEYCLOAK_PORT:-8180}/realms/talentflow
       KEYCLOAK_JWK_SET_URI: http://keycloak:8080/realms/talentflow/protocol/openid-connect/certs
       CV_STORAGE_DIR: /var/lib/talentflow/cvs
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://api.mistral.ai/v1}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-mistral-small-latest}
       CORS_ALLOWED_ORIGINS: http://localhost:${FRONTEND_PORT:-3000},http://localhost:5173
     ports:
       - "${BACKEND_PORT:-8080}:8080"

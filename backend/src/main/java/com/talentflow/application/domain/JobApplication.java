@@ -66,6 +66,15 @@ public class JobApplication {
     @Column(name = "ai_status")
     private AiStatus aiStatus;
 
+    @Column(name = "ai_years_of_experience")
+    private Integer aiYearsOfExperience;
+
+    @Column(name = "ai_model")
+    private String aiModel;
+
+    @Column(name = "ai_analyzed_at")
+    private Instant aiAnalyzedAt;
+
     @Column(name = "applied_at")
     private Instant appliedAt;
 
@@ -88,6 +97,29 @@ public class JobApplication {
         application.aiStatus = AiStatus.PENDING;
         application.appliedAt = now;
         return application;
+    }
+
+    /** Queues a new AI screening, for example after a failure. Earlier results stay visible until replaced. */
+    public void requestAiAnalysis() {
+        aiStatus = AiStatus.PENDING;
+    }
+
+    /** Stores the AI suggestion. It supports the recruiter; it never changes the stage. */
+    public void recordAiAnalysis(int score, List<String> matchingSkills, List<String> missingSkills,
+            Integer yearsOfExperience, String summary, String model, Instant now) {
+        aiScore = score;
+        aiMatchingSkills = new ArrayList<>(matchingSkills);
+        aiMissingSkills = new ArrayList<>(missingSkills);
+        aiYearsOfExperience = yearsOfExperience;
+        aiSummary = summary;
+        aiModel = model;
+        aiAnalyzedAt = now;
+        aiStatus = AiStatus.DONE;
+    }
+
+    public void markAiAnalysisFailed(Instant now) {
+        aiStatus = AiStatus.FAILED;
+        aiAnalyzedAt = now;
     }
 
     public UUID getId() {
@@ -132,6 +164,18 @@ public class JobApplication {
 
     public AiStatus getAiStatus() {
         return aiStatus;
+    }
+
+    public Integer getAiYearsOfExperience() {
+        return aiYearsOfExperience;
+    }
+
+    public String getAiModel() {
+        return aiModel;
+    }
+
+    public Instant getAiAnalyzedAt() {
+        return aiAnalyzedAt;
     }
 
     public Instant getAppliedAt() {

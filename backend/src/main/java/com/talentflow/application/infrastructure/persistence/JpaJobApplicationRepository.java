@@ -3,6 +3,7 @@ package com.talentflow.application.infrastructure.persistence;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,11 @@ class JpaJobApplicationRepository implements JobApplicationRepository, Applicant
     @Override
     public JobApplication save(JobApplication application) {
         return jpa.save(application);
+    }
+
+    @Override
+    public Optional<JobApplication> findById(UUID id) {
+        return jpa.findById(id);
     }
 
     @Override

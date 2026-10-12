@@ -3,6 +3,7 @@ package com.talentflow.application.application;
 import java.time.Clock;
 import java.util.UUID;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
@@ -30,15 +31,17 @@ public class ApplyForJobService {
     private final JobApplicationRepository applications;
     private final CvStorage cvStorage;
     private final CurrentUserProvider currentUser;
+    private final ApplicationEventPublisher events;
     private final Clock clock;
 
     public ApplyForJobService(JobService jobs, CandidateService candidates, JobApplicationRepository applications,
-            CvStorage cvStorage, CurrentUserProvider currentUser, Clock clock) {
+            CvStorage cvStorage, CurrentUserProvider currentUser, ApplicationEventPublisher events, Clock clock) {
         this.jobs = jobs;
         this.candidates = candidates;
         this.applications = applications;
         this.cvStorage = cvStorage;
         this.currentUser = currentUser;
+        this.events = events;
         this.clock = clock;
     }
 
@@ -58,6 +61,7 @@ public class ApplyForJobService {
         JobApplication application = applications.save(
                 JobApplication.submit(jobId, candidate.getId(), cvKey, command.coverLetter(), clock.instant()));
         candidates.recordConsent(candidate, ConsentType.APPLICATION_PROCESSING);
+        events.publishEvent(new ScreeningRequested(application.getId()));
         return application;
     }
 
