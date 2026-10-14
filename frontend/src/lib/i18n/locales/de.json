@@ -350,7 +350,9 @@
     },
     "currentStage": "Aktuelle Phase",
     "moveTo": "Weiter zu {{stage}}",
-    "reject": "Absagen"
+    "reject": "Absagen",
+    "dataErased": "Daten gelöscht (DSGVO)",
+    "consentWithdrawn": "Einwilligung am {{date}} widerrufen · personenbezogene Daten gelöscht"
   },
   "dashboard": {
     "greeting": {

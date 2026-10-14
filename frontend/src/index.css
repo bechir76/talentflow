@@ -624,3 +624,7 @@ button { cursor: pointer; }
 .interviews-panel .interview-row:hover { background: color-mix(in srgb, var(--indigo-soft) 40%, transparent); }
 .lists-grid.single { grid-template-columns: 1fr; }
 .page-loading { min-height: 50vh; gap: 10px; }
+
+/* Erased candidates */
+.gdpr-mini.erased { color: #8a4657; background: #fdf0f2; }
+.gdpr-retention.withdrawn { color: #c74646; }

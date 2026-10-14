@@ -34,6 +34,7 @@ import com.talentflow.shared.domain.NotFoundException;
 @Transactional
 public class MyDataService {
 
+    static final String SELF_SERVICE_ACTOR = "Candidate (self-service)";
     static final String AI_NOTICE = "AI suggestions only support recruiters. Every decision is made by a person.";
 
     private final CandidateService candidates;
@@ -108,7 +109,7 @@ public class MyDataService {
     /** Anonymises the candidate's data; the login account itself is managed by the identity provider. */
     public void deleteMyData() {
         Candidate candidate = myProfile();
-        erasure.erase(candidate.getId(), clock.instant());
+        erasure.erase(candidate.getId(), clock.instant(), currentUser.currentUser().id(), SELF_SERVICE_ACTOR);
         audit.record(AuditAction.CANDIDATE_DELETED, "Candidate", candidate.getId(), "Requested by the candidate");
     }
 

@@ -70,7 +70,7 @@ public class RetentionService {
         Instant cutoff = now.atOffset(ZoneOffset.UTC).minusMonths(policy.getRejectedRetentionMonths()).toInstant();
         List<UUID> expired = policies.findExpiredRejectedCandidates(cutoff);
         for (UUID candidateId : expired) {
-            erasure.erase(candidateId, now);
+            erasure.erase(candidateId, now, AuditService.SYSTEM_ACTOR, JOB_NAME);
             audit.recordAsSystem(JOB_NAME, AuditAction.CANDIDATE_DELETED, "Candidate", candidateId,
                     "Retention period of " + policy.getRejectedRetentionMonths() + " months expired");
         }

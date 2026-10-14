@@ -67,17 +67,19 @@ public class StaffApplicationController {
             return new ApplicationDetailResponse(application.getId(), application.getStage(),
                     application.getAppliedAt(), application.getCoverLetter(), application.getCvStorageKey() != null,
                     new CandidateInfo(candidate.getId(), candidate.getFullName(), candidate.getEmail(),
-                            candidate.getPhone(), candidate.getLocation()),
+                            candidate.getPhone(), candidate.getLocation(), candidate.isAnonymized()),
                     new JobInfo(job.getId(), job.getTitle(), job.getLocation(), job.getWorkMode(),
                             details.job().departmentName()),
                     new AiInfo(application.getAiStatus(), application.getAiScore(), application.getAiMatchingSkills(),
                             application.getAiMissingSkills(), application.getAiYearsOfExperience(),
                             application.getAiSummary(), application.getAiModel(), application.getAiAnalyzedAt()),
-                    details.consent().map(c -> new ConsentInfo(c.getGivenAt(), c.getPolicyVersion())).orElse(null));
+                    details.consent().map(c -> new ConsentInfo(c.getGivenAt(), c.getPolicyVersion(), c.getWithdrawnAt()))
+                            .orElse(null));
         }
     }
 
-    public record CandidateInfo(UUID id, String fullName, String email, String phone, String location) {
+    public record CandidateInfo(UUID id, String fullName, String email, String phone, String location,
+            boolean anonymized) {
     }
 
     public record JobInfo(UUID id, String title, String location, WorkMode workMode, String departmentName) {
@@ -88,6 +90,7 @@ public class StaffApplicationController {
             Integer yearsOfExperience, String summary, String model, Instant analyzedAt) {
     }
 
-    public record ConsentInfo(Instant givenAt, String policyVersion) {
+    /** {@code withdrawnAt} is set once the candidate withdrew consent or had their data erased. */
+    public record ConsentInfo(Instant givenAt, String policyVersion, Instant withdrawnAt) {
     }
 }

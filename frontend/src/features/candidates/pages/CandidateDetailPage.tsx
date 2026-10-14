@@ -45,19 +45,22 @@ export default function CandidateDetailPage() {
   const query = useApplication(id);
   const history = useStageHistory(id ?? "");
   const [scheduling, setScheduling] = useState(false);
-  const canManage = user.roles.includes("RECRUITER") || user.roles.includes("ADMIN");
+  const isStaffManager = user.roles.includes("RECRUITER") || user.roles.includes("ADMIN");
 
   if (query.isPending) return <div className="page candidate-page"><div className="table-empty"><strong>{t("common.loading")}</strong></div></div>;
   if (query.isError) return <div className="page candidate-page"><div className="table-empty"><Icon name="info" size={24}/><strong>{t("common.loadError")}</strong><span>{query.error.message}</span></div></div>;
 
   const application = query.data;
-  const { candidate, job } = application;
+  const { candidate, job, consent } = application;
+  // Erased candidates are read-only: there is nobody left to move through the pipeline.
+  const canManage = isStaffManager && !candidate.anonymized;
+  const consentActive = consent != null && consent.withdrawnAt == null;
 
   return <div className="page candidate-page">
     <div className="breadcrumbs"><button onClick={() => navigate(`/pipeline?jobId=${job.id}`)}>{t("nav.candidates")}</button><Icon name="chevron" size={13}/><span>{job.title}</span><Icon name="chevron" size={13}/><strong>{candidate.fullName}</strong></div>
     <header className="candidate-header">
       <div className="candidate-identity"><Avatar initials={initialsOf(candidate.fullName)} color="rose"/><div>
-        <div><h1>{candidate.fullName}</h1>{application.consent && <span className="gdpr-mini"><Icon name="shield" size={12}/>{t("candidate.consentVerified")}</span>}</div>
+        <div><h1>{candidate.fullName}</h1>{consentActive && <span className="gdpr-mini"><Icon name="shield" size={12}/>{t("candidate.consentVerified")}</span>}{candidate.anonymized && <span className="gdpr-mini erased"><Icon name="lock" size={12}/>{t("candidate.dataErased")}</span>}</div>
         <p><Icon name="mail" size={13}/>{candidate.email}{candidate.location && <><i></i><Icon name="map" size={13}/>{candidate.location}</>}{candidate.phone && <><i></i>{candidate.phone}</>}</p>
       </div></div>
       <StageControls applicationId={application.id} jobId={job.id} stage={application.stage} canManage={canManage}>
@@ -67,7 +70,9 @@ export default function CandidateDetailPage() {
     <div className="candidate-meta">
       <span>{t("candidate.appliedFor")} <strong>{job.title} – {job.location}</strong></span>
       <span>{t("candidate.appliedOn", { date: formatDate(application.appliedAt) })}</span>
-      {application.consent && <span className="gdpr-retention"><Icon name="shield" size={14}/>{t("candidate.consentGiven", { date: formatDate(application.consent.givenAt), version: application.consent.policyVersion })}</span>}
+      {consent && <span className={`gdpr-retention ${consentActive ? "" : "withdrawn"}`}><Icon name="shield" size={14}/>{consentActive
+        ? t("candidate.consentGiven", { date: formatDate(consent.givenAt), version: consent.policyVersion })
+        : t("candidate.consentWithdrawn", { date: formatDate(consent.withdrawnAt!) })}</span>}
     </div>
     <div className="candidate-detail-grid">
       <CvPreview applicationId={application.id} available={application.cvAvailable} fileName={`${candidate.fullName.replace(/\s+/g, "_")}_CV.pdf`}/>

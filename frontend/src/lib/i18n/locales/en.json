@@ -350,7 +350,9 @@
     },
     "currentStage": "Current stage",
     "moveTo": "Move to {{stage}}",
-    "reject": "Reject"
+    "reject": "Reject",
+    "dataErased": "Data erased (GDPR)",
+    "consentWithdrawn": "Consent withdrawn on {{date}} · personal data erased"
   },
   "dashboard": {
     "greeting": {

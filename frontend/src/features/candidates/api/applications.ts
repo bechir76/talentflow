@@ -12,7 +12,7 @@ export type ApplicationDetail = {
   appliedAt: string;
   coverLetter: string | null;
   cvAvailable: boolean;
-  candidate: { id: string; fullName: string; email: string; phone: string | null; location: string | null };
+  candidate: { id: string; fullName: string; email: string; phone: string | null; location: string | null; anonymized: boolean };
   job: { id: string; title: string; location: string; workMode: WorkMode; departmentName: string };
   ai: {
     status: AiStatus;
@@ -24,7 +24,7 @@ export type ApplicationDetail = {
     model: string | null;
     analyzedAt: string | null;
   };
-  consent: { givenAt: string; policyVersion: string } | null;
+  consent: { givenAt: string; policyVersion: string; withdrawnAt: string | null } | null;
 };
 
 const POLL_WHILE_PENDING_MS = 3000;

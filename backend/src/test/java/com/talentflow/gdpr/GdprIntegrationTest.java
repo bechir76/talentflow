@@ -116,7 +116,9 @@ class GdprIntegrationTest {
         assertThat(row.get("keycloak_user_id")).isNull();
         assertThat(row.get("anonymized")).isEqualTo(true);
         assertThat(jdbc.queryForMap("SELECT cv_storage_key, cover_letter, stage FROM job_application WHERE id = ?", applicationId))
-                .containsEntry("cv_storage_key", null).containsEntry("cover_letter", null).containsEntry("stage", "APPLIED");
+                .containsEntry("cv_storage_key", null).containsEntry("cover_letter", null).containsEntry("stage", "REJECTED");
+        assertThat(jdbc.queryForObject("SELECT note FROM stage_change WHERE application_id = ? AND to_stage = 'REJECTED'",
+                String.class, applicationId)).contains("data was erased");
         assertThat(jdbc.queryForObject("SELECT count(*) FROM consent WHERE candidate_id = ? AND withdrawn_at IS NULL",
                 Integer.class, candidateId)).isZero();
         assertThatThrownBy(() -> cvStorage.load(cvKey)).isInstanceOf(RuntimeException.class);
