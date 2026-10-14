@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm, type FieldPath } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { Link, useLocation, useParams } from "react-router";
 import Icon from "@/components/common/Icon";
 import { usePublicJob } from "@/features/careers/api/publicJobs";
@@ -118,7 +118,7 @@ function ApplyForm({ jobId, fullName, email }: { jobId: string; fullName: string
       <div className="form-card-body">
         <label className={`consent-box ${errors.consent ? "invalid" : ""}`}>
           <input type="checkbox" {...register("consent")}/>
-          <span><strong>{t("apply.consentLabel")}<span>*</span></strong>{t("apply.consentText")}</span>
+          <span><strong>{t("apply.consentLabel")}<span>*</span></strong><Trans i18nKey="apply.consentText" components={{ link: <a href="/privacy" target="_blank" rel="noopener noreferrer"/> }}/></span>
         </label>
         {fieldError("consent")}
         <p className="career-privacy"><Icon name="shield" size={14}/>{t("apply.aiNotice")}</p>

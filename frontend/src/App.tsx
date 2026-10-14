@@ -14,6 +14,7 @@ import { homePathFor, STAFF_ROLES } from "@/lib/auth/roles";
 const ApplyPage = lazy(() => import("@/features/applications/pages/ApplyPage"));
 const CareerJobPage = lazy(() => import("@/features/careers/pages/CareerJobPage"));
 const CareersPage = lazy(() => import("@/features/careers/pages/CareersPage"));
+const PrivacyPolicyPage = lazy(() => import("@/features/careers/pages/PrivacyPolicyPage"));
 const CandidateDetailPage = lazy(() => import("@/features/candidates/pages/CandidateDetailPage"));
 const DashboardPage = lazy(() => import("@/features/dashboard/pages/DashboardPage"));
 const JobFormPage = lazy(() => import("@/features/jobs/pages/JobFormPage"));
@@ -60,6 +61,7 @@ export default function App() {
         <Route path="/careers" element={<CareersPage/>}/>
         <Route path="/careers/:id" element={<CareerJobPage/>}/>
         <Route path="/careers/:id/apply" element={<ApplyPage/>}/>
+        <Route path="/privacy" element={<PrivacyPolicyPage/>}/>
       </Route>
       <Route element={<RequireAuth/>}>
         <Route element={<AppShell/>}>

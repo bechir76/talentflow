@@ -12,11 +12,10 @@ export default function Topbar({ dark, setDark }: { dark: boolean; setDark: (val
   const { data: me } = useMe();
   const displayName = me?.fullName ?? user.fullName;
   return <header className="topbar">
-    {user.primaryRole === "CANDIDATE" ? <span></span> : <div className="global-search"><Icon name="search"/><input placeholder={t("shell.searchPlaceholder")}/><kbd>⌘ K</kbd></div>}
+    <span></span>
     <div className="top-actions">
       <button className="icon-button theme-button" onClick={() => setDark(!dark)} aria-label={t("shell.toggleDarkMode")}><Icon name={dark ? "sun" : "moon"}/></button>
       <button className="language-button" onClick={() => changeLanguage(currentLanguage() === "en" ? "de" : "en")}><Icon name="globe" size={16}/>{t("shell.languageLabel")}</button>
-      <button className="icon-button notification" aria-label={t("shell.notifications")}><Icon name="bell"/><i></i></button>
       <span className="top-divider"></span>
       <div className="profile-button"><Avatar initials={user.initials} color="violet" small/><span><strong>{displayName}</strong>{user.primaryRole && <small>{t(`roles.${user.primaryRole}`)}</small>}</span></div>
       <button className="icon-button" onClick={logout} aria-label={t("shell.signOut")} title={t("shell.signOut")}><Icon name="logout"/></button>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import Icon from "@/components/common/Icon";
 import Modal from "@/components/common/Modal";
 import { useAuth } from "@/lib/auth/AuthContext";
@@ -19,7 +20,7 @@ export default function PrivacyPage() {
   const confirmDelete = () => deleteData.mutate(undefined, { onSuccess: () => { setConfirmOpen(false); logout(); } });
 
   return <div className="page portal-page">
-    <div className="page-heading"><div><span className="eyebrow">{t("portal.eyebrow")}</span><h1>{t("privacy.title")}</h1><p>{t("privacy.subtitle")}</p></div></div>
+    <div className="page-heading"><div><span className="eyebrow">{t("portal.eyebrow")}</span><h1>{t("privacy.title")}</h1><p>{t("privacy.subtitle")}</p></div><Link className="secondary-button" to="/privacy"><Icon name="shield" size={15}/>{t("privacy.policyLink")}</Link></div>
     <div className="privacy-grid">
       <section className="panel privacy-card">
         <span className="kpi-icon indigo"><Icon name="download"/></span>

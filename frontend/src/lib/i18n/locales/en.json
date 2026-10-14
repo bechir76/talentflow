@@ -38,7 +38,6 @@
     "secureNote": "Sign-in is handled by our identity provider. We never see your password.",
     "footerCopyright": "© {{year}} TalentFlow",
     "footerPrivacy": "Privacy",
-    "footerImprint": "Imprint",
     "switchLanguage": "Deutsch",
     "connecting": "Connecting to sign-in service…",
     "unavailableTitle": "Sign-in is currently unavailable",
@@ -48,10 +47,8 @@
   },
   "shell": {
     "workspace": "Workspace",
-    "searchPlaceholder": "Search candidates, jobs, interviews...",
     "toggleDarkMode": "Toggle dark mode",
     "toggleSidebar": "Toggle sidebar",
-    "notifications": "Notifications",
     "signOut": "Sign out",
     "languageLabel": "EN"
   },
@@ -253,7 +250,7 @@
     "privacyTitle": "Privacy & consent",
     "privacyText": "We only process your data for this application and in the EU.",
     "consentLabel": "I agree to the processing of my data",
-    "consentText": "TalentFlow may process my CV and contact details to evaluate this application, as described in the privacy policy. I can withdraw my consent and request deletion at any time in my candidate portal.",
+    "consentText": "TalentFlow may process my CV and contact details to evaluate this application, as described in the <link>privacy policy</link>. I can withdraw my consent and request deletion at any time in my candidate portal.",
     "aiNotice": "An AI assistant may summarise your CV against the job requirements. It only makes suggestions; every decision is made by a person.",
     "submit": "Submit application",
     "submitting": "Submitting...",
@@ -420,7 +417,8 @@
     "confirmTitle": "Delete all your data?",
     "confirmText": "We will anonymise your candidate profile, delete your CV files and withdraw your consents. Recruiters will no longer see your name or contact details. You will be signed out.",
     "confirmCheck": "I understand that this cannot be undone.",
-    "confirmButton": "Delete permanently"
+    "confirmButton": "Delete permanently",
+    "policyLink": "Read the privacy policy"
   },
   "admin": {
     "eyebrow": "Administration",
@@ -520,6 +518,78 @@
       "HIRE": "Hire",
       "NO_HIRE": "No hire",
       "UNSURE": "Unsure"
+    }
+  },
+  "privacyPolicy": {
+    "eyebrow": "Data protection",
+    "title": "Privacy policy",
+    "intro": "How TalentFlow handles candidate data",
+    "version": "Policy version {{version}}",
+    "summary": "This notice explains which personal data the company publishing these job openings processes when you apply through TalentFlow, why, for how long, and which rights you have under the General Data Protection Regulation (GDPR, Art. 13).",
+    "data": {
+      "title": "What we store",
+      "items": [
+        "Account data: your name, email address and password. The password is kept by the sign-in service (Keycloak) and is never visible to recruiters.",
+        "Profile data: name, email address, and the phone number and location you enter when applying.",
+        "Application data: your CV (PDF), cover letter, the job you applied for, the date and every change of the application stage.",
+        "Consent records: what you agreed to, the policy version and the date, and when you withdrew it.",
+        "AI screening results: a match score, matching and missing skills and a short summary.",
+        "Interview data: dates, interviewers and the structured feedback of the interviewers.",
+        "Audit log: who viewed or downloaded your CV, changed your stage, exported or deleted your data, and when."
+      ]
+    },
+    "purposes": {
+      "title": "Why we process it",
+      "items": [
+        "To evaluate your application and run the hiring process for the position you applied for.",
+        "To keep you informed: you receive an email when your application moves to a new stage.",
+        "Legal basis: your consent (GDPR Art. 6(1)(a)), which you give when applying, and steps taken at your request before an employment contract (Art. 6(1)(b), § 26 BDSG).",
+        "The audit log documents access to your data so that we can prove compliant handling (Art. 5(2), accountability)."
+      ]
+    },
+    "ai": {
+      "title": "AI-assisted CV screening",
+      "items": [
+        "The text of your CV is compared with the job requirements to suggest a score and a summary for the recruiter.",
+        "Your name, email address and phone number are removed from the text before it is analysed.",
+        "The AI never decides. A person reviews every application and makes every decision (GDPR Art. 22, EU AI Act).",
+        "If no external AI provider is configured, a local keyword comparison is used and no data leaves our systems."
+      ]
+    },
+    "retention": {
+      "title": "How long we keep it",
+      "items": [
+        "Your data is kept while your application is open.",
+        "You can delete your data yourself at any time in the candidate portal. Your profile is anonymised, your CVs are deleted and open applications end."
+      ],
+      "automatic_one": "If your application is rejected, your data is anonymised automatically {{count}} month after the rejection.",
+      "automatic_other": "If your application is rejected, your data is anonymised automatically {{count}} months after the rejection.",
+      "manual_one": "The retention period for rejected applications is {{count}} month. Expired data is anonymised by an administrator.",
+      "manual_other": "The retention period for rejected applications is {{count}} months. Expired data is anonymised by an administrator.",
+      "unknown": "Data of rejected applications is anonymised after the retention period set by the company."
+    },
+    "recipients": {
+      "title": "Who receives it",
+      "items": [
+        "Recruiters and the hiring managers assigned to an interview for your application.",
+        "Administrators, to manage accounts, retention and the audit log.",
+        "Technical service providers acting on our behalf (Art. 28): hosting, email delivery and, if configured, the AI provider, which receives only the redacted CV text and the job description.",
+        "We do not sell your data or use it for advertising."
+      ]
+    },
+    "rights": {
+      "title": "Your rights",
+      "items": [
+        "Access and data portability (Art. 15, 20): download all your data as JSON in the candidate portal under Privacy & Data.",
+        "Erasure (Art. 17): delete your data in the candidate portal under Privacy & Data.",
+        "Withdraw consent (Art. 7(3)): deleting your data withdraws your consent; processing before the withdrawal remains lawful.",
+        "Rectification, restriction and objection (Art. 16, 18, 21): contact the company that published the job.",
+        "Complaint (Art. 77): you can lodge a complaint with a data protection supervisory authority."
+      ]
+    },
+    "contact": {
+      "title": "Contact",
+      "text": "For questions about your data, or to have your sign-in account removed as well, contact the company that published the job opening. TalentFlow is a demo application; this notice describes how the software handles data."
     }
   }
 }

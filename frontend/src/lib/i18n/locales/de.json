@@ -38,7 +38,6 @@
     "secureNote": "Die Anmeldung erfolgt über unseren Identitätsanbieter. Ihr Passwort sehen wir nie.",
     "footerCopyright": "© {{year}} TalentFlow",
     "footerPrivacy": "Datenschutz",
-    "footerImprint": "Impressum",
     "switchLanguage": "English",
     "connecting": "Verbindung zum Anmeldedienst wird hergestellt…",
     "unavailableTitle": "Anmeldung derzeit nicht möglich",
@@ -48,10 +47,8 @@
   },
   "shell": {
     "workspace": "Arbeitsbereich",
-    "searchPlaceholder": "Bewerber, Stellen, Interviews suchen...",
     "toggleDarkMode": "Dunkelmodus umschalten",
     "toggleSidebar": "Seitenleiste umschalten",
-    "notifications": "Benachrichtigungen",
     "signOut": "Abmelden",
     "languageLabel": "DE"
   },
@@ -253,7 +250,7 @@
     "privacyTitle": "Datenschutz & Einwilligung",
     "privacyText": "Wir verarbeiten Ihre Daten nur für diese Bewerbung und in der EU.",
     "consentLabel": "Ich stimme der Verarbeitung meiner Daten zu",
-    "consentText": "TalentFlow darf meinen Lebenslauf und meine Kontaktdaten zur Prüfung dieser Bewerbung verarbeiten, wie in der Datenschutzerklärung beschrieben. Ich kann meine Einwilligung jederzeit im Bewerberportal widerrufen und die Löschung verlangen.",
+    "consentText": "TalentFlow darf meinen Lebenslauf und meine Kontaktdaten zur Prüfung dieser Bewerbung verarbeiten, wie in der <link>Datenschutzerklärung</link> beschrieben. Ich kann meine Einwilligung jederzeit im Bewerberportal widerrufen und die Löschung verlangen.",
     "aiNotice": "Ein KI-Assistent kann Ihren Lebenslauf mit den Anforderungen abgleichen. Er macht nur Vorschläge; jede Entscheidung trifft ein Mensch.",
     "submit": "Bewerbung absenden",
     "submitting": "Wird gesendet...",
@@ -420,7 +417,8 @@
     "confirmTitle": "Alle Daten löschen?",
     "confirmText": "Wir anonymisieren Ihr Bewerberprofil, löschen Ihre Lebensläufe und widerrufen Ihre Einwilligungen. Recruiter sehen Ihren Namen und Ihre Kontaktdaten nicht mehr. Sie werden abgemeldet.",
     "confirmCheck": "Mir ist bewusst, dass dies nicht rückgängig gemacht werden kann.",
-    "confirmButton": "Endgültig löschen"
+    "confirmButton": "Endgültig löschen",
+    "policyLink": "Datenschutzerklärung lesen"
   },
   "admin": {
     "eyebrow": "Administration",
@@ -520,6 +518,78 @@
       "HIRE": "Einstellen",
       "NO_HIRE": "Nicht einstellen",
       "UNSURE": "Unsicher"
+    }
+  },
+  "privacyPolicy": {
+    "eyebrow": "Datenschutz",
+    "title": "Datenschutzerklärung",
+    "intro": "Wie TalentFlow mit Bewerberdaten umgeht",
+    "version": "Version {{version}}",
+    "summary": "Diese Erklärung beschreibt, welche personenbezogenen Daten das Unternehmen, das diese Stellen ausschreibt, bei einer Bewerbung über TalentFlow verarbeitet, warum, wie lange und welche Rechte Sie nach der Datenschutz-Grundverordnung (DSGVO, Art. 13) haben.",
+    "data": {
+      "title": "Welche Daten wir speichern",
+      "items": [
+        "Kontodaten: Name, E-Mail-Adresse und Passwort. Das Passwort verwaltet der Anmeldedienst (Keycloak); Recruiter sehen es nie.",
+        "Profildaten: Name, E-Mail-Adresse sowie Telefonnummer und Ort, die Sie bei der Bewerbung angeben.",
+        "Bewerbungsdaten: Lebenslauf (PDF), Anschreiben, die Stelle, das Datum und jede Änderung der Bewerbungsphase.",
+        "Einwilligungen: wozu Sie eingewilligt haben, Version der Datenschutzerklärung, Datum und gegebenenfalls Widerruf.",
+        "Ergebnisse der KI-Prüfung: ein Übereinstimmungswert, passende und fehlende Fähigkeiten und eine kurze Zusammenfassung.",
+        "Interviewdaten: Termine, Interviewer und das strukturierte Feedback der Interviewer.",
+        "Audit-Log: wer Ihren Lebenslauf angesehen oder heruntergeladen, Ihre Phase geändert oder Ihre Daten exportiert oder gelöscht hat, und wann."
+      ]
+    },
+    "purposes": {
+      "title": "Warum wir sie verarbeiten",
+      "items": [
+        "Um Ihre Bewerbung zu prüfen und das Auswahlverfahren für die Stelle durchzuführen.",
+        "Um Sie zu informieren: Sie erhalten eine E-Mail, wenn Ihre Bewerbung in eine neue Phase wechselt.",
+        "Rechtsgrundlage: Ihre Einwilligung bei der Bewerbung (DSGVO Art. 6 Abs. 1 lit. a) sowie vorvertragliche Maßnahmen auf Ihre Anfrage (Art. 6 Abs. 1 lit. b, § 26 BDSG).",
+        "Das Audit-Log dokumentiert Zugriffe auf Ihre Daten, damit wir die rechtmäßige Verarbeitung nachweisen können (Art. 5 Abs. 2, Rechenschaftspflicht)."
+      ]
+    },
+    "ai": {
+      "title": "KI-gestützte Lebenslaufprüfung",
+      "items": [
+        "Der Text Ihres Lebenslaufs wird mit den Anforderungen der Stelle verglichen, um dem Recruiter einen Wert und eine Zusammenfassung vorzuschlagen.",
+        "Name, E-Mail-Adresse und Telefonnummer werden vor der Analyse aus dem Text entfernt.",
+        "Die KI entscheidet nie. Ein Mensch prüft jede Bewerbung und trifft jede Entscheidung (DSGVO Art. 22, EU AI Act).",
+        "Ist kein externer KI-Anbieter eingerichtet, wird ein lokaler Stichwortvergleich verwendet und keine Daten verlassen unsere Systeme."
+      ]
+    },
+    "retention": {
+      "title": "Wie lange wir sie speichern",
+      "items": [
+        "Ihre Daten werden gespeichert, solange Ihre Bewerbung offen ist.",
+        "Sie können Ihre Daten jederzeit selbst im Bewerberportal löschen. Ihr Profil wird anonymisiert, Ihre Lebensläufe gelöscht und offene Bewerbungen beendet."
+      ],
+      "automatic_one": "Wird Ihre Bewerbung abgelehnt, werden Ihre Daten {{count}} Monat nach der Absage automatisch anonymisiert.",
+      "automatic_other": "Wird Ihre Bewerbung abgelehnt, werden Ihre Daten {{count}} Monate nach der Absage automatisch anonymisiert.",
+      "manual_one": "Die Aufbewahrungsfrist für abgelehnte Bewerbungen beträgt {{count}} Monat. Abgelaufene Daten anonymisiert ein Administrator.",
+      "manual_other": "Die Aufbewahrungsfrist für abgelehnte Bewerbungen beträgt {{count}} Monate. Abgelaufene Daten anonymisiert ein Administrator.",
+      "unknown": "Daten abgelehnter Bewerbungen werden nach der vom Unternehmen festgelegten Frist anonymisiert."
+    },
+    "recipients": {
+      "title": "Wer sie erhält",
+      "items": [
+        "Recruiter und die Hiring Manager, die einem Interview zu Ihrer Bewerbung zugeordnet sind.",
+        "Administratoren, um Konten, Aufbewahrung und das Audit-Log zu verwalten.",
+        "Technische Dienstleister in unserem Auftrag (Art. 28): Hosting, E-Mail-Versand und, falls eingerichtet, der KI-Anbieter, der nur den bereinigten Lebenslauftext und die Stellenbeschreibung erhält.",
+        "Wir verkaufen Ihre Daten nicht und nutzen sie nicht für Werbung."
+      ]
+    },
+    "rights": {
+      "title": "Ihre Rechte",
+      "items": [
+        "Auskunft und Datenübertragbarkeit (Art. 15, 20): Laden Sie alle Ihre Daten als JSON im Bewerberportal unter Datenschutz & Daten herunter.",
+        "Löschung (Art. 17): Löschen Sie Ihre Daten im Bewerberportal unter Datenschutz & Daten.",
+        "Widerruf der Einwilligung (Art. 7 Abs. 3): Mit dem Löschen Ihrer Daten widerrufen Sie Ihre Einwilligung; die Verarbeitung bis dahin bleibt rechtmäßig.",
+        "Berichtigung, Einschränkung und Widerspruch (Art. 16, 18, 21): Wenden Sie sich an das Unternehmen, das die Stelle ausgeschrieben hat.",
+        "Beschwerde (Art. 77): Sie können sich bei einer Datenschutz-Aufsichtsbehörde beschweren."
+      ]
+    },
+    "contact": {
+      "title": "Kontakt",
+      "text": "Bei Fragen zu Ihren Daten oder wenn auch Ihr Anmeldekonto entfernt werden soll, wenden Sie sich an das Unternehmen, das die Stelle ausgeschrieben hat. TalentFlow ist eine Demo-Anwendung; diese Erklärung beschreibt, wie die Software mit Daten umgeht."
     }
   }
 }

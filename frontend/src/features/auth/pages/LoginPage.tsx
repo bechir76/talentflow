@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Navigate, useLocation } from "react-router";
+import { Link, Navigate, useLocation } from "react-router";
 import Avatar from "@/components/common/Avatar";
 import Icon from "@/components/common/Icon";
 import Logo from "@/components/common/Logo";
@@ -48,7 +48,7 @@ export default function LoginPage() {
         <p className="form-help"><Icon name="lock" size={13}/> {t("auth.secureNote")}</p>
       </div>
       <div className="login-footer">
-        <span>{t("auth.footerCopyright", { year: new Date().getFullYear() })}</span><span>{t("auth.footerPrivacy")}</span><span>{t("auth.footerImprint")}</span>
+        <span>{t("auth.footerCopyright", { year: new Date().getFullYear() })}</span><Link to="/privacy">{t("auth.footerPrivacy")}</Link>
         <button className="link-button" onClick={() => changeLanguage(currentLanguage() === "en" ? "de" : "en")}>{t("auth.switchLanguage")}</button>
       </div>
     </section>

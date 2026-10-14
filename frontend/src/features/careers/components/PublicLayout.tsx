@@ -26,7 +26,7 @@ export default function PublicLayout() {
     </header>
     <main className="public-main"><Outlet/></main>
     <footer className="public-footer">
-      <span>{t("auth.footerCopyright", { year: new Date().getFullYear() })}</span><span>{t("auth.footerPrivacy")}</span><span>{t("auth.footerImprint")}</span>
+      <span>{t("auth.footerCopyright", { year: new Date().getFullYear() })}</span><Link to="/privacy">{t("auth.footerPrivacy")}</Link>
     </footer>
   </div>;
 }
