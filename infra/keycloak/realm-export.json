@@ -8,6 +8,23 @@
   "loginWithEmailAllowed": true,
   "duplicateEmailsAllowed": false,
   "resetPasswordAllowed": false,
+  "verifyEmail": true,
+  "passwordPolicy": "length(10) and digits(1) and notUsername and notEmail",
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "failureFactor": 5,
+  "waitIncrementSeconds": 60,
+  "maxFailureWaitSeconds": 900,
+  "maxDeltaTimeSeconds": 43200,
+  "smtpServer": {
+    "host": "${KEYCLOAK_SMTP_HOST:mailpit}",
+    "port": "${KEYCLOAK_SMTP_PORT:1025}",
+    "from": "no-reply@talentflow.dev",
+    "fromDisplayName": "TalentFlow",
+    "auth": "false",
+    "ssl": "false",
+    "starttls": "false"
+  },
   "rememberMe": true,
   "internationalizationEnabled": true,
   "supportedLocales": [
@@ -140,7 +157,9 @@
       "credentials": [
         {
           "type": "password",
-          "value": "demo1234",
+          "userLabel": "Demo password (demo1234), imported as hash so the realm password policy does not apply",
+          "secretData": "{\"value\":\"PvvBxhrq4ZkoUDvPkqM4ANY0t/Pb88vq1LGwyVvNHtvznzu2MDNSgcbL4wzFbzcmhVRoPyPneurNLr3txJHX2Q==\",\"salt\":\"4xm4ukqcXZDp+rPrykvVqQ==\",\"additionalParameters\":{}}",
+          "credentialData": "{\"hashIterations\":210000,\"algorithm\":\"pbkdf2-sha512\",\"additionalParameters\":{}}",
           "temporary": false
         }
       ],
@@ -161,7 +180,9 @@
       "credentials": [
         {
           "type": "password",
-          "value": "demo1234",
+          "userLabel": "Demo password (demo1234), imported as hash so the realm password policy does not apply",
+          "secretData": "{\"value\":\"gtWZ1PNsWT1qHkZ6o0uRadHdMnUQMUsdWAq/McH6kdkc4D6NCRpRMehuYJtbCjI7yB2x46OKwgVoh6bdfayHPQ==\",\"salt\":\"JjAZnn0tqK4czncc2/X1ig==\",\"additionalParameters\":{}}",
+          "credentialData": "{\"hashIterations\":210000,\"algorithm\":\"pbkdf2-sha512\",\"additionalParameters\":{}}",
           "temporary": false
         }
       ],
@@ -182,7 +203,9 @@
       "credentials": [
         {
           "type": "password",
-          "value": "demo1234",
+          "userLabel": "Demo password (demo1234), imported as hash so the realm password policy does not apply",
+          "secretData": "{\"value\":\"auzL1lDBQHyaFwvgpQgGaLvd40oa5Zij4z6YPkjVvyJHQTKWwUTk+MSBjpWqcStL3iJQ9c11vXVHSy8G2XM0ng==\",\"salt\":\"hCPb3ti2y1aePTGNbgLX7g==\",\"additionalParameters\":{}}",
+          "credentialData": "{\"hashIterations\":210000,\"algorithm\":\"pbkdf2-sha512\",\"additionalParameters\":{}}",
           "temporary": false
         }
       ],
@@ -203,7 +226,9 @@
       "credentials": [
         {
           "type": "password",
-          "value": "demo1234",
+          "userLabel": "Demo password (demo1234), imported as hash so the realm password policy does not apply",
+          "secretData": "{\"value\":\"nLhh+hpStH/ZO1wwuTZKiJog6QRI1dW8N6L3ikRScipWjAfEooggqDoVko0/zJepPC6TdaqJH6Nlt/93u2xUhg==\",\"salt\":\"IS+Bhh72NTQ+07+x67K68Q==\",\"additionalParameters\":{}}",
+          "credentialData": "{\"hashIterations\":210000,\"algorithm\":\"pbkdf2-sha512\",\"additionalParameters\":{}}",
           "temporary": false
         }
       ],
