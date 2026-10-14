@@ -32,13 +32,14 @@ flowchart LR
     api --> files
     api -->|stage and interview e-mails| smtp
     api -->|redacted CV text + job| llm
+    keycloak -->|e-mail verification| smtp
 ```
 
 | Container | Port (local) | Responsibility |
 |---|---|---|
-| `frontend` | 3000 | nginx serves the built React app and proxies `/api` to the backend |
+| `frontend` | 3000 (`FRONTEND_PORT`) | nginx serves the built React app with security headers (CSP and others) and proxies `/api` to the backend |
 | `backend` | 8080 (`BACKEND_PORT`) | REST API, business rules, AI screening, e-mails, scheduled retention job |
-| `keycloak` | 8180 | Login, self-registration, roles; realm imported from `infra/keycloak/realm-export.json` |
+| `keycloak` | 8180 (`KEYCLOAK_PORT`) | Login, self-registration with e-mail verification, password policy, brute-force protection, roles; realm imported from `infra/keycloak/realm-export.json` |
 | `postgres` | 5432 | All application data; schema managed by Flyway |
 | `mailpit` | 8025 / 1025 | Catches all outgoing e-mail in development |
 
@@ -63,33 +64,48 @@ flowchart TB
         ai[ai<br/>PDF text, redaction, analyzers]
         pipeline[pipeline<br/>stages, history, dashboard, e-mails]
         interview[interview<br/>scheduling, feedback]
-        gdpr[gdpr<br/>export, erasure, retention]
+        gdpr[gdpr<br/>export, erasure, retention, privacy facts]
         audit[audit<br/>audit trail]
         user[user<br/>current user, user admin via Keycloak]
         shared[shared<br/>security, errors, roles, config]
+        demo[demo<br/>seed data for an empty database]
     end
 
     application --> job
     application --> candidate
+    application --> audit
     ai --> application
     ai --> job
     ai --> candidate
     pipeline --> application
+    pipeline --> job
+    pipeline --> candidate
     pipeline --> audit
     pipeline --> interview
     interview --> application
+    interview --> job
+    interview --> candidate
     interview --> user
     gdpr --> application
+    gdpr --> job
     gdpr --> candidate
     gdpr --> pipeline
     gdpr --> interview
     gdpr --> audit
     user --> audit
+    demo --> job
+    demo --> application
+    demo --> candidate
+    demo --> ai
+    demo --> pipeline
+    demo --> interview
+    demo --> audit
     job -. "ApplicantCounter port" .-> application
     application -. "InterviewAssignments port" .-> interview
 ```
 
-All modules use `shared` (roles, `CurrentUserProvider`, Problem Details error handling, security config).
+All modules use `shared` (roles, `CurrentUserProvider`, Problem Details error handling, security config). `demo` is not
+layered: it only seeds fictional data when `SEED_DEMO_DATA=true` and the database has no jobs yet.
 
 ## 3. Data model
 
@@ -223,8 +239,10 @@ sequenceDiagram
    so anonymous statistics (funnel, time to hire) remain correct.
 3. Interviews and feedback: meeting links and free-text comments are cleared.
 4. Consents are marked as withdrawn.
-5. CV files are deleted **after** the transaction commits, so a rollback never loses a file.
-6. An audit entry records who triggered the erasure (the candidate or the retention job).
+5. Open applications are moved to `REJECTED` with a stage change noting that the candidate's data was erased, so
+   recruiters see them as closed in the pipeline and the detail page becomes read-only.
+6. CV files are deleted **after** the transaction commits, so a rollback never loses a file.
+7. An audit entry records who triggered the erasure (the candidate or the retention job).
 
 ## 5. Security model
 
@@ -236,6 +254,14 @@ sequenceDiagram
 - Errors, including 401 and 403, are RFC 9457 Problem Details.
 - User administration uses a separate confidential Keycloak client (service account) whose secret comes from the
   environment.
+- The realm requires a verified e-mail address for self-registered accounts, a password of at least 10 characters
+  with a digit that differs from the username and e-mail, and slows down repeated failed logins. The demo users are
+  imported with pre-hashed passwords and verified addresses.
+- nginx sends a Content-Security-Policy (`script-src 'self'`, no inline scripts, Keycloak as the only other
+  origin), `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy` on every
+  response and hides its version. Only `silent-check-sso.html` may be framed, by the app itself.
+- The Inter font is served from the app, so no request goes to a third-party font CDN.
+- Hiring managers do not see the cross-job "top matches" on the dashboard; only recruiters and admins do.
 
 ## 6. Concurrency
 

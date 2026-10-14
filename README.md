@@ -31,7 +31,7 @@ and an audit trail. The AI never decides; it only suggests, and a person makes e
 
 | Role | What they can do |
 |---|---|
-| **Candidate** | Browse the public career page, apply with a PDF CV and explicit consent, follow every application with a stage stepper, download all their data as JSON, see their consent history and delete their data |
+| **Candidate** | Browse the public career page, read the privacy policy, apply with a PDF CV and explicit consent, follow every application with a stage stepper, download all their data as JSON, see their consent history and delete their data |
 | **Recruiter** | Create, publish, close and reopen jobs; see applications with AI suggestions; view CVs in the browser; move candidates on a drag-and-drop Kanban board; schedule interviews and invite interviewers; dashboard with live KPIs and charts |
 | **Hiring manager** | See the interviews they are invited to in a week calendar, open those candidates (and only those), and submit a scorecard (technical, communication, culture fit from 1 to 5, recommendation) |
 | **Admin** | Everything a recruiter can do, plus user and role management (via Keycloak), the data retention policy and the audit log |
@@ -40,8 +40,12 @@ Across the app:
 
 - **AI CV screening:** asynchronous, with strict JSON validation, an offline fallback and personal data removed before anything is sent.
 - **E-mails:** candidates are notified of stage changes and interview invitations, in English and German.
+- **Privacy policy:** a public `/privacy` page (English and German) explains what is stored, why, for how long and
+  which rights candidates have. It shows the current policy version and retention period from the API and is linked
+  from the footers, the consent checkbox and the candidate's privacy page.
 - **Bilingual UI:** English and German, switchable at any time and also passed to the Keycloak login page.
-- **Design:** the UI follows the original Figma design: indigo `#4F46E5`, Inter, light and dark mode.
+- **Design:** the UI follows the original Figma design: indigo `#4F46E5`, Inter (self-hosted, no font CDN), light
+  and dark mode.
 
 ## Quick start
 
@@ -72,28 +76,33 @@ database with fictional demo data (`SEED_DEMO_DATA=true`).
 | `manager@talentflow.dev` | Hiring manager (Martin Richter), invited to several interviews |
 | `admin@talentflow.dev` | Admin |
 
-> If a port is already taken on your machine, change `BACKEND_PORT`, `FRONTEND_PORT` or `KEYCLOAK_PORT` in `.env`.
+> New candidate accounts must confirm their e-mail address before they set a password: the verification mail
+> arrives in Mailpit. Passwords need at least 10 characters including a digit (the demo accounts are exempt).
+>
+> If a port is already taken on your machine, change `BACKEND_PORT`, `FRONTEND_PORT` or `KEYCLOAK_PORT` in `.env`
+> and run `docker compose up --build -d` again; the Keycloak URL and redirect URLs follow the ports.
 > To start again with a clean database: `docker compose down -v`.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    browser([Browser]) --> web[frontend<br/>React + nginx]
+    browser([Browser]) --> web[frontend<br/>React + nginx, CSP]
     browser -->|login, PKCE| kc[(Keycloak)]
     web -->|/api, Bearer JWT| api[backend<br/>Spring Boot 4]
     api --> db[(PostgreSQL 17)]
     api --> cv[(CV volume)]
     api -->|JWKS, Admin API| kc
     api -->|SMTP| mail[Mailpit]
+    kc -->|verification e-mails| mail
     api -.->|optional, redacted text| llm[LLM provider]
 ```
 
 The backend is a modular monolith with a **hexagonal (ports and adapters)** structure. Each module
 (`job`, `application`, `candidate`, `ai`, `pipeline`, `interview`, `gdpr`, `audit`, `user`, `shared`) has
-`domain`, `application` and `infrastructure` packages. Domain rules live in the entities (for example "hired only
-from offer"), use cases in application services, and everything technical (REST, JPA, Keycloak, LLM, mail,
-files) in adapters behind interfaces.
+`domain`, `application` and `infrastructure` packages; a separate `demo` package seeds fictional data. Domain
+rules live in the entities (for example "hired only from offer"), use cases in application services, and
+everything technical (REST, JPA, Keycloak, LLM, mail, files) in adapters behind interfaces.
 
 More diagrams (modules, data model, sequence diagrams for applying, screening, pipeline moves and erasure) are
 in **[docs/architecture.md](docs/architecture.md)**.
@@ -104,8 +113,8 @@ in **[docs/architecture.md](docs/architecture.md)**.
 |---|---|
 | Backend | Java 25, Spring Boot 4.1 (Spring Framework 7, Jakarta EE 11, Jackson 3), Spring Web MVC, Data JPA, Validation, Security (OAuth2 resource server), Mail, Scheduling, Flyway, PostgreSQL 17, Apache PDFBox, springdoc-openapi, `RestClient` |
 | Frontend | React 19, TypeScript (strict), Vite, Tailwind CSS v4 with the design's CSS system, React Router, TanStack Query, react-hook-form + zod, dnd-kit, Recharts, react-i18next, keycloak-js |
-| Identity | Keycloak 26 (realm import with roles, clients and demo users) |
-| Tests | JUnit 5, Mockito, Spring MockMvc, Testcontainers (PostgreSQL), JaCoCo; Vitest and React Testing Library |
+| Identity | Keycloak 26 (realm import with roles, clients, demo users, e-mail verification and password policy) |
+| Tests | JUnit 5, Mockito, Spring MockMvc, Testcontainers (PostgreSQL), JaCoCo; Vitest and React Testing Library; ESLint |
 | Delivery | Docker Compose, GitHub Actions (backend, frontend and image builds on every push) |
 
 ## Design decisions
@@ -116,7 +125,11 @@ in **[docs/architecture.md](docs/architecture.md)**.
 - **Keycloak with authorization code flow and PKCE.** The app never handles passwords; the login form of the
   original design became a redirect. The backend validates issuer, audience and signature and maps realm roles
   to Spring roles. User administration uses a separate service-account client whose secret is injected into
-  the realm import from the environment.
+  the realm import from the environment. The realm requires verified e-mail addresses for self-registration, a
+  password policy and brute-force protection; the demo users are imported with pre-hashed passwords.
+- **Security headers from nginx.** A Content-Security-Policy allows scripts only from the app itself (no inline
+  scripts) and Keycloak as the only other origin; the Keycloak URL is injected from the environment when the
+  container starts. nosniff, frame, referrer and permissions headers are sent on every response.
 - **RFC 9457 Problem Details for every error**, including 401 and 403 from the security layer, with field
   errors for validation problems. Business rule violations are 422, conflicts 409.
 - **AI as a plain HTTP call with `RestClient`.** Any OpenAI-compatible chat completions API works (Mistral,
@@ -148,12 +161,13 @@ support:
 | Robustness | The LLM must return strict JSON that is validated (score range, lists, max. 3 sentences); invalid output marks the screening as failed instead of storing it. Recruiters can re-run a screening |
 | Non-discrimination | The prompt restricts the model to job-related skills and tells it to ignore protected characteristics; CV text is treated as untrusted data (prompt-injection guard) |
 | Data minimisation (Art. 5(1)(c) GDPR) | Name, e-mail, phone and profile links are removed from the CV text before it is sent; only the job and the redacted text leave the system |
-| Lawful basis and proof of consent (Art. 6, 7) | Applying requires an explicit, unticked consent checkbox. Each consent is stored with timestamp and privacy policy version |
+| Information (Art. 13) | A public privacy policy page describes the stored data, purposes, legal basis, AI screening, retention period, recipients and rights |
+| Lawful basis and proof of consent (Art. 6, 7) | Applying requires an explicit, unticked consent checkbox that links to the privacy policy. Each consent is stored with timestamp and privacy policy version |
 | Right of access (Art. 15) | Candidates download all their data as JSON (profile, consents, applications, stage history, interviews, AI results) |
-| Right to erasure (Art. 17) | Candidates can delete their data: the profile is anonymised, CVs, cover letters, AI output, meeting links and feedback comments are removed, consents withdrawn. Anonymous statistics stay correct |
+| Right to erasure (Art. 17) | Candidates can delete their data: the profile is anonymised, CVs, cover letters, AI output, meeting links and feedback comments are removed, consents withdrawn and open applications ended. Anonymous statistics stay correct |
 | Storage limitation (Art. 5(1)(e)) | Admins configure how many months rejected candidates are kept; a daily job (or "Run now") anonymises them |
 | Accountability (Art. 5(2)) | Audit log for CV viewed and downloaded, data exported, candidate deleted, stage changed, retention and user changes |
-| Security (Art. 32) | Token-based auth with roles and row-level rules, no passwords in the app, CV files outside the database under random names, path-traversal-safe storage |
+| Security (Art. 32) | Token-based auth with roles and row-level rules, no passwords in the app, verified e-mail and password policy for new accounts, brute-force protection, CSP and security headers, CV files outside the database under random names, path-traversal-safe storage |
 
 ## Local development
 
@@ -207,8 +221,9 @@ All settings come from environment variables (see [`.env.example`](.env.example)
 ## Testing and quality
 
 ```bash
-cd backend && ./mvnw verify      # 122 tests incl. Testcontainers integration tests, JaCoCo gate (≥ 70 % lines)
+cd backend && ./mvnw verify      # 123 tests incl. Testcontainers integration tests, JaCoCo gate (≥ 70 % lines)
 cd frontend && npm test          # Vitest + React Testing Library
+cd frontend && npm run lint      # ESLint (TypeScript and React hooks rules), no warnings allowed
 cd frontend && npm run build     # strict type check + production build
 ```
 
@@ -217,8 +232,8 @@ cd frontend && npm run build     # strict type check + production build
   validation on every controller, and end-to-end integration tests against PostgreSQL for applying, screening,
   pipeline, GDPR, interviews and the demo seeder.
 - **Frontend:** tests for role routing helpers, stage rules, form schemas (including GDPR consent), pagination,
-  the skills input and the CV drop zone.
-- **CI:** GitHub Actions runs the backend build with Testcontainers, the frontend type check, tests and build,
+  date helpers, the skills input and the CV drop zone.
+- **CI:** GitHub Actions runs the backend build with Testcontainers, the frontend type check, lint, tests and build,
   and builds both Docker images on every push.
 
 ## API documentation
