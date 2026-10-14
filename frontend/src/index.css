@@ -169,7 +169,7 @@ button { cursor: pointer; }
 .table-search input { width: 100%; min-width: 0; border: 0; outline: none; color: var(--text); background: transparent; font-size: 9px; }
 .table-toolbar select { height: 32px; padding: 0 25px 0 9px; border: 1px solid var(--border); border-radius: 7px; color: var(--muted); background: var(--surface); font-size: 8px; outline: none; }
 .table-toolbar > span { margin-left: auto; color: var(--muted); font-size: 8px; }
-.jobs-table-wrap { overflow-x: auto; }
+.jobs-table-wrap { position: relative; overflow-x: auto; }
 .jobs-table { width: 100%; min-width: 1040px; border-collapse: collapse; }
 .jobs-table th { height: 38px; padding: 0 12px; color: var(--subtle); background: color-mix(in srgb, var(--canvas) 60%, var(--panel)); border-bottom: 1px solid var(--border); text-align: left; text-transform: uppercase; letter-spacing: .06em; font-size: 7px; font-weight: 600; }
 .jobs-table td { height: 62px; padding: 0 12px; color: var(--muted); border-bottom: 1px solid var(--border); font-size: 8px; white-space: nowrap; }
