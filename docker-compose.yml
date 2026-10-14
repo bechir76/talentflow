@@ -29,6 +29,8 @@ services:
       KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
       # Substituted into the realm import (service account secret of the backend).
       KEYCLOAK_ADMIN_CLIENT_SECRET: ${KEYCLOAK_ADMIN_CLIENT_SECRET:?Set KEYCLOAK_ADMIN_CLIENT_SECRET in .env}
+      # Substituted into the web app client's redirect and logout URLs.
+      FRONTEND_URL: http://localhost:${FRONTEND_PORT:-3000}
     ports:
       - "${KEYCLOAK_PORT:-8180}:8080"
     volumes:
@@ -67,7 +69,10 @@ services:
         condition: service_healthy
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        VITE_KEYCLOAK_URL: http://localhost:${KEYCLOAK_PORT:-8180}
     environment:
       KEYCLOAK_URL: http://localhost:${KEYCLOAK_PORT:-8180}
     ports:

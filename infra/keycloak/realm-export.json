@@ -91,18 +91,18 @@
       "directAccessGrantsEnabled": false,
       "serviceAccountsEnabled": false,
       "frontchannelLogout": true,
-      "rootUrl": "http://localhost:5173",
+      "rootUrl": "${FRONTEND_URL:http://localhost:3000}",
       "baseUrl": "/",
       "redirectUris": [
         "http://localhost:5173/*",
-        "http://localhost:3000/*"
+        "${FRONTEND_URL:http://localhost:3000}/*"
       ],
       "webOrigins": [
         "+"
       ],
       "attributes": {
         "pkce.code.challenge.method": "S256",
-        "post.logout.redirect.uris": "http://localhost:5173/*##http://localhost:3000/*"
+        "post.logout.redirect.uris": "http://localhost:5173/*##${FRONTEND_URL:http://localhost:3000}/*"
       },
       "protocolMappers": [
         {
