@@ -47,6 +47,7 @@
   },
   "shell": {
     "workspace": "Arbeitsbereich",
+    "companyTeam": "Recruiting",
     "toggleDarkMode": "Dunkelmodus umschalten",
     "toggleSidebar": "Seitenleiste umschalten",
     "signOut": "Abmelden",

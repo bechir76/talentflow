@@ -36,7 +36,7 @@ export default function CandidateCard({ card, draggable, onOpen, overlay = false
     {...attributes}
     {...listeners}
   >
-    <div className="candidate-card-head"><Avatar initials={initialsOf(name)} color={score >= 80 ? "rose" : "blue"}/><Icon name="more"/></div>
+    <div className="candidate-card-head"><Avatar initials={initialsOf(name)} color={score >= 80 ? "rose" : "blue"}/></div>
     <strong className="candidate-name">{name}</strong><span className="candidate-role">{card.candidateLocation ?? " "}</span>
     <div className="skills">{card.topSkills.map((tag) => <span key={tag}>{tag}</span>)}</div>
     <div className="candidate-foot"><AiScoreBadge card={card}/><span><Icon name="clock" size={14}/>{days === 0 ? t("pipeline.today") : t("pipeline.daysInStage", { count: days })}</span></div>

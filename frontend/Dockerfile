@@ -6,6 +6,8 @@ COPY . .
 # Vite bakes the browser-facing Keycloak URL into the bundle.
 ARG VITE_KEYCLOAK_URL=http://localhost:8180
 ENV VITE_KEYCLOAK_URL=$VITE_KEYCLOAK_URL
+ARG VITE_COMPANY_NAME="Acme GmbH"
+ENV VITE_COMPANY_NAME=$VITE_COMPANY_NAME
 RUN npm run build
 
 FROM nginx:1.31-alpine

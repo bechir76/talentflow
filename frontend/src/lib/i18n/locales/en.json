@@ -47,6 +47,7 @@
   },
   "shell": {
     "workspace": "Workspace",
+    "companyTeam": "Recruiting",
     "toggleDarkMode": "Toggle dark mode",
     "toggleSidebar": "Toggle sidebar",
     "signOut": "Sign out",

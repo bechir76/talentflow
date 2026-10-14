@@ -307,7 +307,7 @@ button { cursor: pointer; }
   .jobs-summary { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 760px) {
-  .sidebar { width: 76px; }.sidebar .logo strong, .sidebar .workspace-switch > div, .sidebar .workspace-switch > .icon, .sidebar .nav-label, .sidebar .nav-list button span, .sidebar .nav-list button b, .sidebar .sidebar-bottom button span, .sidebar .role-switch > div, .sidebar .collapse-button { display: none; }
+  .sidebar { width: 76px; }.sidebar .logo strong, .sidebar .workspace-switch > div, .sidebar .nav-label, .sidebar .nav-list button span, .sidebar .nav-list button b, .sidebar .sidebar-bottom button span, .sidebar .role-switch > div, .sidebar .collapse-button { display: none; }
   .sidebar .workspace-switch { padding: 7px; border: 0; background: transparent; box-shadow: none; }.sidebar .nav-list button, .sidebar .sidebar-bottom > button { justify-content: center; padding: 0; }
   .app-main { margin-left: 76px; width: calc(100% - 76px); }.topbar { padding: 0 16px; }.profile-button span, .profile-button > .icon, .language-button { display: none; }
   .page { padding: 24px 18px 35px; }.page-heading { align-items: flex-end; }.page-heading p { max-width: 300px; }.pipeline-toolbar { overflow-x: auto; }.pipeline-search { min-width: 180px; }

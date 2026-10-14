@@ -198,6 +198,7 @@ All settings come from environment variables (see [`.env.example`](.env.example)
 | `KEYCLOAK_ADMIN_CLIENT_SECRET` | Secret of the backend's user-admin service account | required |
 | `LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL` | AI provider (OpenAI-compatible). Empty key = offline analyzer | Mistral, empty, `mistral-small-latest` |
 | `SEED_DEMO_DATA` | Fill an empty database with demo data | `true` in Compose |
+| `COMPANY_NAME` | Hiring company shown in the staff workspace header (frontend build argument) | `Acme GmbH` |
 | `BACKEND_PORT`, `FRONTEND_PORT`, `KEYCLOAK_PORT` | Host ports | 8080, 3000, 8180 |
 | `PRIVACY_POLICY_VERSION` | Stored with every consent | `2026-10` |
 | `RETENTION_CRON`, `TIME_ZONE` | Retention job schedule, time zone for e-mails and "this week" | `0 0 3 * * *`, `Europe/Berlin` |

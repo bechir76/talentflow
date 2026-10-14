@@ -73,6 +73,7 @@ services:
       context: ./frontend
       args:
         VITE_KEYCLOAK_URL: http://localhost:${KEYCLOAK_PORT:-8180}
+        VITE_COMPANY_NAME: ${COMPANY_NAME:-Acme GmbH}
     environment:
       KEYCLOAK_URL: http://localhost:${KEYCLOAK_PORT:-8180}
     ports:
