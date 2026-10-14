@@ -162,9 +162,21 @@ support:
 ```bash
 docker compose up -d postgres keycloak mailpit
 cd backend
-./mvnw spring-boot:run                      # uses localhost defaults from application.yml
+set -a; source ../.env; set +a                # read the same values Compose uses
+DB_PASSWORD=$POSTGRES_PASSWORD SEED_DEMO_DATA=true ./mvnw spring-boot:run
 # or, without any local database: run TestTalentflowApplication from the IDE (Testcontainers)
 ```
+
+`application.yml` defaults to the local services (database `talentflow` on port 5432, Keycloak on 8180,
+Mailpit on 1025, API on 8080). Outside Compose these variables need values:
+
+| Variable | Why |
+|---|---|
+| `DB_PASSWORD` | Must match `POSTGRES_PASSWORD` from `.env`; the default `talentflow` only works if you kept that password. `DB_USERNAME`/`DB_URL` likewise if you changed `POSTGRES_USER`/`POSTGRES_DB` |
+| `KEYCLOAK_ADMIN_CLIENT_SECRET` | Same value as in `.env`; without it the admin user management calls to Keycloak fail |
+| `KEYCLOAK_ISSUER_URI`, `KEYCLOAK_JWK_SET_URI`, `KEYCLOAK_ADMIN_URL` | Only if `KEYCLOAK_PORT` is not 8180 |
+| `SERVER_PORT` | Only if port 8080 is taken; then start the frontend with `API_PROXY_TARGET` (below) |
+| `SEED_DEMO_DATA` | `true` to fill an empty database with demo data (off by default outside Compose) |
 
 **Frontend** (Node 24):
 
