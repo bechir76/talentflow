@@ -117,6 +117,7 @@ class InterviewIntegrationTest {
                 .extracting(entry -> entry.interview().getId()).contains(interview.getId());
         assertThat(dashboard.dashboard().upcomingInterviews())
                 .anySatisfy(upcoming -> assertThat(upcoming.candidateName()).isEqualTo("Clara Candidate"));
+        assertThat(dashboard.dashboard().topMatches()).as("no names of unassigned candidates").isEmpty();
 
         interviews.submitFeedback(interview.getId(), new Scores(5, 4, 4), "Very strong Kubernetes skills", Recommendation.HIRE);
         assertThatThrownBy(() -> interviews.submitFeedback(interview.getId(), new Scores(3, 3, 3), null, Recommendation.UNSURE))

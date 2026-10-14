@@ -24,6 +24,9 @@ import com.talentflow.job.application.JobService;
 import com.talentflow.job.application.JobStats;
 import com.talentflow.pipeline.application.DashboardReader.JobApplicationCount;
 import com.talentflow.pipeline.application.DashboardReader.TopMatch;
+import com.talentflow.shared.application.CurrentUser;
+import com.talentflow.shared.application.CurrentUserProvider;
+import com.talentflow.shared.domain.Role;
 
 /**
  * Key figures and charts for the staff dashboard. Interview figures are personal for hiring managers.
@@ -45,14 +48,16 @@ public class DashboardService {
     private final DashboardReader reader;
     private final JobService jobs;
     private final InterviewService interviews;
+    private final CurrentUserProvider currentUser;
     private final Clock clock;
     private final ZoneId zone;
 
-    public DashboardService(DashboardReader reader, JobService jobs, InterviewService interviews, Clock clock,
-            @Value("${talentflow.time-zone}") String zone) {
+    public DashboardService(DashboardReader reader, JobService jobs, InterviewService interviews,
+            CurrentUserProvider currentUser, Clock clock, @Value("${talentflow.time-zone}") String zone) {
         this.reader = reader;
         this.jobs = jobs;
         this.interviews = interviews;
+        this.currentUser = currentUser;
         this.clock = clock;
         this.zone = ZoneId.of(zone);
     }
@@ -73,7 +78,13 @@ public class DashboardService {
         return new Dashboard(jobStats.published(), jobStats.activeApplicants(), interviewsThisWeek,
                 reader.averageDaysToHire(now.minus(TIME_TO_HIRE_WINDOW)),
                 reader.applicationsPerJob(now.minus(APPLICATIONS_WINDOW), CHART_JOBS), funnel,
-                reader.topMatches(now.minus(TOP_MATCHES_WINDOW), TOP_MATCHES), upcoming);
+                seesAllCandidates() ? reader.topMatches(now.minus(TOP_MATCHES_WINDOW), TOP_MATCHES) : List.of(), upcoming);
+    }
+
+    /** Hiring managers only see candidates they interview, so the cross-job top matches are not for them. */
+    private boolean seesAllCandidates() {
+        CurrentUser user = currentUser.currentUser();
+        return user.hasRole(Role.RECRUITER) || user.hasRole(Role.ADMIN);
     }
 
     public record Dashboard(long openJobs, long activeCandidates, long interviewsThisWeek, Double averageDaysToHire,
