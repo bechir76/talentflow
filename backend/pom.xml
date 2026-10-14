@@ -21,6 +21,12 @@
         <springdoc.version>3.1.1</springdoc.version>
         <jacoco.version>0.8.15</jacoco.version>
         <pdfbox.version>3.0.8</pdfbox.version>
+        <!-- Security patches ahead of the Spring Boot BOM (remove once Boot ships these versions):
+             Tomcat GHSA-9xv2-5v5q-p794, GHSA-gcx9-497g-6cp6, GHSA-h3x4-894j-xpx5;
+             Jackson GHSA-cxp5-3px4-pw24, GHSA-7hhh-6rmp-j9qf, GHSA-p6pp-m3f8-5c89 and others. -->
+        <tomcat.version>11.0.27</tomcat.version>
+        <jackson-bom.version>3.1.7</jackson-bom.version>
+        <jackson-2-bom.version>2.21.7</jackson-2-bom.version>
     </properties>
 
     <dependencies>
