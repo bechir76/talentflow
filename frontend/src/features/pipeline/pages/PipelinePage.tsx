@@ -86,6 +86,7 @@ export default function PipelinePage() {
       <button className={`filter-button ${order === "newest" ? "active" : ""}`} onClick={() => setOrder("newest")}><Icon name="calendar"/>{t("pipeline.sortNewest")}</button>
       <span className="toolbar-spacer"></span><span className="candidate-total">{t("pipeline.total", { count: total })}</span>
     </div>
+    <p className="pipeline-hint"><Icon name="info" size={13}/>{t("candidate.ai.notice")}</p>
     {!canManage && <p className="pipeline-hint"><Icon name="lock" size={13}/>{t("pipeline.readOnly")}</p>}
     {moveStage.isError && <div className="form-error-banner" role="alert"><Icon name="info" size={16}/>{moveStage.error.message}</div>}
     {openJobs.data?.totalElements === 0 && !params.get("jobId") && <div className="panel"><div className="table-empty"><Icon name="briefcase" size={24}/><strong>{t("pipeline.noJobsTitle")}</strong><span>{t("pipeline.noJobsText")}</span></div></div>}
