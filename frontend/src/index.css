@@ -1,5 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
+
+/* Inter is served from this app instead of Google Fonts, so no visitor IP address is sent to a third party
+   (GDPR; see LG München I, 3 O 17493/20). Licensed under the SIL Open Font License 1.1, see /fonts/Inter-LICENSE.txt. */
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/InterVariable.woff2") format("woff2");
+}
 
 :root {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
