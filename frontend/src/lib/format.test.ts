@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatSalaryRange, initialsOf } from "./format";
+import { daysSince, formatSalaryRange, initialsOf } from "./format";
 
 describe("format", () => {
   it("formats salary ranges in euro", () => {
@@ -12,5 +12,12 @@ describe("format", () => {
     expect(initialsOf("Lena Schmidt")).toBe("LS");
     expect(initialsOf("anna maria keller")).toBe("AM");
     expect(initialsOf("  ")).toBe("?");
+  });
+
+  it("counts whole days since a timestamp", () => {
+    const now = Date.parse("2026-10-14T12:00:00Z");
+    expect(daysSince("2026-10-14T08:00:00Z", now)).toBe(0);
+    expect(daysSince("2026-10-11T11:00:00Z", now)).toBe(3);
+    expect(daysSince("2026-10-15T08:00:00Z", now)).toBe(0);
   });
 });

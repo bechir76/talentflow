@@ -4,10 +4,9 @@ import { useTranslation } from "react-i18next";
 import Avatar from "@/components/common/Avatar";
 import Icon from "@/components/common/Icon";
 import { scoreTone } from "@/features/candidates/score";
-import { initialsOf } from "@/lib/format";
+import { daysSince, initialsOf } from "@/lib/format";
 import type { PipelineCard } from "../api/pipeline";
 
-const DAY_MS = 24 * 60 * 60 * 1000;
 
 function AiScoreBadge({ card }: { card: PipelineCard }) {
   const { t } = useTranslation();
@@ -23,7 +22,7 @@ export default function CandidateCard({ card, draggable, onOpen, overlay = false
   const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id: card.id, disabled: !draggable || overlay });
   const name = card.candidateName ?? t("pipeline.unknownCandidate");
-  const days = Math.floor((Date.now() - new Date(card.stageChangedAt).getTime()) / DAY_MS);
+  const days = daysSince(card.stageChangedAt);
   const score = card.aiScore ?? 0;
 
   return <article

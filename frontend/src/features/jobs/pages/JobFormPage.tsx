@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm, type FieldPath } from "react-hook-form";
+import { Controller, useForm, useWatch, type FieldPath } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
 import Icon, { type IconName } from "@/components/common/Icon";
@@ -44,14 +44,14 @@ export default function JobFormPage() {
   const changeStatus = useChangeJobStatus();
   const [serverError, setServerError] = useState<string>();
 
-  const { register, control, handleSubmit, reset, watch, setError, formState: { errors, isSubmitting } } =
+  const { register, control, handleSubmit, reset, setError, formState: { errors, isSubmitting } } =
     useForm<JobFormValues>({ resolver: zodResolver(jobFormSchema), defaultValues: EMPTY });
 
   useEffect(() => {
     if (existing.data) reset(toValues(existing.data));
   }, [existing.data, reset]);
 
-  const descriptionLength = watch("description")?.length ?? 0;
+  const descriptionLength = useWatch({ control, name: "description" })?.length ?? 0;
   const status = existing.data?.status;
 
   const save = (targetStatus: JobStatus | undefined) => handleSubmit(async (values) => {

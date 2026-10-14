@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import Icon from "@/components/common/Icon";
 import { formatDate } from "@/lib/format";
-import { useRerunAiAnalysis, type ApplicationDetail } from "../api/applications";
+import { useRerunAiAnalysis, type ApplicationDetail } from "../api/applicationDetails";
 import { scoreTone } from "../score";
 
 const RING_CIRCUMFERENCE = 2 * Math.PI * 52;

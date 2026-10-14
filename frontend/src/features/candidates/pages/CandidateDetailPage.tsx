@@ -8,7 +8,7 @@ import ScheduleInterviewModal from "@/features/interviews/components/ScheduleInt
 import { useStageHistory, type StageChange } from "@/features/pipeline/api/pipeline";
 import { useCurrentUser } from "@/lib/auth/AuthContext";
 import { formatDate, formatDateTime, initialsOf } from "@/lib/format";
-import { useApplication, type ApplicationDetail } from "../api/applications";
+import { useApplication, type ApplicationDetail } from "../api/applicationDetails";
 import AiAnalysis from "../components/AiAnalysis";
 import CandidateTabs, { type TimelineEntry } from "../components/CandidateTabs";
 import CvPreview from "../components/CvPreview";

@@ -20,6 +20,13 @@ export function formatSalaryRange(min: number | null, max: number | null, curren
   return undefined;
 }
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** Whole days between an ISO timestamp and now (0 on the same day). */
+export function daysSince(iso: string, now: number = Date.now()): number {
+  return Math.max(0, Math.floor((now - new Date(iso).getTime()) / DAY_MS));
+}
+
 /** "Lena Schmidt" → "LS". */
 export function initialsOf(name: string): string {
   return name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]!.toUpperCase()).join("") || "?";

@@ -61,6 +61,8 @@ export function useCvUrl(id: string, enabled: boolean) {
   useEffect(() => {
     if (!cv.data) return;
     const objectUrl = URL.createObjectURL(cv.data);
+    // The object URL is an external resource: it is created and revoked together in this effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setUrl(objectUrl);
     return () => URL.revokeObjectURL(objectUrl);
   }, [cv.data]);

@@ -32,6 +32,7 @@ export default function JobsPage() {
   useEffect(() => {
     if (debouncedQuery !== (params.get("q") ?? "")) updateParams({ q: debouncedQuery || undefined, page: undefined });
     // Only react to the debounced text; params changes are written by this page itself.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery]);
 
   const jobs = useJobs({ q: debouncedQuery || undefined, status, departmentId, page });

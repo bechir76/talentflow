@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Icon from "@/components/common/Icon";
 import { formatDate } from "@/lib/format";
-import { useRetentionPolicy, useRunRetention, useUpdateRetentionPolicy } from "../api/admin";
+import { useRetentionPolicy, useRunRetention, useUpdateRetentionPolicy, type RetentionPolicy } from "../api/admin";
 
 const MIN_MONTHS = 1;
 const MAX_MONTHS = 120;
@@ -15,12 +15,14 @@ export default function RetentionPage() {
   const [months, setMonths] = useState(6);
   const [enabled, setEnabled] = useState(false);
 
-  useEffect(() => {
-    if (policy.data) {
-      setMonths(policy.data.rejectedRetentionMonths);
-      setEnabled(policy.data.autoDeleteEnabled);
-    }
-  }, [policy.data]);
+  const [loaded, setLoaded] = useState<RetentionPolicy>();
+
+  // Copy the saved policy into the form whenever a new version arrives from the server.
+  if (policy.data && policy.data !== loaded) {
+    setLoaded(policy.data);
+    setMonths(policy.data.rejectedRetentionMonths);
+    setEnabled(policy.data.autoDeleteEnabled);
+  }
 
   const valid = Number.isInteger(months) && months >= MIN_MONTHS && months <= MAX_MONTHS;
 

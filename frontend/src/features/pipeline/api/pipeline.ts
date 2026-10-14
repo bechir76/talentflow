@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ApplicationStage } from "@/features/applications/api/applications";
-import type { AiStatus } from "@/features/candidates/api/applications";
+import type { AiStatus } from "@/features/candidates/api/applicationDetails";
 import { api } from "@/lib/api/client";
 import { toQuery, type Page } from "@/lib/api/types";
 

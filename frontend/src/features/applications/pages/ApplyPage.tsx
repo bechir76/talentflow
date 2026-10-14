@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm, type FieldPath } from "react-hook-form";
+import { Controller, useForm, useWatch, type FieldPath } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
 import { Link, useLocation, useParams } from "react-router";
 import Icon from "@/components/common/Icon";
@@ -54,10 +54,11 @@ function ApplyForm({ jobId, fullName, email }: { jobId: string; fullName: string
   const { t } = useTranslation();
   const apply = useApply(jobId);
   const [serverError, setServerError] = useState<string>();
-  const { register, control, handleSubmit, watch, setError, formState: { errors, isSubmitting } } = useForm<ApplyFormValues>({
+  const { register, control, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<ApplyFormValues>({
     resolver: zodResolver(applyFormSchema),
     defaultValues: { phone: "", location: "", coverLetter: "", consent: false },
   });
+  const coverLetterLength = useWatch({ control, name: "coverLetter" })?.length ?? 0;
 
   const onSubmit = handleSubmit(async (values) => {
     setServerError(undefined);
@@ -110,7 +111,7 @@ function ApplyForm({ jobId, fullName, email }: { jobId: string; fullName: string
         <label className="apply-cover" htmlFor="cover-letter">{t("apply.coverLetter")}</label>
         <div className="rich-editor"><textarea id="cover-letter" className="editor-content editor-textarea apply-cover-text" maxLength={MAX_COVER_LETTER} {...register("coverLetter")} placeholder={t("apply.coverLetterPlaceholder")}/></div>
         {fieldError("coverLetter")}
-        <div className="editor-foot"><span><Icon name="info" size={13}/>{t("apply.coverLetterHint")}</span><b>{t("jobs.form.characters", { count: watch("coverLetter")?.length ?? 0 })}</b></div>
+        <div className="editor-foot"><span><Icon name="info" size={13}/>{t("apply.coverLetterHint")}</span><b>{t("jobs.form.characters", { count: coverLetterLength })}</b></div>
       </div>
     </section>
     <section className="form-card panel">
