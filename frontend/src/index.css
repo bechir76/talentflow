@@ -40,7 +40,7 @@ button { cursor: pointer; }
   --text: #eef0f6; --muted: #9ea5b8; --subtle: #747c91; --border: #292d39;
   --indigo-soft: #28264c; color-scheme: dark;
 }
-.app-main { margin-left: 248px; width: calc(100% - 248px); transition: margin .2s, width .2s; }
+.app-main { min-width: 0; margin-left: 248px; width: calc(100% - 248px); transition: margin .2s, width .2s; }
 .sidebar.collapsed + .app-main { margin-left: 76px; width: calc(100% - 76px); }
 
 .logo { height: 32px; display: flex; align-items: center; gap: 10px; font-size: 19px; letter-spacing: -.5px; color: var(--text); }
