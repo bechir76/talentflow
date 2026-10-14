@@ -12,11 +12,11 @@ class PersonalDataRedactorTest {
     void removesKnownNameEmailAndPhone() {
         String cv = """
                 LENA SCHMIDT
-                lena.schmidt@email.de | +49 151 234 5678 | Berlin
+                lena.schmidt@example.org | +49 151 234 5678 | Berlin
                 Lena led a team of five engineers. Contact Ms. Schmidt for references.
                 """;
 
-        String redacted = redactor.redact(cv, "Lena Schmidt", "lena.schmidt@email.de", "+49 151 234 5678");
+        String redacted = redactor.redact(cv, "Lena Schmidt", "lena.schmidt@example.org", "+49 151 234 5678");
 
         assertThat(redacted).doesNotContainIgnoringCase("lena").doesNotContainIgnoringCase("schmidt")
                 .doesNotContain("@").doesNotContain("234 5678")
