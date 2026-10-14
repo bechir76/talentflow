@@ -68,6 +68,8 @@ services:
 
   frontend:
     build: ./frontend
+    environment:
+      KEYCLOAK_URL: http://localhost:${KEYCLOAK_PORT:-8180}
     ports:
       - "${FRONTEND_PORT:-3000}:80"
     depends_on:
