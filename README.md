@@ -212,7 +212,10 @@ cd frontend && npm run build     # strict type check + production build
 
 Swagger UI is available at `/swagger-ui.html` and the OpenAPI document at `/v3/api-docs`. Use the
 **Authorize** button with an access token to try protected endpoints. All endpoints are under `/api/v1`;
-`/api/v1/public/**` (career page) needs no login. List endpoints are paginated (`page`, `size`, `sort`).
+`/api/v1/public/**` (career page and privacy policy facts) needs no login. Lists that can grow with use
+(jobs, career page, pipeline cards, the candidate's applications, users, audit log) are paginated (`page`, `size`, `sort`).
+A few small, bounded lists return a plain array: departments, interviewers, the stage history and interviews
+of one application, the candidate's own consents, and the interview calendar (limited to a range of 62 days).
 
 ## Project structure
 
