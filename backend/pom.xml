@@ -18,7 +18,7 @@
 
     <properties>
         <java.version>25</java.version>
-        <springdoc.version>3.1.1</springdoc.version>
+        <springdoc.version>3.2.0</springdoc.version>
         <jacoco.version>0.8.15</jacoco.version>
         <pdfbox.version>3.0.8</pdfbox.version>
         <!-- Security patches ahead of the Spring Boot BOM (remove once Boot ships these versions):
