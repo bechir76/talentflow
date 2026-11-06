@@ -76,8 +76,9 @@ database with fictional demo data (`SEED_DEMO_DATA=true`).
 | `manager@talentflow.dev` | Hiring manager (Martin Richter), invited to several interviews |
 | `admin@talentflow.dev` | Admin |
 
-> New candidate accounts must confirm their e-mail address before they set a password: the verification mail
-> arrives in Mailpit. Passwords need at least 10 characters including a digit (the demo accounts are exempt).
+> New candidates choose a password on the registration form and then confirm their e-mail address; the
+> verification mail arrives in Mailpit, and so does the "Forgot password?" link. Passwords need at least
+> 10 characters including a digit (the demo accounts are exempt).
 >
 > If a port is already taken on your machine, change `BACKEND_PORT`, `FRONTEND_PORT` or `KEYCLOAK_PORT` in `.env`
 > and run `docker compose up --build -d` again; the Keycloak URL and redirect URLs follow the ports.

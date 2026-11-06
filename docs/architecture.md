@@ -255,7 +255,10 @@ sequenceDiagram
 - User administration uses a separate confidential Keycloak client (service account) whose secret comes from the
   environment.
 - The realm requires a verified e-mail address for self-registered accounts, a password of at least 10 characters
-  with a digit that differs from the username and e-mail, and slows down repeated failed logins. The demo users are
+  with a digit that differs from the username and e-mail, and slows down repeated failed logins. The password is
+  set on the registration form: the built-in "Password Validation" step carries the
+  `always_set_password_on_register_form` option, because with e-mail verification enabled Keycloak otherwise
+  hides the password fields. Users can reset a forgotten password by e-mail. The demo users are
   imported with pre-hashed passwords and verified addresses.
 - nginx sends a Content-Security-Policy (`script-src 'self'`, no inline scripts, Keycloak as the only other
   origin), `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy` on every
